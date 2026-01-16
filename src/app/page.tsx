@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic"; // For lazy loading
 import { BentoCard } from "../components/BentoCard";
 import { DetailView, DetailType } from "../components/DetailView";
-import { AnimatePresence, motion, Variants } from "framer-motion"; // Added Variants type
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import '../app/globals.css';
@@ -19,9 +20,13 @@ import {
   ContactContent,
   ProjectsTriggerContent,
 } from "../components/CardContents";
-import { MapContent } from "@/components/GlobeClient";
 
-// --- Types ---
+// LAZY LOAD the MapContent: This stops the 10-second "blank" delay
+const MapContent = dynamic(() => import("@/components/GlobeClient").then(mod => mod.MapContent), { 
+  ssr: false,
+  loading: () => <div className="h-full w-full bg-card/20 animate-pulse" />
+});
+
 interface BentoItem {
   id: string;
   colSpan: string;
@@ -32,8 +37,7 @@ interface BentoItem {
 }
 
 export default function HomePage() {
-
-  const [loading, setLoading] = useState(typeof window !== 'undefined' ? document.readyState !== "complete" : true);
+  const [loading, setLoading] = useState(true);
   const [activeModal, setActiveModal] = useState<DetailType | null>(null);
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const [time, setTime] = useState(new Date());
@@ -41,74 +45,64 @@ export default function HomePage() {
   const { resolvedTheme } = useTheme();
   const router = useRouter();
 
-  // --- Effects ---
+  // 1. Unified Loading Logic
   useEffect(() => {
-    const handleLoad = () => setLoading(false);
+    const clearLoaders = () => {
+      // 1. Hide the raw HTML loader from layout.tsx
+      const rawLoader = document.getElementById('initial-loader');
+      if (rawLoader) rawLoader.classList.add('loaded');
+      
+      // 2. Hide the React Framer Motion loader
+      setLoading(false);
+    };
 
     if (document.readyState === "complete") {
-      const timer = setTimeout(() => setLoading(false), 0);
+      const timer = setTimeout(clearLoaders, 10);
       return () => clearTimeout(timer);
     } else {
-      window.addEventListener("load", handleLoad);
-      return () => window.removeEventListener("load", handleLoad);
+      window.addEventListener("load", clearLoaders);
+      return () => window.removeEventListener("load", clearLoaders);
     }
   }, []);
 
-  // 2. Clock Logic
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // 3. Scroll Lock Logic
   useEffect(() => {
-    if (loading || activeModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = (loading || activeModal) ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
   }, [loading, activeModal]);
 
-  // --- Helpers ---
   const copyToClipboard = async (text: string, label: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedText(label);
       setTimeout(() => setCopiedText(null), 2000);
     } catch {
-      alert("Failed to copy to clipboard.");
+      alert("Failed to copy.");
     }
   };
 
-  // --- Animation Variants (Typed to fix build errors) ---
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
-      }
+      transition: { staggerChildren: 0.05, delayChildren: 0.1 }
     }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20, scale: 0.96 },
+    hidden: { opacity: 0, y: 15, scale: 0.98 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1] // Framer Motion uses this for cubic-bezier
-      }
+      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
-  // --- Grid Data ---
   const items: BentoItem[] = [
     { id: "intro", colSpan: "col-span-2 sm:col-span-2" },
     { id: "photo", colSpan: "col-span-1", bgImage: "/vighnesh1.webp" },
@@ -138,42 +132,30 @@ export default function HomePage() {
 
   return (
     <main className="relative bg-page min-h-screen">
-      {/* 1. Universal Loader */}
+      {/* 1. React-Side Loader (Framer Motion) */}
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div
             key="loader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-page flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center gap-6">
-              <div className="relative w-12 h-12">
-                <div className="absolute inset-0 border-2 border-primary/10 rounded-full" />
-                <div className="absolute inset-0 border-2 border-t-primary rounded-full animate-spin" />
-              </div>
+              <div className="spinner-ring" /> {/* Use the CSS spinner for consistency */}
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 className="flex flex-col items-center gap-2"
               >
-                <span className="text-main font-bold tracking-[0.4em] uppercase text-[11px]">
-                  Vighnesh Gaddam
-                </span>
-                <span className="text-muted text-[9px] tracking-[0.2em] uppercase font-medium">
-                  Portfolio 2026
-                </span>
+                <span className="text-main font-bold tracking-[0.4em] uppercase text-[11px]">Vighnesh Gaddam</span>
+                <span className="text-muted text-[9px] tracking-[0.2em] uppercase font-medium">Portfolio 2026</span>
               </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 2. Main Site UI */}
-      <div className="min-h-screen text-main p-4 pt-8 md:p-6 md:pt-12 md:pb-0 font-sans selection:bg-primary selection:text-primary-fg transition-colors duration-500 overflow-x-hidden flex flex-col items-center">
-
+      <div className={`transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'} min-h-screen text-main p-4 pt-8 md:p-6 md:pt-12 flex flex-col items-center`}>
         <AnimatePresence>
           {activeModal && (
             <DetailView
@@ -184,64 +166,44 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
-        <div className="w-full max-w-7xl mx-auto pb-12 sm:pb-6">
+        <div className="w-full max-w-7xl mx-auto pb-12">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={loading ? "hidden" : "visible"}
             className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 auto-rows-[152px] sm:auto-rows-[190px] md:auto-rows-[237px] grid-flow-row-dense"
           >
-            {items.map((item, index) => {
-              const isExpanded = activeModal === item.id;
-
-              return (
-                <motion.div
-                  key={item.id}
-                  variants={itemVariants}
-                  className={item.colSpan}
+            {items.map((item, index) => (
+              <motion.div key={item.id} variants={itemVariants} className={item.colSpan}>
+                <BentoCard
+                  layoutId={item.id}
+                  dataId={item.id}
+                  index={index}
+                  className="h-full w-full"
+                  title={["intro", "socials", "photo"].includes(item.id) ? undefined : item.id}
+                  backgroundImage={item.bgImage}
+                  hasArrow={item.hasArrow}
+                  isVisible={activeModal !== item.id}
+                  noPadding={item.noPadding}
+                  onClick={
+                    item.id === "featured projects"
+                      ? () => { setLoading(true); setTimeout(() => router.push("/projects"), 100); }
+                      : item.onClickModal ? () => setActiveModal(item.onClickModal!) : undefined
+                  }
                 >
-                  <BentoCard
-                    layoutId={item.id}
-                    dataId={item.id}
-                    index={index}
-                    className="h-full w-full"
-                    title={["intro", "socials", "photo"].includes(item.id) ? undefined : item.id}
-                    backgroundImage={item.bgImage}
-                    hasArrow={item.hasArrow}
-                    isVisible={!isExpanded}
-                    noPadding={item.noPadding}
-                    onClick={
-                      item.id === "featured projects"
-                        ? () => {
-                          setLoading(true);
-                          setTimeout(() => {
-                            router.push("/projects");
-                          }, 150);
-                        }
-                        : item.onClickModal
-                          ? () => setActiveModal(item.onClickModal!)
-                          : undefined
-                    }
-                  >
-                    {renderCardContent(item.id)}
-                  </BentoCard>
-                </motion.div>
-              );
-            })}
+                  {renderCardContent(item.id)}
+                </BentoCard>
+              </motion.div>
+            ))}
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: loading ? 0 : 0.5 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="mt-8 flex flex-row justify-between items-center text-muted text-xs font-medium uppercase tracking-wider gap-4"
-          >
+          <footer className="mt-8 flex flex-row justify-between items-center text-muted text-xs font-medium uppercase tracking-wider opacity-50">
             <p>© 2026 Vighnesh Gaddam</p>
             <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>
+              <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
               <p>Full Stack Developer</p>
             </div>
-          </motion.div>
+          </footer>
         </div>
       </div>
     </main>
