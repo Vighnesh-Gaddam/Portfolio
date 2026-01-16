@@ -95,7 +95,7 @@ npm run dev
 
 ## 📬 Contact
 
-* **Website**: [vighneshgaddam.com](https://vighneshgaddam.com)
+* **Website**: [vighnesh-dev.vercel.app](https://vighnesh-dev.vercel.app)
 * **LinkedIn**: [@vighnesh-gaddam](https://www.linkedin.com/in/vighnesh-gaddam/)
 * **Email**: [vgnshgdm@gmail.com](mailto:vgnshgdm@gmail.com)
 
