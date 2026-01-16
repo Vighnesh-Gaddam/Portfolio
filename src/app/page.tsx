@@ -28,12 +28,12 @@ interface BentoItem {
   hasArrow?: boolean;
   bgImage?: string;
   noPadding?: boolean;
-  onClickModal?: DetailType; 
+  onClickModal?: DetailType;
 }
 
 export default function HomePage() {
-  // --- States ---
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(typeof window !== 'undefined' ? document.readyState !== "complete" : true);
   const [activeModal, setActiveModal] = useState<DetailType | null>(null);
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const [time, setTime] = useState(new Date());
@@ -42,16 +42,13 @@ export default function HomePage() {
   const router = useRouter();
 
   // --- Effects ---
-  
-  // 1. Loading Logic
+
   useEffect(() => {
-    const handleLoad = () => {
-      // Small delay to ensure smooth transition
-      setTimeout(() => setLoading(false), 1000);
-    };
+    const handleLoad = () => setLoading(false);
 
     if (document.readyState === "complete") {
-      handleLoad();
+      const timer = setTimeout(() => setLoading(false), 0);
+      return () => clearTimeout(timer);
     } else {
       window.addEventListener("load", handleLoad);
       return () => window.removeEventListener("load", handleLoad);
@@ -94,14 +91,14 @@ export default function HomePage() {
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20, scale: 0.96 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
-      transition: { 
-        duration: 0.5, 
+      transition: {
+        duration: 0.5,
         ease: [0.22, 1, 0.36, 1] // Framer Motion uses this for cubic-bezier
-      } 
+      }
     }
   };
 
@@ -150,7 +147,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 border-2 border-primary/10 rounded-full" />
                 <div className="absolute inset-0 border-2 border-t-primary rounded-full animate-spin" />
               </div>
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -170,7 +167,7 @@ export default function HomePage() {
 
       {/* 2. Main Site UI */}
       <div className="min-h-screen text-main p-4 pt-8 md:p-6 md:pt-12 md:pb-0 font-sans selection:bg-primary selection:text-primary-fg transition-colors duration-500 overflow-x-hidden flex flex-col items-center">
-        
+
         <AnimatePresence>
           {activeModal && (
             <DetailView
@@ -190,11 +187,11 @@ export default function HomePage() {
           >
             {items.map((item, index) => {
               const isExpanded = activeModal === item.id;
-              
+
               return (
-                <motion.div 
-                  key={item.id} 
-                  variants={itemVariants} 
+                <motion.div
+                  key={item.id}
+                  variants={itemVariants}
                   className={item.colSpan}
                 >
                   <BentoCard
@@ -209,7 +206,12 @@ export default function HomePage() {
                     noPadding={item.noPadding}
                     onClick={
                       item.id === "featured projects"
-                        ? () => router.push("/projects")
+                        ? () => {
+                          setLoading(true);
+                          setTimeout(() => {
+                            router.push("/projects");
+                          }, 150);
+                        }
                         : item.onClickModal
                           ? () => setActiveModal(item.onClickModal!)
                           : undefined
