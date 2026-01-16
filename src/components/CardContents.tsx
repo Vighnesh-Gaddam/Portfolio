@@ -81,7 +81,7 @@ export const IntroContent: React.FC = () => {
           </h1>
         </div>
 
-        {/* Bio Container */ }
+        {/* Bio Container */}
         <div className="block md:max-w-40 md:text-right pb-1">
           <p className="text-[10px] sm:text-xs text-muted font-medium leading-relaxed opacity-80 md:opacity-100">
             {renderBio()}
@@ -191,7 +191,7 @@ export const AboutContent: React.FC = () => {
     // About Text
     const phrase = "Dedicated to <precision>precision</precision> and <automation>automation</automation>.";
     const parts = phrase.split(/(<precision>.*?<\/precision>|<automation>.*?<\/automation>)/g);
-    
+
     return parts.map((part, index) => {
       if (part.startsWith('<precision>')) {
         const text = part.replace(/<\/?precision>/g, '');
@@ -217,7 +217,7 @@ export const AboutContent: React.FC = () => {
     <div className="h-full flex flex-col justify-end relative z-10">
       {/* Background Glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl pointer-events-none"></div>
-      
+
       <div className="space-y-3 sm:space-y-4">
         {/* Icon Box */}
         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card flex items-center justify-center text-main border border-custom shadow-sm">
@@ -244,11 +244,11 @@ export const ExperienceContent: React.FC = () => {
     <div className="mt-auto space-y-2 sm:space-y-4">
       {experiences.map((exp, i) => (
         <React.Fragment key={exp.company}>
-          <div 
+          <div
             className={`flex items-center gap-2.5 sm:gap-4 transition-all duration-300
-              ${i === 0 
-                ? "group" 
-                : "opacity-50 hover:opacity-100" 
+              ${i === 0
+                ? "group"
+                : "opacity-50 hover:opacity-100"
               }`}
           >
             {/* Icon Box */}
@@ -304,7 +304,7 @@ export const ProjectsTriggerContent: React.FC = () => {
     <div className="relative h-full flex flex-col justify-between group/projects overflow-hidden p-1">
       {/* Background Glow */}
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover/projects:bg-primary/25 transition-colors duration-500"></div>
-      
+
       <div className="relative z-10">
         {/* Icon Box */}
         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm mb-4 sm:mb-6 group-hover/projects:border-primary/30 transition-all duration-500">
@@ -327,8 +327,8 @@ export const ProjectsTriggerContent: React.FC = () => {
       <div className="relative z-10 flex items-center justify-start mt-auto">
         <div className="flex -space-x-2">
           {[1, 2, 3].map((i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-custom bg-card-hover flex items-center justify-center text-[10px] font-bold text-muted shadow-sm transition-transform group-hover/projects:translate-y-[-2px]"
               style={{ transitionDelay: `${i * 50}ms` }}
             >
@@ -361,30 +361,29 @@ export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) =>
           Contact Me
         </h3>
       </div>
-      
+
       <div className="w-full space-y-2">
         {/* Email Copy Button */}
-        <button 
+        <button
           onClick={() => copyToClipboard(email, "Email")}
           className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
         >
           <span className="truncate font-medium text-muted group-hover:text-main transition-colors">
             {email}
           </span>
-          <span className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 ${
-            copiedText === "Email" 
-            ? "bg-green-500 text-white" 
-            : "bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg"
-          }`}>
+          <span className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 ${copiedText === "Email"
+              ? "bg-green-500 text-white"
+              : "bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg"
+            }`}>
             {copiedText === "Email" ? "Copied" : "Copy"}
           </span>
         </button>
 
         {/* LinkedIn Link */}
-        <a 
-          href="https://www.linkedin.com/in/vighnesh-gaddam/" 
-          target="_blank" 
-          rel="noreferrer" 
+        <a
+          href="https://www.linkedin.com/in/vighnesh-gaddam/"
+          target="_blank"
+          rel="noreferrer"
           className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
         >
           <span className="truncate font-medium text-muted group-hover:text-main transition-colors">
