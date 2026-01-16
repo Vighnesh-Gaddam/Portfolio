@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍱 vighnesh-portfolio
 
-## Getting Started
+A high-performance, bento-style professional showcase built with **Next.js 16** and **Tailwind CSS v4**. This portfolio focuses on clean architecture, fluid animations, and a sophisticated developer experience.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+* **Next-Gen Bento Grid** – A modular, responsive UI built with Tailwind CSS v4's modern engine.
+* **Interactive 3D Globe** – High-performance location visualization using `cobe` (Canvas-based).
+* **Smooth Animations** – Powered by Framer Motion 12 for layout transitions and modal expansions.
+* **Unified Error Handling** – Custom-designed 404 and Error pages sharing a consistent "System Glitch" UI.
+* **ATS-Ready** – Built with semantic HTML5 and JSON-LD schema for professional search indexing.
+* **Zero-Latency Theming** – Seamless Dark/Light mode switching via `next-themes`.
+
+## 🛠️ Tech Stack
+
+* **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+* **Library**: [React 19](https://react.dev/)
+* **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+* **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
+* **Visuals**: [COBE](https://github.com/shuding/cobe)
+* **Icons**: [Lucide React](https://lucide.dev/)
+* **Language**: [TypeScript](https://www.typescriptlang.org/)
+
+## 📂 Project Structure
+
+```text
+├── public/                  # Static assets (vighnesh1.png, icons)
+├── src/
+│   ├── app/                 # Next.js 16 App Router
+│   │   ├── error.tsx        # Global error boundary
+│   │   ├── layout.tsx       # Root layout (Metadata & Theme Providers)
+│   │   ├── not-found.tsx    # Custom 404 handler
+│   │   ├── page.tsx         # Home page (Bento Grid)
+│   │   ├── robots.ts        # Search engine instructions
+│   │   ├── sitemap.ts       # Dynamic SEO sitemap
+│   │   └── projects/        # /projects route (Timeline & Portfolio)
+│   │       ├── page.tsx     # Project page
+│   ├── components/          # Modular React Components
+│   │   ├── BentoCard.tsx    # Responsive grid card container
+│   │   ├── CardContents.tsx # Content switch-case for bento items
+│   │   ├── DetailView.tsx   # Modal system for card expansion
+│   │   ├── ErrorState.tsx   # Shared UI for 404/Error pages
+│   │   ├── Globe.tsx        # Server-side globe wrapper
+│   │   ├── GlobeClient.tsx  # Client-side 3D Canvas rendering
+│   │   └── ThemeToggle.tsx  # Theme switch logic
+│   └── types/               # TypeScript interfaces
+└── package.json             # Dependencies and scripts
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛣️ Routing Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application utilizes the **Next.js 16 App Router** for optimized delivery:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Home (`/`)**: A modular Bento interface providing a high-level overview of skills and personality.
+* **Showcase (`/projects`)**: A dedicated, vertically scrolling timeline showcasing full-stack and freelance work.
+* **Global States**: Unified design system for missing routes and runtime errors via `ErrorState.tsx`.
 
-## Learn More
+## 🚀 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Node.js 20+**
+* **npm** or **pnpm**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Installation
 
-## Deploy on Vercel
+1. Clone the repository:
+```bash
+git clone https://github.com/Vighnesh-Gaddam/portfolio.git
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+2. Install dependencies:
+```bash
+npm install
+
+```
+
+
+3. Start development server:
+```bash
+npm run dev
+
+```
+
+
+
+## 📈 Performance & SEO
+
+* **SEO Optimized**: Dynamic metadata generation using Next.js `generateMetadata` API.
+* **Accessibility**: ARIA labels, semantic landmark tags, and high-contrast theme support.
+* **Speed**: Optimized images and 60fps canvas animations.
+
+## 📬 Contact
+
+* **Website**: [vighneshgaddam.com](https://vighneshgaddam.com)
+* **LinkedIn**: [@vighnesh-gaddam](https://www.linkedin.com/in/vighnesh-gaddam/)
+* **Email**: [vgnshgdm@gmail.com](mailto:vgnshgdm@gmail.com)
+
+---
+
+Built with 🤍 by [Vighnesh Gaddam](https://github.com/Vighnesh-Gaddam)
+
+---

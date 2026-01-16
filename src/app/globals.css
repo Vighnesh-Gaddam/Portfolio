@@ -1,26 +1,345 @@
 @import "tailwindcss";
 
+/* ============================
+   THEME VARIABLES
+============================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-page: #F5F4F1;
+  --bg-card: rgba(255, 255, 255, 0.65);
+  --bg-card-hover: rgba(255, 255, 255, 0.85);
+  --border-color: rgba(0, 0, 0, 0.05);
+  --primary: #1a1a1a;
+  --primary-fg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-muted: #666666;
+  --text-inverse: #ffffff;
+  --overlay: rgba(245, 244, 241, 0.85);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --bg-page: #080808;
+  --bg-card: rgba(20, 20, 20, 0.6);
+  --bg-card-hover: rgba(30, 30, 30, 0.7);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --primary: #ffffff;
+  --primary-fg: #000000;
+  --text-main: #ededed;
+  --text-muted: #909090;
+  --text-inverse: #000000;
+  --overlay: rgba(8, 8, 8, 0.9);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+
+/* ============================
+   BASE STYLES
+============================ */
+@layer base {
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overscroll-behavior: none;
   }
 }
 
+/* ============================
+   UTILITIES (THIS IS THE KEY)
+============================ */
+@layer utilities {
+
+  /* Backgrounds */
+  .bg-page {
+    background-color: var(--bg-page);
+  }
+
+  .bg-card {
+    background-color: var(--bg-card);
+  }
+
+  .bg-text-main {
+    background-color: var(--text-main);
+  }
+
+  .bg-card-hover {
+    background-color: var(--bg-card-hover);
+  }
+
+  .bg-overlay {
+    background-color: var(--overlay);
+  }
+
+  .bg-page-20 {
+    background-color: rgba(245, 244, 241, 0.2);
+  }
+
+  .dark .bg-page-20 {
+    background-color: rgba(8, 8, 8, 0.2);
+  }
+
+  .bg-text-muted {
+    background-color: var(--text-muted);
+  }
+  .bg-text-main {
+    background-color: var(--text-main);
+  }
+
+
+  /* Text colors */
+  .text-main {
+    color: var(--text-main);
+  }
+
+  .text-page {
+    color: var(--bg-page);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .text-primary {
+    color: var(--primary);
+  }
+
+  .text-primary-fg {
+    color: var(--primary-fg);
+  }
+
+  .text-inverse {
+    color: var(--text-inverse);
+  }
+
+    /* This allows tailwind to use /opacity on your variables */
+  .bg-text-muted\/20 {
+    background-color: rgba(102, 102, 102, 0.2);
+  }
+
+  /* Borders */
+  .border-custom {
+    border-color: var(--border-color);
+  }
+
+  /* Fill / SVG */
+  .fill-primary {
+    fill: var(--primary);
+  }
+
+  .stroke-primary {
+    stroke: var(--primary);
+  }
+
+  /* Hover states */
+  .hover\:bg-card-hover:hover {
+    background-color: var(--bg-card-hover);
+  }
+
+  .hover\:bg-card:hover {
+    background-color: var(--bg-card);
+  }
+
+  .hover\:bg-text-main:hover {
+    background-color: var(--text-main);
+  }
+
+  .hover\:border-text-main-20:hover {
+    border-color: rgba(26, 26, 26, 0.2);
+  }
+
+  .dark .hover\:border-text-main-20:hover {
+    border-color: rgba(237, 237, 237, 0.2);
+  }
+
+  .hover\:text-main:hover {
+    color: var(--text-main);
+  }
+
+  .hover\:text-primary:hover {
+    color: var(--primary);
+  }
+
+  /* Focus states */
+  .focus\:border-custom:focus {
+    border-color: var(--border-color);
+  }
+
+  .focus\:ring-primary:focus {
+    --tw-ring-color: var(--primary);
+  }
+}
+
+
+
+/* @layer utilities {
+  .bg-card-hover {
+    background-color: var(--bg-card);
+  }
+  .hover\:bg-card-hover:hover {
+    background-color: var(--bg-card-hover);
+  }
+} */
+
+
+/* body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.5s ease, color 0.5s ease; */
+/* Prevent overscroll bounce on mobile */
+/* overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+} */
+
+/* Prevent pull-to-refresh on mobile */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overscroll-behavior-y: contain;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mobile-optimized modal scrolling */
+.modal-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.modal-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+ }
+
+@media (max-width: 640px) {
+  .modal-scroll::-webkit-scrollbar {
+    width: 2px;
+  }
+}
+
+/* Custom scrollbar for the entire page */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+  transform: scaleX(1.1);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+}
+
+:root * {
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.dark * {
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.mask-linear-fade {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* Intro card animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+}
+
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 25s linear infinite;
 }
