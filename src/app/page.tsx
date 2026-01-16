@@ -42,7 +42,6 @@ export default function HomePage() {
   const router = useRouter();
 
   // --- Effects ---
-
   useEffect(() => {
     const handleLoad = () => setLoading(false);
 
@@ -63,8 +62,15 @@ export default function HomePage() {
 
   // 3. Scroll Lock Logic
   useEffect(() => {
-    document.body.style.overflow = (activeModal || loading) ? "hidden" : "";
-  }, [activeModal, loading]);
+    if (loading || activeModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [loading, activeModal]);
 
   // --- Helpers ---
   const copyToClipboard = async (text: string, label: string) => {
