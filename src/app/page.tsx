@@ -80,7 +80,7 @@ export default function HomePage() {
       case "contact":
         return (<ContactContent copyToClipboard={copyToClipboard} copiedText={copiedText} />);
       case 'map':
-        return <MapContent time={time} theme={resolvedTheme}/>; 
+        return <MapContent time={time.toLocaleString()} theme={resolvedTheme}/>; 
       default:
         return null;
     }
