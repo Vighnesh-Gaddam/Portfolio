@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, useMemo, memo } from 'react'; 
 import { motion, AnimatePresence } from 'framer-motion'; 
+// Optimized imports: pulling only what is needed to reduce bundle size
 import { 
     ArrowLeft, Github, ExternalLink, Code2, 
-    Mail, Linkedin, Check, Copy 
+    Mail, Linkedin, Check 
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { BentoCard } from '@/components/BentoCard';
@@ -20,7 +21,6 @@ interface Project {
 }
 
 /* ---------------- MEMOIZED COMPONENTS ---------------- */
-// Prevents re-rendering the visual SVG pattern on every scroll/hover
 const ProjectVisual = memo(() => (
     <div className="w-full h-full flex items-center justify-center overflow-hidden relative rounded-lg border border-custom bg-card/30 group-hover:bg-card/50 transition-colors duration-500">
         <div
@@ -47,10 +47,10 @@ const TimelineItem = memo(({
     index: number;
 }) => (
     <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }} // Reduced y-offset for smoother feel
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-10% 0px" }} // Trigger earlier for perceived speed
-        transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }} // Cap the delay
+        viewport={{ once: true, margin: "-5%" }} 
+        transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.2) }} // Snappier timing
         className="relative pl-8 sm:pl-12 py-2 group"
     >
         {!isLast && (
@@ -95,18 +95,21 @@ TimelineItem.displayName = 'TimelineItem';
 
 export default function ProjectsPage() {
     const router = useRouter();
+    // Start with loading true, but we will clear it almost immediately
     const [loading, setLoading] = useState(true); 
     const [copied, setCopied] = useState(false);
     const email = 'vgnshgdm@gmail.com';
 
-    // Instant-mount effect
+    // Optimized mount effect: satisfy React rules and clear loader instantly
     useEffect(() => {
-        // Reduced wait time. 300ms is the sweet spot for "perceived" loading.
-        const timer = setTimeout(() => setLoading(false), 300);
+        const timer = setTimeout(() => {
+            setLoading(false);
+            // Restore scroll in case it was locked by Home Page
+            document.body.style.overflow = "unset";
+        }, 10); 
         return () => clearTimeout(timer);
     }, []);
 
-    // Memoize the data array so it's not recreated on every render
     const projects = useMemo((): Project[] => [
         {
             id: '1',
@@ -158,10 +161,12 @@ export default function ProjectsPage() {
 
     return (
         <main className="relative bg-page min-h-screen">
-            <AnimatePresence>
+            {/* 1. Instant Loader - Fixed Z-index and cleanup */}
+            <AnimatePresence mode="wait">
                 {loading && (
                     <motion.div
                         key="loader"
+                        initial={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-[200] bg-page flex items-center justify-center"
                     >
@@ -170,13 +175,15 @@ export default function ProjectsPage() {
                 )}
             </AnimatePresence>
 
-            <div className={`transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-                <motion.button
+            {/* 2. Content Visibility via CSS for faster painting */}
+            <div className={`transition-opacity duration-300 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+                <button
                     onClick={() => router.back()}
-                    className="fixed top-6 left-6 z-[110] w-12 h-12 flex items-center justify-center rounded-[20px] bg-card border border-custom shadow-sm hover:-translate-y-1 transition-all group"
+                    className="fixed top-6 left-6 z-[110] w-12 h-12 flex items-center justify-center rounded-[20px] bg-card border border-custom shadow-sm hover:-translate-y-1 transition-all group active:scale-95"
+                    aria-label="Go back"
                 >
                     <ArrowLeft size={20} className="text-main group-hover:-translate-x-1 transition-transform" />
-                </motion.button>
+                </button>
 
                 <div className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
                     <header className="mb-24 pl-8 sm:pl-12">
@@ -186,9 +193,15 @@ export default function ProjectsPage() {
                         </p>
                     </header>
 
-                    <div className="relative">
+                    {/* GPU Accelerated Container */}
+                    <div className="relative will-change-transform">
                         {projects.map((project, i) => (
-                            <TimelineItem key={project.id} index={i} project={project} isLast={i === projects.length - 1} />
+                            <TimelineItem 
+                                key={project.id} 
+                                index={i} 
+                                project={project} 
+                                isLast={i === projects.length - 1} 
+                            />
                         ))}
                     </div>
 
