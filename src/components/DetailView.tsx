@@ -427,24 +427,41 @@ export const DetailView: React.FC<DetailViewProps> = ({
                   </div>
 
                   {/* 3. Deployment */}
-                  <div className="md:col-span-2 p-6 md:p-8 rounded-[24px] md:rounded-[32px] bg-neutral-900/50 border border-blue-500/20 relative overflow-hidden">
+                  <div className="md:col-span-2 p-6 md:p-8 rounded-[24px] md:rounded-[32px] bg-card border border-custom relative overflow-hidden transition-all duration-500 hover:border-blue-500/30 group">
+                    {/* The Ping Animation - now themed */}
                     <div className="absolute top-0 right-0 p-6">
                       <div className="w-2 h-2 rounded-full bg-blue-500 animate-ping"></div>
+                      <div className="absolute top-6 right-6 w-2 h-2 rounded-full bg-blue-500"></div>
                     </div>
-                    <h3 className="text-lg md:text-xl font-bold text-blue-400 mb-5 relative z-10 flex items-center gap-2">
-                      Deployment
+
+                    {/* Header */}
+                    <h3 className="text-lg md:text-xl font-bold text-main mb-5 relative z-10 flex items-center gap-2">
+                      <span className="text-blue-500 dark:text-blue-400">Deployment</span>
                     </h3>
+
                     <div className="relative z-10 space-y-5">
                       <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1.5 rounded-xl bg-card text-main text-[11px] font-medium border border-blue-500/30">
+                        <span className="px-3 py-1.5 rounded-xl bg-page text-main text-[11px] font-bold border border-custom group-hover:border-blue-500/20 transition-colors">
                           Git & Version Control
                         </span>
                       </div>
-                      <div className="pt-4 border-t border-blue-500/10">
-                        <span className="text-[9px] uppercase tracking-widest font-bold text-blue-500/80 block mb-2">Learning Path</span>
-                        <p className="text-muted text-[11px] italic">Currently mastering <span className="text-main/80 font-medium font-sans">Docker</span> & <span className="text-main/80 font-medium font-sans">CI/CD</span> to bridge the gap to cloud.⚡</p>
+
+                      {/* Learning Path Section */}
+                      <div className="pt-4 border-t border-custom">
+                        <span className="text-[9px] uppercase tracking-widest font-bold text-blue-500 block mb-2">
+                          Learning Path
+                        </span>
+                        <p className="text-muted text-[11px] italic leading-relaxed">
+                          Currently mastering{" "}
+                          <span className="text-main font-semibold not-italic">Docker</span> &{" "}
+                          <span className="text-main font-semibold not-italic">CI/CD</span>{" "}
+                          to bridge the gap to cloud.⚡
+                        </p>
                       </div>
                     </div>
+
+                    {/* Subtle Background Glow for Light Mode */}
+                    <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-500/10 blur-[50px] rounded-full pointer-events-none" />
                   </div>
 
                   {/* 4. Backend */}
