@@ -73,10 +73,10 @@ export const IntroContent: React.FC = () => {
       {/* Name + Bio */}
       <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-2 sm:gap-4 mt-auto">
         <div className="relative bottom-[-2px] sm:bottom-[-4px]">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-main animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-main animate-fade-in-up" style={{ animationDelay: '1.3s', animationFillMode: 'both' }}>
             Vighnesh
           </h1>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-muted/20 animate-fade-in-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-muted/20 animate-fade-in-up" style={{ animationDelay: '1.5s', animationFillMode: 'both' }}>
             Gaddam.
           </h1>
         </div>
