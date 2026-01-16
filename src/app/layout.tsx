@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     default: "Vighnesh Gaddam | Software Engineer",
     template: "%s | Vighnesh Gaddam"
   },
+  verification: {
+    google: "cIA6t7lrm7bP85h9L0MiaI6I5a3yfqBvbs4De7nFfCs",
+  },
   description: "I build web apps using React, NextJS, NestJS and TypeScript. I'm big on clean code, snappy interfaces, and making sure things don't break when they grow.",
   keywords: [
     "Vighnesh Gaddam", "Full Stack Developer", "React & Next.js Expert", "NestJS Backend Developer", "TypeScript Engineer", "Java and Python Developer", "MongoDB & PostgreSQL", "Prisma ORM", "Auth0 & Clerk Integration", "REST API Development", "Razorpay Integration", "Software Portfolio"
