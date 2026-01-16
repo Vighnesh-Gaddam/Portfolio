@@ -342,19 +342,57 @@ export const ProjectsTriggerContent: React.FC = () => {
 };
 
 // ----- CONTACT -----
-export const ContactContent: React.FC = () => {
+
+interface ContactProps {
+  copyToClipboard: (text: string, label: string) => Promise<void>;
+  copiedText: string | null;
+}
+
+export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) => {
+  const email = "vgnshgdm@gmail.com";
+
   return (
     <div className="flex flex-col justify-between h-full relative z-10 p-4">
       <div className="max-w-[80%]">
         <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm mb-2 sm:mb-4">
           <Mail size={18} className="sm:w-6 sm:h-6" strokeWidth={1.5} />
         </div>
-        <h3 className="text-lg sm:text-2xl md:text-3xl font-semibold text-main mb-1 sm:mb-2 tracking-tight">Contact Me</h3>
+        <h3 className="text-lg sm:text-2xl md:text-3xl font-semibold text-main mb-1 sm:mb-2 tracking-tight">
+          Contact Me
+        </h3>
       </div>
-      <div className="w-full">
-        <a href="https://www.linkedin.com/in/vighnesh-gaddam/" target="_blank" rel="noreferrer" className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]">
-          <span className="truncate font-medium text-muted group-hover:text-main transition-colors">Connect on LinkedIn</span>
-          <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg">Open</span>
+      
+      <div className="w-full space-y-2">
+        {/* Email Copy Button */}
+        <button 
+          onClick={() => copyToClipboard(email, "Email")}
+          className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
+        >
+          <span className="truncate font-medium text-muted group-hover:text-main transition-colors">
+            {email}
+          </span>
+          <span className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 ${
+            copiedText === "Email" 
+            ? "bg-green-500 text-white" 
+            : "bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg"
+          }`}>
+            {copiedText === "Email" ? "Copied" : "Copy"}
+          </span>
+        </button>
+
+        {/* LinkedIn Link */}
+        <a 
+          href="https://www.linkedin.com/in/vighnesh-gaddam/" 
+          target="_blank" 
+          rel="noreferrer" 
+          className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
+        >
+          <span className="truncate font-medium text-muted group-hover:text-main transition-colors">
+            Connect on LinkedIn
+          </span>
+          <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg">
+            Open
+          </span>
         </a>
       </div>
     </div>
