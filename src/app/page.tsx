@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { BentoCard } from "../components/BentoCard";
-import { DetailView } from "../components/DetailView";
+import { DetailView, DetailType } from "../components/DetailView";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes"; // <--- ADD THIS LINE
@@ -22,9 +22,12 @@ import {
 import { MapContent } from "@/components/GlobeClient";
 
 export default function HomePage() {
-  const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [activeModal, setActiveModal] = useState<DetailType | null>(null);
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const [time, setTime] = useState(new Date());
+
+  const [detailType, setDetailType] = useState<DetailType | null>(null);
+  const [layoutId, setLayoutId] = useState<string | null>(null);
 
   const { resolvedTheme } = useTheme();
 
@@ -49,7 +52,16 @@ export default function HomePage() {
     }
   };
 
-  const items = [
+  interface BentoItem {
+    id: string;
+    colSpan: string;
+    hasArrow?: boolean;
+    bgImage?: string;
+    noPadding?: boolean;
+    onClickModal?: DetailType; 
+  }
+
+  const items: BentoItem[] = [
     { id: "intro", colSpan: "col-span-2 sm:col-span-2" },
     { id: "photo", colSpan: "col-span-1", bgImage: "/vighnesh1.png" },
     { id: "socials", colSpan: "col-span-1" },
@@ -80,7 +92,7 @@ export default function HomePage() {
       case "contact":
         return (<ContactContent copyToClipboard={copyToClipboard} copiedText={copiedText} />);
       case 'map':
-        return <MapContent time={time.toLocaleString()} theme={resolvedTheme}/>; 
+        return <MapContent time={time.toLocaleString()} theme={resolvedTheme} />;
       default:
         return null;
     }
@@ -141,19 +153,19 @@ export default function HomePage() {
           })}
         </motion.div>
 
-         {/* Footer */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 0.5, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 flex flex-row justify-between items-center text-muted text-xs font-medium uppercase tracking-wider gap-4"
-          >
-            <p>© 2026 Vighnesh Gaddam</p>
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>
-              <p>Full Stack Developer</p>
-            </div>
-          </motion.div>
+        {/* Footer */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 0.5, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-8 flex flex-row justify-between items-center text-muted text-xs font-medium uppercase tracking-wider gap-4"
+        >
+          <p>© 2026 Vighnesh Gaddam</p>
+          <div className="flex items-center gap-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>
+            <p>Full Stack Developer</p>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

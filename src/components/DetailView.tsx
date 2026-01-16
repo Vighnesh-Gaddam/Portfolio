@@ -13,9 +13,11 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+export type DetailType = 'about' | 'experience' | 'education' | 'stack';
+
 interface DetailViewProps {
   onClose: () => void;
-  type: 'about' | 'experience' | 'education' | 'stack';
+  type: DetailType; // Use the exported type here
   layoutId?: string;
 }
 
@@ -136,7 +138,7 @@ export const DetailView: React.FC<DetailViewProps> = ({
                       <p className="text-main leading-relaxed sm:leading-loose text-base sm:text-lg font-light">
                         I’m a developer who bridges the gap between complex backends and sharp frontends.
                         I spend my time in <strong>React and NestJS</strong>, ensuring data flows correctly from
-                        PostgreSQL to the user's screen. I build tools that work—no fluff, just functional code.
+                        PostgreSQL to the user&apos;s screen. I build tools that work—no fluff, just functional code.
                       </p>
                     </div>
 
