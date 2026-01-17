@@ -1,16 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, memo } from 'react'; 
-import { motion, AnimatePresence } from 'framer-motion'; 
-// Optimized imports: pulling only what is needed to reduce bundle size
-import { 
-    ArrowLeft, Github, ExternalLink, Code2, 
-    Mail, Linkedin, Check 
+import React, { useState, useEffect, useMemo, memo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+    ArrowLeft, Github, ExternalLink, Code2,
+    Mail, Linkedin, Check
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { BentoCard } from '@/components/BentoCard';
 
-/* ---------------- TYPES ---------------- */
 interface Project {
     id: string;
     title: string;
@@ -20,7 +18,6 @@ interface Project {
     repo: string;
 }
 
-/* ---------------- MEMOIZED COMPONENTS ---------------- */
 const ProjectVisual = memo(() => (
     <div className="w-full h-full flex items-center justify-center overflow-hidden relative rounded-lg border border-custom bg-card/30 group-hover:bg-card/50 transition-colors duration-500">
         <div
@@ -46,11 +43,11 @@ const TimelineItem = memo(({
     isLast: boolean;
     index: number;
 }) => (
-    <motion.div 
-        initial={{ opacity: 0, y: 15 }} // Reduced y-offset for smoother feel
+    <motion.div
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-5%" }} 
-        transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.2) }} // Snappier timing
+        viewport={{ once: true, margin: "-5%" }}
+        transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.2) }}
         className="relative pl-8 sm:pl-12 py-2 group"
     >
         {!isLast && (
@@ -95,19 +92,11 @@ TimelineItem.displayName = 'TimelineItem';
 
 export default function ProjectsPage() {
     const router = useRouter();
-    // Start with loading true, but we will clear it almost immediately
-    const [loading, setLoading] = useState(true); 
     const [copied, setCopied] = useState(false);
     const email = 'vgnshgdm@gmail.com';
 
-    // Optimized mount effect: satisfy React rules and clear loader instantly
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-            // Restore scroll in case it was locked by Home Page
-            document.body.style.overflow = "unset";
-        }, 10); 
-        return () => clearTimeout(timer);
+        document.body.style.overflow = "unset";
     }, []);
 
     const projects = useMemo((): Project[] => [
@@ -161,79 +150,61 @@ export default function ProjectsPage() {
 
     return (
         <main className="relative bg-page min-h-screen">
-            {/* 1. Instant Loader - Fixed Z-index and cleanup */}
-            <AnimatePresence mode="wait">
-                {loading && (
-                    <motion.div
-                        key="loader"
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] bg-page flex items-center justify-center"
-                    >
-                        <div className="w-8 h-8 border-2 border-t-main border-main/10 rounded-full animate-spin" />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <button
+                onClick={() => router.back()}
+                className="fixed top-6 left-6 z-[110] w-12 h-12 flex items-center justify-center rounded-[20px] bg-card border border-custom shadow-sm hover:-translate-y-1 transition-all group active:scale-95"
+                aria-label="Go back"
+            >
+                <ArrowLeft size={20} className="text-main group-hover:-translate-x-1 transition-transform" />
+            </button>
 
-            {/* 2. Content Visibility via CSS for faster painting */}
-            <div className={`transition-opacity duration-300 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-                <button
-                    onClick={() => router.back()}
-                    className="fixed top-6 left-6 z-[110] w-12 h-12 flex items-center justify-center rounded-[20px] bg-card border border-custom shadow-sm hover:-translate-y-1 transition-all group active:scale-95"
-                    aria-label="Go back"
-                >
-                    <ArrowLeft size={20} className="text-main group-hover:-translate-x-1 transition-transform" />
-                </button>
+            <div className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
+                <header className="mb-24 pl-8 sm:pl-12">
+                    <h2 className="text-5xl sm:text-7xl font-black tracking-tighter text-main mb-6 leading-none">Projects</h2>
+                    <p className="text-lg text-text-muted max-w-2xl font-medium">
+                        A curated selection of projects showcasing my frontend and <span className="text-main font-semibold">full-stack work.</span>
+                    </p>
+                </header>
 
-                <div className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
-                    <header className="mb-24 pl-8 sm:pl-12">
-                        <h2 className="text-5xl sm:text-7xl font-black tracking-tighter text-main mb-6 leading-none">Projects</h2>
-                        <p className="text-lg text-text-muted max-w-2xl font-medium">
-                            A curated selection of projects showcasing my frontend and <span className="text-main font-semibold">full-stack work.</span>
-                        </p>
-                    </header>
-
-                    {/* GPU Accelerated Container */}
-                    <div className="relative will-change-transform">
-                        {projects.map((project, i) => (
-                            <TimelineItem 
-                                key={project.id} 
-                                index={i} 
-                                project={project} 
-                                isLast={i === projects.length - 1} 
-                            />
-                        ))}
-                    </div>
-
-                    <section className="mt-20 pl-8 sm:pl-12">
-                        <h3 className="text-4xl sm:text-6xl font-black text-main mb-12 tracking-tight">Let’s Connect</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <BentoCard onClick={handleCopyEmail}>
-                                <div className="flex flex-col justify-between h-full p-2">
-                                    <div className="w-10 h-10 rounded-xl bg-card border border-custom flex items-center justify-center text-main">
-                                        {copied ? <Check size={20} /> : <Mail size={20} />}
-                                    </div>
-                                    <div className="mt-4">
-                                        <h4 className="font-bold text-main">{copied ? 'Copied!' : 'Email Me'}</h4>
-                                        <p className="text-xs text-text-muted">{email}</p>
-                                    </div>
-                                </div>
-                            </BentoCard>
-
-                            <BentoCard onClick={() => window.open('https://linkedin.com/in/vighnesh-gaddam/', '_blank')}>
-                                <div className="flex flex-col justify-between h-full p-2">
-                                    <div className="w-10 h-10 rounded-xl bg-card border border-custom flex items-center justify-center text-main">
-                                        <Linkedin size={20} />
-                                    </div>
-                                    <div className="mt-4">
-                                        <h4 className="font-bold text-main">LinkedIn</h4>
-                                        <p className="text-xs text-text-muted">@vighneshgd</p>
-                                    </div>
-                                </div>
-                            </BentoCard>
-                        </div>
-                    </section>
+                <div className="relative will-change-transform">
+                    {projects.map((project, i) => (
+                        <TimelineItem
+                            key={project.id}
+                            index={i}
+                            project={project}
+                            isLast={i === projects.length - 1}
+                        />
+                    ))}
                 </div>
+
+                <section className="mt-20 pl-8 sm:pl-12">
+                    <h3 className="text-4xl sm:text-6xl font-black text-main mb-12 tracking-tight">Let’s Connect</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <BentoCard onClick={handleCopyEmail}>
+                            <div className="flex flex-col justify-between h-full p-2">
+                                <div className="w-10 h-10 rounded-xl bg-card border border-custom flex items-center justify-center text-main">
+                                    {copied ? <Check size={20} /> : <Mail size={20} />}
+                                </div>
+                                <div className="mt-4">
+                                    <h4 className="font-bold text-main">{copied ? 'Copied!' : 'Email Me'}</h4>
+                                    <p className="text-xs text-text-muted">{email}</p>
+                                </div>
+                            </div>
+                        </BentoCard>
+
+                        <BentoCard onClick={() => window.open('https://linkedin.com/in/vighnesh-gaddam/', '_blank')}>
+                            <div className="flex flex-col justify-between h-full p-2">
+                                <div className="w-10 h-10 rounded-xl bg-card border border-custom flex items-center justify-center text-main">
+                                    <Linkedin size={20} />
+                                </div>
+                                <div className="mt-4">
+                                    <h4 className="font-bold text-main">LinkedIn</h4>
+                                    <p className="text-xs text-text-muted">@vighneshgd</p>
+                                </div>
+                            </div>
+                        </BentoCard>
+                    </div>
+                </section>
             </div>
         </main>
     );

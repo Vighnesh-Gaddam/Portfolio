@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vighnesh-dev.vercel.app"),
@@ -40,9 +41,42 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-page text-main antialiased">
-        {/* RAW HTML LOADER: Shows instantly before JS loads */}
+        {/* SAFETY SCRIPT: 
+          This forces the loader to disappear even if the page is a 404.
+          It checks if the document is ready and removes the loader.
+        */}
+        <Script id="loader-safety-switch" strategy="afterInteractive">
+          {`
+            (function() {
+              const hideLoader = () => {
+                const loader = document.getElementById('initial-loader');
+                if (loader) loader.classList.add('loaded');
+              };
+              if (document.readyState === 'complete') hideLoader();
+              else window.addEventListener('load', hideLoader);
+              
+              // Fallback: If it's still there after 3 seconds (like on a slow 404), kill it.
+              setTimeout(hideLoader, 3000);
+            })();
+          `}
+        </Script>
+
+        {/* RAW HTML LOADER */}
         <div id="initial-loader">
-          <div className="spinner-ring"></div>
+          <div className="loader-content">
+            <div className="loader-typography">
+              <span className="loader-name">VIGHNESH GADDAM</span>
+              <span className="loader-year">Portfolio 2026</span>
+            </div>
+
+            {/* This matches your SVG circle design */}
+            <div className="loader-circle-container">
+              <svg className="loader-circle-svg" viewBox="0 0 48 48">
+                <circle className="circle-bg" cx="24" cy="24" r="22" />
+                <circle className="circle-progress" cx="24" cy="24" r="22" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <ThemeProvider
