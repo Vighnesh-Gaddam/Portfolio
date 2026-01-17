@@ -19,7 +19,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Vighnesh Gaddam" }],
   creator: "Vighnesh Gaddam",
-  icons: { icon: "/vighnesh1.png", apple: "/vighnesh1.png" },
+  icons: {
+    icon: [
+      { url: "/vighnesh1.png", sizes: "any" }, 
+      { url: "/vighnesh1.png", sizes: "96x96", type: "image/png" }, 
+      { url: "/vighnesh1.png", sizes: "144x144", type: "image/png" }, 
+    ],
+    apple: [
+      { url: "/vighnesh1.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "Vighnesh Gaddam | Full-Stack Developer",
     description: "Full-stack engineer specializing in React, NestJS, and secure auth integrations.",
