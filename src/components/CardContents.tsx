@@ -20,13 +20,18 @@ import {
 } from 'lucide-react';
 import '../app/globals.css';
 
+
+interface SocialsProps {
+  onOpenConnect?: () => void;
+}
+
 // ----- INTRO CONTENT -----
 export const IntroContent: React.FC = () => {
 
   const renderBio = () => {
     // BIO TEXT:
     const bioText = "Full Stack Developer architecting <full-stack>scalable apps</full-stack> & <devops>production-ready</devops> cloud systems.";
-    
+
     // Updated Regex to look for our new tags
     const parts = bioText.split(/(<full-stack>.*?<\/full-stack>|<devops>.*?<\/devops>)/g);
 
@@ -92,56 +97,51 @@ export const IntroContent: React.FC = () => {
   );
 };
 
+
 // ----- SOCIALS CONTENT -----
-export const SocialsContent: React.FC = () => {
+export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => {
   return (
     <div className="flex flex-col h-full gap-2 sm:gap-3 w-full">
       <div className="flex-1 flex gap-2 sm:gap-3 min-h-0">
-
         {/* GitHub */}
         <a
           href="https://github.com/Vighnesh-Gaddam"
           target="_blank"
           rel="noreferrer"
-          className="group/github relative flex-1 flex items-center justify-center rounded-[16px] sm:rounded-[24px] bg-card-hover border border-custom transition-all duration-300 hover:bg-text-main">
-          <Github
-            className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-300 group-hover/github:text-[var(--text-inverse)]"
-          />
+          className="group/github relative flex-1 flex items-center justify-center rounded-[16px] sm:rounded-[24px] bg-card-hover border border-custom transition-all duration-300 hover:bg-text-main"
+        >
+          <Github className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-300 group-hover/github:text-[var(--text-inverse)]" />
         </a>
 
-        {/* LinkedIn */}
+        {/* linkedin */}
         <a
           href="https://www.linkedin.com/in/vighnesh-gaddam/"
           target="_blank"
           rel="noreferrer"
-          className="relative flex-1 flex items-center justify-center rounded-[16px] sm:rounded-[24px] bg-card-hover border border-custom overflow-hidden transition-all duration-300 hover:bg-[#0077b5]">
-          <Linkedin
-            className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-30 hover:text-white"
-          />
+          className="relative flex-1 flex items-center justify-center rounded-[16px] sm:rounded-[24px] bg-card-hover border border-custom overflow-hidden transition-all duration-300 hover:bg-[#0077b5]"
+        >
+          <Linkedin className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-30 hover:text-white" />
         </a>
       </div>
 
-      {/* Let's Connect CTA */}
-      <a
-        href="https://www.linkedin.com/in/vighnesh-gaddam/"
-        target="_blank"
-        rel="noreferrer"
-        className="group relative h-11 sm:h-14 w-full bg-text-main text-page rounded-[16px] sm:rounded-[24px] flex items-center justify-between px-4 sm:px-6 gap-2 font-bold shadow-md transition-all overflow-hidden hover:shadow-xl active:scale-[0.98]" >
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (onOpenConnect) onOpenConnect();
+        }}
+        className="group relative h-11 sm:h-14 w-full bg-text-main text-page rounded-[16px] sm:rounded-[24px] flex items-center justify-between px-4 sm:px-6 gap-2 font-bold shadow-md transition-all overflow-hidden hover:shadow-xl active:scale-[0.98]"
+      >
         <span className="relative z-10 text-xs sm:text-sm tracking-wide">
           Let&apos;s Connect
         </span>
-        <div
-          className="relative z-10 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-[var(--bg-page)] group-hover:text-[var(--text-main)]">
-          <ArrowUpRight
-            size={14}
-            className="sm:w-4 sm:h-4"
-          />
+        <div className="relative z-10 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-[var(--bg-page)] group-hover:text-[var(--text-main)]">
+          <ArrowUpRight size={14} className="sm:w-4 sm:h-4" />
         </div>
-      </a>
+      </button>
     </div>
   );
 };
-
 
 // ----- TECH ICON -----
 const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({ icon, label, hoverColor }) => (
@@ -372,8 +372,8 @@ export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) =>
             {email}
           </span>
           <span className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 ${copiedText === "Email"
-              ? "bg-green-500 text-white"
-              : "bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg"
+            ? "bg-green-500 text-white"
+            : "bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg"
             }`}>
             {copiedText === "Email" ? "Copied" : "Copy"}
           </span>

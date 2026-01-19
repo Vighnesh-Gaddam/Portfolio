@@ -20,6 +20,7 @@ import {
   ContactContent,
   ProjectsTriggerContent,
 } from "../components/CardContents";
+import { ConnectionHub } from "@/components/ConnectionHub";
 
 // LAZY LOAD the MapContent
 const MapContent = dynamic(() => import("@/components/GlobeClient").then(mod => mod.MapContent), {
@@ -104,7 +105,7 @@ export default function HomePage() {
   const renderCardContent = (id: string) => {
     switch (id) {
       case "intro": return <IntroContent />;
-      case "socials": return <SocialsContent />;
+      case "socials": return <SocialsContent onOpenConnect={() => setIsConnectOpen(true)} />;
       case "stack": return <TechStackContent />;
       case "about": return <AboutContent />;
       case "experience": return <ExperienceContent />;
@@ -116,6 +117,18 @@ export default function HomePage() {
     }
   };
 
+  // Inside HomePage component
+  const [isConnectOpen, setIsConnectOpen] = useState(false);
+
+  useEffect(() => {
+    const handleOpenHub = (e: Event) => {
+      setIsConnectOpen(true);
+    };
+    window.addEventListener('open-connection-hub', handleOpenHub);
+
+    return () => window.removeEventListener('open-connection-hub', handleOpenHub);
+  }, []);
+
   return (
     <main className="relative bg-page min-h-screen">
       <div className="min-h-screen text-main p-4 pt-8 md:p-6 md:pt-12 flex flex-col items-center">
@@ -125,6 +138,15 @@ export default function HomePage() {
               onClose={() => setActiveModal(null)}
               type={activeModal}
               layoutId={activeModal}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {isConnectOpen && (
+            <ConnectionHub
+              layoutId="connect-hub"
+              onClose={() => setIsConnectOpen(false)}
             />
           )}
         </AnimatePresence>
