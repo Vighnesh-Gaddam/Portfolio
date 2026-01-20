@@ -1,117 +1,134 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Github, Linkedin, Mail, FileText, Send, ArrowUpRight, MessageSquare, Code2, Terminal, PenTool } from 'lucide-react';
+import { X, Github, Linkedin, Send, ArrowUpRight, Terminal, FileText, Twitter, Copy, Check } from 'lucide-react';
 
 export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layoutId?: string }) => {
-  
+  const [time, setTime] = useState("");
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
-    const originalStyle = document.body.style.overflow;
+    setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    const timer = setInterval(() => setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })), 60000);
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = originalStyle; };
+    return () => { clearInterval(timer); document.body.style.overflow = 'unset'; };
   }, []);
 
-  const socialLinks = [
-    { name: 'GitHub', icon: <Github />, url: 'https://github.com/Vighnesh-Gaddam', color: 'hover:text-[#2ea44f] hover:bg-[#2ea44f]/5', desc: 'Code' },
-    { name: 'LinkedIn', icon: <Linkedin />, url: 'https://linkedin.com/in/vighnesh-gaddam', color: 'hover:text-[#0a66c2] hover:bg-[#0a66c2]/5', desc: 'Network' },
-    { name: 'Email', icon: <Mail />, url: 'mailto:vgnshgdm@gmail.com', color: 'hover:text-primary hover:bg-primary/5', desc: 'Direct' },
-    { name: 'X / Twitter', icon: <MessageSquare />, url: 'https://x.com/your-handle', color: 'hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/5', desc: 'Social' },
-    { name: 'LeetCode', icon: <Terminal />, url: 'https://leetcode.com/u/vgnshgdm', color: 'hover:text-[#FFA116] hover:bg-[#FFA116]/5', desc: 'DSA' },
-    { name: 'CodeChef', icon: <Code2 />, url: 'https://www.codechef.com/users/your-handle', color: 'hover:text-[#5B4638] hover:bg-[#5B4638]/5', desc: 'Contests' },
-    { name: 'Hashnode', icon: <PenTool />, url: 'https://vighnesh.hashnode.dev', color: 'hover:text-[#2962FF] hover:bg-[#2962FF]/5', desc: 'Blog' },
-    { name: 'Resume', icon: <FileText />, url: '/resume.pdf', color: 'hover:text-amber-500 hover:bg-amber-500/5', desc: 'CV' },
-  ];
+  const copyEmail = () => {
+    navigator.clipboard.writeText('vgnshgdm@gmail.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <>
+      {/* 1. BACKDROP: Fades in/out */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-overlay/90 backdrop-blur-xl"
+        className="fixed inset-0 z-[100] bg-black/20 dark:bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 pointer-events-none">
+        {/* 2. HUB WINDOW: This is the part you were asking about */}
         <motion.div
           layoutId={layoutId}
-          className="relative w-full max-w-5xl bg-card rounded-[32px] md:rounded-[48px] border border-custom shadow-2xl pointer-events-auto flex flex-col md:flex-row max-h-[85vh] md:max-h-[min(800px,90vh)] overflow-hidden"
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0 }}
+          initial={{ scale: 0.9, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.95, opacity: 0, y: 15 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 30,
+            opacity: { duration: 0.2 }
+          }}
+          className="relative w-full max-w-lg bg-card backdrop-blur-2xl border border-custom dark:border-white/5 rounded-[32px] shadow-2xl pointer-events-auto flex flex-col overflow-hidden"
         >
-          {/* Close Button - Sticky/Fixed Position */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 md:top-8 md:right-8 z-50 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/50 backdrop-blur-md border border-custom flex items-center justify-center text-main hover:bg-text-main hover:text-page transition-all active:scale-90"
-          >
-            <X size={20} />
-          </button>
-
-          {/* LEFT: CONTENT AREA */}
-          <div className="w-full md:w-[40%] p-8 md:p-12 bg-card-hover border-b md:border-b-0 md:border-r border-custom flex flex-col">
-            <div className="mt-auto md:mt-0">
-              <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-4">Connection</h4>
-              <h2 className="text-3xl md:text-5xl font-bold text-main leading-tight tracking-tighter mb-6 uppercase">
-                Ready to <br className="hidden md:block" />
-                <span className="text-muted opacity-40 italic font-light">Sync?</span>
-              </h2>
-              <p className="text-muted text-sm md:text-base font-light leading-relaxed mb-8 max-w-[280px] md:max-w-none">
-                Exploring 2026 roles. Let's build something exceptional together.
+          {/* HEADER: CONDENSED METADATA (20%) */}
+          <div className="p-7 pb-6 flex justify-between items-start">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] font-bold tracking-[0.2em] text-muted uppercase">Sync_Active</span>
+              </div>
+              <p className="text-[9px] text-muted opacity-50 font-bold uppercase tracking-widest">
+                {time} • MUMBAI • 2026
               </p>
-              <a 
-                href="mailto:vgnshgdm@gmail.com" 
-                className="inline-flex items-center justify-between w-full p-4 bg-text-main text-page rounded-2xl font-bold text-sm group transition-transform active:scale-[0.98]"
-              >
-                Start Conversation
-                <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </a>
             </div>
+
+            <motion.button
+              onClick={onClose}
+              className="w-10 h-10 rounded-full bg-card-hover border border-custom flex items-center justify-center transition-all active:scale-90"
+              whileHover={{ backgroundColor: "var(--text-main)", color: "var(--bg-page)" }}
+              style={{ color: "var(--text-muted)" }}
+            >
+              <X size={18} color="currentColor" />
+            </motion.button>
           </div>
 
-          {/* RIGHT: SCROLLABLE GRID AREA */}
-          <div className="w-full md:w-[60%] overflow-y-auto p-6 md:p-12 bg-card scrollbar-hide">
-            <h3 className="text-muted text-[10px] font-bold uppercase tracking-widest mb-8">Digital Footprint</h3>
+          {/* CONTENT: BENTO GRID (80%) */}
+          <div className="p-5 pt-0 pb-8 grid grid-cols-4 grid-rows-4 gap-3">
             
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group p-4 md:p-5 rounded-[24px] bg-card-hover/40 border border-custom flex flex-col justify-between h-28 md:h-36 transition-all duration-300 ${link.color}`}
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="p-2 md:p-2.5 bg-card rounded-xl border border-custom group-hover:scale-110 transition-transform">
-                      {React.cloneElement(link.icon as React.ReactElement, { size: 16 })}
-                    </div>
-                    <ArrowUpRight size={14} className="text-muted opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div>
-                    <h4 className="text-main font-bold text-xs md:text-sm">{link.name}</h4>
-                    <p className="text-muted text-[8px] md:text-[9px] uppercase font-bold tracking-wider">{link.desc}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+            {/* CV CARD */}
+            <a
+              href="YOUR_DRIVE_LINK_HERE"
+              target="_blank"
+              className="col-span-3 row-span-2 group relative overflow-hidden rounded-[24px] bg-text-main text-page p-6 flex flex-col justify-between transition-all hover:scale-[1.01] active:scale-[0.98]"
+            >
+              <div className="flex justify-between items-start">
+                <div className="w-10 h-10 rounded-xl bg-page/20 flex items-center justify-center">
+                  <FileText size={20} strokeWidth={1.5} />
+                </div>
+                <div className="w-8 h-8 rounded-full bg-page/10 border border-page/20 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight size={16} />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold uppercase italic tracking-tighter leading-none">Curriculum Vitae</h3>
+                <p className="text-[9px] opacity-60 uppercase tracking-[0.3em] mt-3 font-black">Archive_v2.2026</p>
+              </div>
+            </a>
 
-            {/* BRANDING FOOTER */}
-            <div className="mt-12 pt-8 border-t border-custom flex flex-row items-center justify-between gap-4">
-               <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 rounded-full border border-emerald-500/20">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[9px] font-bold text-emerald-500 uppercase">2026 Active</span>
-               </div>
+            {/* GITHUB */}
+            <a href="https://github.com/Vighnesh-Gaddam" target="_blank" className="col-span-1 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-text-main">
+              <Github size={22} className="text-muted group-hover:text-[var(--text-inverse)] transition-colors" />
+            </a>
 
-               {/* Your requested circle element */}
-               <div className="flex flex-col items-end opacity-40">
-                  <span className="text-[9px] font-bold text-main uppercase tracking-widest">Vighnesh Gaddam</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-bold text-main">2026 Edition</span>
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  </div>
-               </div>
+            {/* LINKEDIN */}
+            <a href="https://www.linkedin.com/in/vighnesh-gaddam/" target="_blank" className="col-span-1 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-[#0077b5]">
+              <Linkedin size={22} className="text-muted group-hover:text-white transition-colors" />
+            </a>
+
+            {/* TWITTER */}
+            <a href="https://x.com/DevVighnesh" target="_blank" className="col-span-2 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:bg-text-main">
+              <Twitter size={20} className="text-muted group-hover:text-page transition-colors" />
+              <span className="text-[10px] font-black uppercase tracking-widest hidden group-hover:block text-page">Twitter</span>
+            </a>
+
+            {/* LEETCODE */}
+            <a href="https://leetcode.com/u/Vighnesh_Gaddam/" target="_blank" className="col-span-2 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#FFA116]/30">
+              <Terminal size={20} className="text-muted group-hover:text-[#FFA116] transition-colors" />
+              <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-[#FFA116]">LeetCode</span>
+            </a>
+
+            {/* EMAIL ACTION */}
+            <div className="col-span-4 row-span-1 group flex items-center justify-between p-2 pl-6 rounded-[24px] bg-card border border-custom hover:border-emerald-500/30 transition-all shadow-sm">
+              <a href="mailto:vgnshgdm@gmail.com" className="flex items-center gap-4 flex-1">
+                <Send size={18} className="text-emerald-500" strokeWidth={2} />
+                <div className="flex flex-col">
+                  <span className="text-main font-bold text-xs uppercase tracking-tight italic leading-none">Drop Inquiry</span>
+                  <span className="text-muted text-[10px] font-bold uppercase truncate mt-1 opacity-70">vgnshgdm@gmail.com</span>
+                </div>
+              </a>
+              <button
+                onClick={copyEmail}
+                className="w-14 h-14 rounded-[20px] bg-card-hover border border-custom flex items-center justify-center text-muted hover:text-main transition-all active:scale-90"
+              >
+                {copied ? <Check size={18} className="text-emerald-500" /> : <Copy size={16} />}
+              </button>
             </div>
           </div>
         </motion.div>

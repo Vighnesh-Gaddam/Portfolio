@@ -111,7 +111,7 @@ export default function HomePage() {
       case "experience": return <ExperienceContent />;
       case "education": return <EducationContent />;
       case "featured projects": return <ProjectsTriggerContent />;
-      case "contact": return (<ContactContent copyToClipboard={copyToClipboard} copiedText={copiedText} />);
+      // case "contact": return (<ContactContent copyToClipboard={copyToClipboard} copiedText={copiedText} />);
       case 'map': return <MapContent time={time.toLocaleString()} theme={resolvedTheme} />;
       default: return null;
     }
