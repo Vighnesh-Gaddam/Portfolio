@@ -133,7 +133,7 @@ export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => {
         className="group relative h-11 sm:h-14 w-full bg-text-main text-page rounded-[16px] sm:rounded-[24px] flex items-center justify-between px-4 sm:px-6 gap-2 font-bold shadow-md transition-all overflow-hidden hover:shadow-xl active:scale-[0.98]"
       >
         <span className="relative z-10 text-xs sm:text-sm tracking-wide">
-          Let&apos;s Connect
+          Contact & Resume
         </span>
         <div className="relative z-10 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-[var(--bg-page)] group-hover:text-[var(--text-main)]">
           <ArrowUpRight size={14} className="sm:w-4 sm:h-4" />
