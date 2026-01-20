@@ -25,23 +25,23 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
     <>
       {/* 1. BACKDROP: Fades in/out */}
       <motion.div
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[100] bg-black/20 dark:bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
       <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 pointer-events-none">
-        {/* 2. HUB WINDOW: This is the part you were asking about */}
+        {/* 2. HUB WINDOW */}
         <motion.div
           layoutId={layoutId}
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 15 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 300, 
+          transition={{
+            type: "spring",
+            stiffness: 300,
             damping: 30,
             opacity: { duration: 0.2 }
           }}
@@ -71,10 +71,10 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
 
           {/* CONTENT: BENTO GRID (80%) */}
           <div className="p-5 pt-0 pb-8 grid grid-cols-4 grid-rows-4 gap-3">
-            
+
             {/* CV CARD */}
             <a
-              href="YOUR_DRIVE_LINK_HERE"
+              href="https://drive.google.com/file/d/1CNFqHM5ViEHpooJ8ahV9FtPYwKWN4Bij/view?usp=sharing"
               target="_blank"
               className="col-span-3 row-span-2 group relative overflow-hidden rounded-[24px] bg-text-main text-page p-6 flex flex-col justify-between transition-all hover:scale-[1.01] active:scale-[0.98]"
             >
@@ -82,13 +82,22 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
                 <div className="w-10 h-10 rounded-xl bg-page/20 flex items-center justify-center">
                   <FileText size={20} strokeWidth={1.5} />
                 </div>
-                <div className="w-8 h-8 rounded-full bg-page/10 border border-page/20 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
-                  <ArrowUpRight size={16} />
+                <div
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 ease-out group-hover:scale-110 group-hover:rotate-45 group-hover:shadow-lg bg-white/50 dark:bg-white/5 border-custom text-muted group-hover:border-primary/20 group-hover:text-primary">
+                  <ArrowUpRight
+                    size={14}
+                    className="sm:w-4 sm:h-4 transition-transform duration-300 group-hover:scale-110"
+                    strokeWidth={2.5}
+                  />
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold uppercase italic tracking-tighter leading-none">Curriculum Vitae</h3>
-                <p className="text-[9px] opacity-60 uppercase tracking-[0.3em] mt-3 font-black">Archive_v2.2026</p>
+                <h3 className="text-xl font-bold uppercase italic tracking-tighter leading-none">
+                  View Resume
+                </h3>
+                <p className="text-[10px] opacity-60 uppercase tracking-widest mt-3 font-bold">
+                  PDF • 2026 Edition
+                </p>
               </div>
             </a>
 
