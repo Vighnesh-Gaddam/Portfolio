@@ -62,16 +62,6 @@ export default function HomePage() {
     return () => { document.body.style.overflow = "unset"; };
   }, [activeModal]);
 
-  const copyToClipboard = async (text: string, label: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedText(label);
-      setTimeout(() => setCopiedText(null), 2000);
-    } catch {
-      alert("Failed to copy.");
-    }
-  };
-
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {

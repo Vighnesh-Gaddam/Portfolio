@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     ArrowLeft, Github, ExternalLink, Code2,
     Mail, Linkedin, Check
