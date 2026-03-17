@@ -74,7 +74,8 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
 
             {/* CV CARD */}
             <a
-              href="https://drive.google.com/file/d/1CNFqHM5ViEHpooJ8ahV9FtPYwKWN4Bij/view?usp=sharing"
+              // href="https://drive.google.com/file/d/1CNFqHM5ViEHpooJ8ahV9FtPYwKWN4Bij/view?usp=sharing" // old
+              href="https://drive.google.com/file/d/1xCRjIGB-hHnn6idYZWaBmDFM3_KIk7qM/view?usp=sharing" // new resume 
               target="_blank"
               className="col-span-3 row-span-2 group relative overflow-hidden rounded-[24px] bg-text-main text-page p-6 flex flex-col justify-between transition-all hover:scale-[1.01] active:scale-[0.98]"
             >
