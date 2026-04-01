@@ -30,11 +30,12 @@ export const DetailView: React.FC<DetailViewProps> = ({
 
   // Escape key
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
     };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
   // Focus management
@@ -48,29 +49,28 @@ export const DetailView: React.FC<DetailViewProps> = ({
     <>
       {/* Backdrop */}
       <motion.div
-        initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-        animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
-        exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed inset-0 z-50 bg-overlay "
+        className="fixed inset-0 z-50 bg-overlay backdrop-blur-md"
         onClick={onClose}
       />
 
-      <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-4 pb-4 sm:pb-2 px-3 sm:px-8 pointer-events-none overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-4 pb-4 sm:pb-2 px-3 sm:px-8 pointer-events-none ">
         <motion.div
           ref={modalRef}
-          layoutId={layoutId}
+          // layoutId={layoutId}
           tabIndex={-1}
           role="dialog"
           aria-modal="true"
           className="relative w-full max-w-5xl my-auto bg-card rounded-[24px] sm:rounded-[40px] border border-custom overflow-hidden flex flex-col shadow-2xl pointer-events-auto ring-1 ring-white/10 max-h-[calc(100vh-8rem)] sm:max-h-[85vh]"
-          initial={{ scale: 0.92, opacity: 0.5 }}
+          initial={{ opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0 }}
+          exit={{ opacity: 0 }}
           transition={{
-            layout: { type: 'spring', stiffness: 200, damping: 28, mass: 0.8 },
-            scale: { duration: 0.5, ease: [0.32, 0.72, 0, 1] },
-            opacity: { duration: 0.3 },
+            scale: { duration: 0.25 },
+            opacity: { duration: 0.2 }
           }}
         >
           {/* Close */}
@@ -97,7 +97,7 @@ export const DetailView: React.FC<DetailViewProps> = ({
             className="flex flex-col w-full h-full overflow-y-auto overscroll-contain modal-scroll"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
 
