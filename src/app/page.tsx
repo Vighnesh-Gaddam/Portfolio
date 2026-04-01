@@ -149,7 +149,7 @@ export default function HomePage() {
             className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 auto-rows-[152px] sm:auto-rows-[190px] md:auto-rows-[237px] grid-flow-row-dense"
           >
             {items.map((item, index) => (
-              <motion.div key={item.id} variants={itemVariants} className={item.colSpan}>
+              <motion.div key={item.id} variants={itemVariants} className={item.colSpan} layout>
                 <BentoCard
                   layoutId={item.id}
                   dataId={item.id}
