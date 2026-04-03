@@ -5,16 +5,18 @@ import { motion } from 'framer-motion';
 import { X, Github, Linkedin, Send, ArrowUpRight, Terminal, FileText, Twitter, Copy, Check } from 'lucide-react';
 
 export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layoutId?: string }) => {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState(() =>
+    new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  );
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-    const timer = setInterval(() => setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })), 60000);
-    document.body.style.overflow = 'hidden';
-    return () => { clearInterval(timer); document.body.style.overflow = 'unset'; };
+    const timer = setInterval(() =>
+      setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })),
+      60000);
+    return () => clearInterval(timer);
   }, []);
-
+  
   const copyEmail = () => {
     navigator.clipboard.writeText('vgnshgdm@gmail.com');
     setCopied(true);
@@ -23,7 +25,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
 
   return (
     <>
-      {/* 1. BACKDROP: Fades in/out */}
+      {/* BACKDROP */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -33,7 +35,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
       />
 
       <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 pointer-events-none">
-        {/* 2. HUB WINDOW */}
+        {/* HUB WINDOW */}
         <motion.div
           layoutId={layoutId}
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -47,7 +49,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
           }}
           className="relative w-full max-w-lg bg-card backdrop-blur-2xl border border-custom dark:border-white/5 rounded-[32px] shadow-2xl pointer-events-auto flex flex-col overflow-hidden"
         >
-          {/* HEADER: CONDENSED METADATA (20%) */}
+          {/* HEADER */}
           <div className="p-7 pb-6 flex justify-between items-start">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -69,13 +71,12 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
             </motion.button>
           </div>
 
-          {/* CONTENT: BENTO GRID (80%) */}
+          {/* BENTO GRID */}
           <div className="p-5 pt-0 pb-8 grid grid-cols-4 grid-rows-4 gap-3">
 
             {/* CV CARD */}
-            <a
-              // href="https://drive.google.com/file/d/1CNFqHM5ViEHpooJ8ahV9FtPYwKWN4Bij/view?usp=sharing" // old
-              href="https://drive.google.com/file/d/1xCRjIGB-hHnn6idYZWaBmDFM3_KIk7qM/view?usp=sharing" // new resume 
+
+            <a href="https://drive.google.com/file/d/1xCRjIGB-hHnn6idYZWaBmDFM3_KIk7qM/view?usp=sharing"
               target="_blank"
               className="col-span-3 row-span-2 group relative overflow-hidden rounded-[24px] bg-text-main text-page p-6 flex flex-col justify-between transition-all hover:scale-[1.01] active:scale-[0.98]"
             >
@@ -83,8 +84,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
                 <div className="w-10 h-10 rounded-xl bg-page/20 flex items-center justify-center">
                   <FileText size={20} strokeWidth={1.5} />
                 </div>
-                <div
-                  className="absolute top-4 right-4 sm:top-6 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 ease-out group-hover:scale-110 group-hover:rotate-45 group-hover:shadow-lg bg-white/50 dark:bg-white/5 border-custom text-muted group-hover:border-primary/20 group-hover:text-primary">
+                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 ease-out group-hover:scale-110 group-hover:rotate-45 group-hover:shadow-lg bg-white/50 dark:bg-white/5 border-custom text-muted group-hover:border-primary/20 group-hover:text-primary">
                   <ArrowUpRight
                     size={14}
                     className="sm:w-4 sm:h-4 transition-transform duration-300 group-hover:scale-110"
@@ -103,28 +103,41 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
             </a>
 
             {/* GITHUB */}
-            <a href="https://github.com/Vighnesh-Gaddam" target="_blank" className="col-span-1 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-text-main">
+
+            <a href="https://github.com/Vighnesh-Gaddam"
+              target="_blank"
+              className="col-span-1 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-text-main"
+            >
               <Github size={22} className="text-muted group-hover:text-[var(--text-inverse)] transition-colors" />
             </a>
 
             {/* LINKEDIN */}
-            <a href="https://www.linkedin.com/in/vighnesh-gaddam/" target="_blank" className="col-span-1 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-[#0077b5]">
+
+            <a href="https://www.linkedin.com/in/vighnesh-gaddam/"
+              target="_blank"
+              className="col-span-1 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-[#0077b5]"
+            >
               <Linkedin size={22} className="text-muted group-hover:text-white transition-colors" />
             </a>
 
             {/* TWITTER */}
-            <a href="https://x.com/DevVighnesh" target="_blank" className="col-span-2 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:bg-text-main">
-              <Twitter size={20} className="text-muted group-hover:text-page transition-colors" />
-              <span className="text-[10px] font-black uppercase tracking-widest hidden group-hover:block text-page">Twitter</span>
+
+            <a href="https://x.com/DevVighnesh" target="_blank" className="col-span-2 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#1DA1F2]/30">
+              <Twitter size={20} className="text-muted group-hover:text-[#1DA1F2] transition-colors" />
+              <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-[#1DA1F2]">Twitter</span>
             </a>
 
             {/* LEETCODE */}
-            <a href="https://leetcode.com/u/Vighnesh_Gaddam/" target="_blank" className="col-span-2 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#FFA116]/30">
+
+            <a href="https://leetcode.com/u/Vighnesh_Gaddam/"
+              target="_blank"
+              className="col-span-2 row-span-1 group rounded-[24px] bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#FFA116]/30"
+            >
               <Terminal size={20} className="text-muted group-hover:text-[#FFA116] transition-colors" />
               <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-[#FFA116]">LeetCode</span>
             </a>
 
-            {/* EMAIL ACTION */}
+            {/* EMAIL */}
             <div className="col-span-4 row-span-1 group flex items-center justify-between p-2 pl-6 rounded-[24px] bg-card border border-custom hover:border-emerald-500/30 transition-all shadow-sm">
               <a href="mailto:vgnshgdm@gmail.com" className="flex items-center gap-4 flex-1">
                 <Send size={18} className="text-emerald-500" strokeWidth={2} />
@@ -140,6 +153,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void, layo
                 {copied ? <Check size={18} className="text-emerald-500" /> : <Copy size={16} />}
               </button>
             </div>
+
           </div>
         </motion.div>
       </div>

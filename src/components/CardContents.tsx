@@ -18,11 +18,15 @@ import {
   FolderOpen,
   Layers
 } from 'lucide-react';
-import "../app/globals.css";
 
 
 interface SocialsProps {
   onOpenConnect?: () => void;
+}
+
+interface ContactProps {
+  copyToClipboard: (text: string, label: string) => Promise<void>;
+  copiedText: string | null;
 }
 
 // ----- INTRO CONTENT -----
@@ -342,12 +346,6 @@ export const ProjectsTriggerContent: React.FC = () => {
 };
 
 // ----- CONTACT -----
-
-interface ContactProps {
-  copyToClipboard: (text: string, label: string) => Promise<void>;
-  copiedText: string | null;
-}
-
 export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) => {
   const email = "vgnshgdm@gmail.com";
 
@@ -363,7 +361,6 @@ export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) =>
       </div>
 
       <div className="w-full space-y-2">
-        {/* Email Copy Button */}
         <button
           onClick={() => copyToClipboard(email, "Email")}
           className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
@@ -379,9 +376,8 @@ export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) =>
           </span>
         </button>
 
-        {/* LinkedIn Link */}
-        <a
-          href="https://www.linkedin.com/in/vighnesh-gaddam/"
+        
+          <a href="https://www.linkedin.com/in/vighnesh-gaddam/"
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
