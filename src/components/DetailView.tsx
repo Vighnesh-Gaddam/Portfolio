@@ -17,14 +17,12 @@ export type DetailType = 'about' | 'experience' | 'education' | 'stack';
 
 interface DetailViewProps {
   onClose: () => void;
-  type: DetailType; // Use the exported type here
-  layoutId?: string;
+  type: DetailType; 
 }
 
 export const DetailView: React.FC<DetailViewProps> = ({
   onClose,
   type,
-  layoutId,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +58,6 @@ export const DetailView: React.FC<DetailViewProps> = ({
       <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-4 pb-4 sm:pb-2 px-3 sm:px-8 pointer-events-none ">
         <motion.div
           ref={modalRef}
-          // layoutId={layoutId}
           tabIndex={-1}
           role="dialog"
           aria-modal="true"
