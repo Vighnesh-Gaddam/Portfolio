@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* ============================
    THEME VARIABLES
@@ -29,8 +30,6 @@
   --overlay: rgba(8, 8, 8, 0.9);
 }
 
-
-
 /* ============================
    BASE STYLES
 ============================ */
@@ -44,313 +43,139 @@
 }
 
 /* ============================
-   UTILITIES (THIS IS THE KEY)
+   UTILITIES
 ============================ */
 @layer utilities {
 
   /* Backgrounds */
-  .bg-page {
-    background-color: var(--bg-page);
-  }
+  .bg-page        { background-color: var(--bg-page); }
+  .bg-card        { background-color: var(--bg-card); }
+  .bg-text-main   { background-color: var(--text-main); }
+  .bg-card-hover  { background-color: var(--bg-card-hover); }
+  .bg-overlay     { background-color: var(--overlay); }
+  .bg-text-muted  { background-color: var(--text-muted); }
 
-  .bg-card {
-    background-color: var(--bg-card);
-  }
+  .bg-page-20 { background-color: rgba(245, 244, 241, 0.2); }
+  .dark .bg-page-20 { background-color: rgba(8, 8, 8, 0.2); }
 
-  .bg-text-main {
-    background-color: var(--text-main);
-  }
+  .bg-text-muted\/20 { background-color: rgba(102, 102, 102, 0.2); }
 
-  .bg-card-hover {
-    background-color: var(--bg-card-hover);
-  }
-
-  .bg-overlay {
-    background-color: var(--overlay);
-  }
-
-  .bg-page-20 {
-    background-color: rgba(245, 244, 241, 0.2);
-  }
-
-  .dark .bg-page-20 {
-    background-color: rgba(8, 8, 8, 0.2);
-  }
-
-  .bg-text-muted {
-    background-color: var(--text-muted);
-  }
-  .bg-text-main {
-    background-color: var(--text-main);
-  }
-
-
-  /* Text colors */
-  .text-main {
-    color: var(--text-main);
-  }
-
-  .text-page {
-    color: var(--bg-page);
-  }
-
-  .text-muted {
-    color: var(--text-muted);
-  }
-
-  .text-primary {
-    color: var(--primary);
-  }
-
-  .text-primary-fg {
-    color: var(--primary-fg);
-  }
-
-  .text-inverse {
-    color: var(--text-inverse);
-  }
-
-    /* This allows tailwind to use /opacity on your variables */
-  .bg-text-muted\/20 {
-    background-color: rgba(102, 102, 102, 0.2);
-  }
+  /* Text */
+  .text-main       { color: var(--text-main); }
+  .text-page       { color: var(--bg-page); }
+  .text-muted      { color: var(--text-muted); }
+  .text-primary    { color: var(--primary); }
+  .text-primary-fg { color: var(--primary-fg); }
+  .text-inverse    { color: var(--text-inverse); }
 
   /* Borders */
-  .border-custom {
-    border-color: var(--border-color);
-  }
+  .border-custom { border-color: var(--border-color); }
 
   /* Fill / SVG */
-  .fill-primary {
-    fill: var(--primary);
-  }
-
-  .stroke-primary {
-    stroke: var(--primary);
-  }
+  .fill-primary   { fill: var(--primary); }
+  .stroke-primary { stroke: var(--primary); }
 
   /* Hover states */
-  .hover\:bg-card-hover:hover {
-    background-color: var(--bg-card-hover);
-  }
+  .hover\:bg-card-hover:hover   { background-color: var(--bg-card-hover); }
+  .hover\:bg-card:hover         { background-color: var(--bg-card); }
+  .hover\:bg-text-main:hover    { background-color: var(--text-main); }
+  .hover\:text-main:hover       { color: var(--text-main); }
+  .hover\:text-primary:hover    { color: var(--primary); }
 
-  .hover\:bg-card:hover {
-    background-color: var(--bg-card);
-  }
-
-  .hover\:bg-text-main:hover {
-    background-color: var(--text-main);
-  }
-
-  .hover\:border-text-main-20:hover {
-    border-color: rgba(26, 26, 26, 0.2);
-  }
-
-  .dark .hover\:border-text-main-20:hover {
-    border-color: rgba(237, 237, 237, 0.2);
-  }
-
-  .hover\:text-main:hover {
-    color: var(--text-main);
-  }
-
-  .hover\:text-primary:hover {
-    color: var(--primary);
-  }
+  .hover\:border-text-main-20:hover       { border-color: rgba(26, 26, 26, 0.2); }
+  .dark .hover\:border-text-main-20:hover { border-color: rgba(237, 237, 237, 0.2); }
 
   /* Focus states */
-  .focus\:border-custom:focus {
-    border-color: var(--border-color);
-  }
-
-  .focus\:ring-primary:focus {
-    --tw-ring-color: var(--primary);
-  }
+  .focus\:border-custom:focus { border-color: var(--border-color); }
+  .focus\:ring-primary:focus  { --tw-ring-color: var(--primary); }
 }
 
-
-
-/* @layer utilities {
-  .bg-card-hover {
-    background-color: var(--bg-card);
-  }
-  .hover\:bg-card-hover:hover {
-    background-color: var(--bg-card-hover);
-  }
-} */
-
-
-/* body {
-  background-color: var(--bg-page);
-  color: var(--text-main);
-  transition: background-color 0.5s ease, color 0.5s ease; */
-/* Prevent overscroll bounce on mobile */
-/* overscroll-behavior: none;
-  -webkit-overflow-scrolling: touch;
-} */
-
-/* Prevent pull-to-refresh on mobile */
+/* ============================
+   GLOBAL LAYOUT
+============================ */
 html,
 body {
   overscroll-behavior-y: contain;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Mobile-optimized modal scrolling */
+/* ============================
+   SCROLLBAR — modal (thin)
+============================ */
 .modal-scroll {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
 }
 
-.modal-scroll::-webkit-scrollbar {
-  width: 4px;
-}
-
-.modal-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.modal-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--border-color);
-  border-radius: 4px;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
- }
+.modal-scroll::-webkit-scrollbar        { width: 4px; }
+.modal-scroll::-webkit-scrollbar-track  { background: transparent; }
+.modal-scroll::-webkit-scrollbar-thumb  { background-color: var(--border-color); border-radius: 4px; }
 
 @media (max-width: 640px) {
-  .modal-scroll::-webkit-scrollbar {
-    width: 2px;
-  }
+  .modal-scroll::-webkit-scrollbar { width: 2px; }
 }
 
-/* Custom scrollbar for the entire page */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ============================
+   SCROLLBAR — hidden
+   FIX 5: duplicate .no-scrollbar removed (was declared twice)
+============================ */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
+/* ============================
+   SCROLLBAR — page (custom)
+============================ */
+::-webkit-scrollbar          { width: 8px; height: 8px; }
+::-webkit-scrollbar-track    { background: transparent; }
+::-webkit-scrollbar-thumb    {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  transition: all 0.3s ease;
   border: 1px solid transparent;
   background-clip: padding-box;
 }
+::-webkit-scrollbar-corner   { background: transparent; }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid transparent;
-  background-clip: padding-box;
-}
+.dark ::-webkit-scrollbar-thumb       { background: rgba(255, 255, 255, 0.3); border: 1px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover       { background: rgba(0, 0, 0, 0.4); }
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.4);
-  transform: scaleX(1.1);
-}
+* { scrollbar-width: thin; }
+:root * { scrollbar-color: rgba(0, 0, 0, 0.2) transparent; }
+.dark * { scrollbar-color: rgba(255, 255, 255, 0.3) transparent; }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-}
-
-:root * {
-  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-}
-
-.dark * {
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-}
-
+/* ============================
+   UTILITIES — misc
+============================ */
 .mask-linear-fade {
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
-/* Intro card animations */
+/* ============================
+   ANIMATIONS
+============================ */
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-in-up { animation: fade-in-up 0.8s ease-out; }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out;
-}
+@keyframes marquee         { 0% { transform: translateX(0); }    100% { transform: translateX(-50%); } }
+@keyframes marquee-reverse { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-reverse {
-  0% {
-    transform: translateX(-50%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 25s linear infinite;
-}
-
-.animate-marquee-reverse {
-  animation: marquee-reverse 25s linear infinite;
-}
-
-/* ... keep all your existing CSS ... */
+.animate-marquee         { animation: marquee 25s linear infinite; }
+.animate-marquee-reverse { animation: marquee-reverse 25s linear infinite; }
 
 /* ============================
-   INITIAL PRE-LOADER STYLES
+   INITIAL PRE-LOADER
 ============================ */
-/* src/app/globals.css */
-
 #initial-loader {
   position: fixed;
   inset: 0;
@@ -367,16 +192,8 @@ html {
   pointer-events: none;
 }
 
-.loader-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.loader-typography {
-  text-align: center;
-  margin-bottom: 48px;
-}
+.loader-content    { display: flex; flex-direction: column; align-items: center; }
+.loader-typography { text-align: center; margin-bottom: 48px; }
 
 .loader-name {
   color: white;
@@ -395,33 +212,21 @@ html {
   display: block;
 }
 
-.loader-circle-container {
-  position: relative;
-  width: 48px;
-  height: 48px;
-}
+.loader-circle-container { position: relative; width: 48px; height: 48px; }
+.loader-circle-svg { transform: rotate(-90deg); }
 
-.loader-circle-svg {
-  transform: rotate(-90deg);
-}
-
-.circle-bg {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.1);
-  stroke-width: 1;
-}
-
+.circle-bg       { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 1; }
 .circle-progress {
   fill: none;
   stroke: white;
   stroke-width: 1.5;
   stroke-dasharray: 138.23;
-  stroke-dashoffset: 60; /* Initial "fake" progress */
+  stroke-dashoffset: 60;
   animation: circle-pulse 2s infinite ease-in-out;
 }
 
 @keyframes circle-pulse {
-  0% { stroke-dashoffset: 138.23; }
-  50% { stroke-dashoffset: 40; }
+  0%   { stroke-dashoffset: 138.23; }
+  50%  { stroke-dashoffset: 40; }
   100% { stroke-dashoffset: 138.23; }
 }

@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
+import withMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
+  pageExtensions: ["ts", "tsx", "mdx"],
   async redirects() {
     return [
       {
@@ -29,4 +31,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const mdxConfig = withMDX();
+
+export default mdxConfig(nextConfig);

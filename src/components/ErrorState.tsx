@@ -28,7 +28,7 @@ export const ErrorState = ({ title, message, showReset, onReset }: ErrorStatePro
         animate={{ opacity: 1, scale: 1 }}
         className="max-w-md w-full relative z-10"
       >
-        <div className="p-8 sm:p-10 rounded-[32px] bg-card border border-custom shadow-2xl text-center">
+        <div className="p-8 sm:p-10 rounded-4xl bg-card border border-custom shadow-2xl text-center">
           <div className="w-20 h-20 bg-primary/5 border border-primary/10 rounded-3xl flex items-center justify-center text-primary mx-auto mb-8">
             <AlertCircle size={40} strokeWidth={1.5} />
           </div>

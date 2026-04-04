@@ -1,9 +1,9 @@
-// cordcontent.tsx
-import React from 'react';
+'use client';
+
+import React, { useCallback } from 'react';
 import {
   Github,
   Linkedin,
-  Mail,
   Terminal,
   Database,
   Code2,
@@ -16,83 +16,67 @@ import {
   Layout,
   Server,
   FolderOpen,
-  Layers
+  Layers,
+  Quote,
 } from 'lucide-react';
-
+import {
+  testimonials,
+  blogPosts,
+  person,
+  socials,
+  experiences,
+  education,
+  projects,
+} from '@/data/siteConfig';
+import { useTheme } from 'next-themes';
 
 interface SocialsProps {
   onOpenConnect?: () => void;
 }
 
-interface ContactProps {
-  copyToClipboard: (text: string, label: string) => Promise<void>;
-  copiedText: string | null;
-}
-
-// ----- INTRO CONTENT -----
+// ─── INTRO ──────────────────────────────────────────────────
 export const IntroContent: React.FC = () => {
-
-  const renderBio = () => {
-    // BIO TEXT:
-    const bioText = "Full Stack Developer architecting <full-stack>scalable apps</full-stack> & <devops>production-ready</devops> cloud systems.";
-
-    // Updated Regex to look for our new tags
-    const parts = bioText.split(/(<full-stack>.*?<\/full-stack>|<devops>.*?<\/devops>)/g);
-
-    return parts.map((part, index) => {
+  const renderBio = useCallback(() => {
+    const parts = person.bio.split(/(<full-stack>.*?<\/full-stack>|<devops>.*?<\/devops>)/g);
+    return parts.map((part, i) => {
       if (part.startsWith('<full-stack>')) {
-        const text = part.replace(/<\/?full-stack>/g, '');
-        return (
-          <span key={index} className="text-main font-semibold decoration-primary/20 decoration-2">
-            {text}
-          </span>
-        );
+        return <span key={i} className="text-main font-semibold">{part.replace(/<\/?full-stack>/g, '')}</span>;
       }
       if (part.startsWith('<devops>')) {
-        const text = part.replace(/<\/?devops>/g, '');
-        return (
-          <span key={index} className="text-main font-semibold pb-0.5">
-            {text}
-          </span>
-        );
+        return <span key={i} className="text-main font-semibold">{part.replace(/<\/?devops>/g, '')}</span>;
       }
       return part;
     });
-  };
+  }, []);
 
   return (
     <div className="relative h-full flex flex-col justify-between">
-      {/* Decorative Background Blobs */}
-      <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-[80px] animate-blob mix-blend-overlay pointer-events-none"></div>
-      <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-500/5 rounded-full blur-[80px] animate-blob mix-blend-overlay pointer-events-none" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
 
-      {/* Status Badge */}
       <div className="relative z-10 flex justify-end">
-        <div className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card border border-custom shadow-sm transition-all hover:border-emerald-500/30 hover:shadow-md cursor-default group">
+        <div className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card border border-custom shadow-sm hover:border-emerald-500/30 cursor-default group transition-all">
           <div className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 items-center justify-center">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60"></span>
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-emerald-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-emerald-500" />
           </div>
           <span className="text-[8px] sm:text-[10px] font-semibold tracking-wider uppercase text-muted group-hover:text-main transition-colors duration-200">
-            AVAILABLE FOR WORK
+            {person.available ? 'AVAILABLE FOR WORK' : 'NOT AVAILABLE'}
           </span>
         </div>
       </div>
 
-      {/* Name + Bio */}
       <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-2 sm:gap-4 mt-auto">
-        <div className="relative bottom-[-2px] sm:bottom-[-4px]">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-main animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-            Vighnesh
+        <div>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-main">
+            {person.firstName}
           </h1>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-muted/20 animate-fade-in-up" style={{ animationDelay: '0.35s', animationFillMode: 'both' }}>
-            Gaddam.
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.85] text-muted/20">
+            {person.lastName}
           </h1>
         </div>
-
-        {/* Bio Container */}
         <div className="block md:max-w-40 md:text-right pb-1">
-          <p className="text-[10px] sm:text-xs text-muted font-medium leading-relaxed opacity-80 md:opacity-100">
+          <p className="text-[10px] sm:text-xs text-muted font-medium leading-relaxed opacity-80">
             {renderBio()}
           </p>
         </div>
@@ -101,200 +85,147 @@ export const IntroContent: React.FC = () => {
   );
 };
 
+// ─── SOCIALS ────────────────────────────────────────────────
+export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => (
+  <div className="flex flex-col h-full gap-2 sm:gap-3 w-full">
+    <div className="flex-1 flex gap-2 sm:gap-3 min-h-0">
 
-// ----- SOCIALS CONTENT -----
-export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => {
-  return (
-    <div className="flex flex-col h-full gap-2 sm:gap-3 w-full">
-      <div className="flex-1 flex gap-2 sm:gap-3 min-h-0">
-        {/* GitHub */}
-        <a
-          href="https://github.com/Vighnesh-Gaddam"
-          target="_blank"
-          rel="noreferrer"
-          className="group/github relative flex-1 flex items-center justify-center rounded-[16px] sm:rounded-[24px] bg-card-hover border border-custom transition-all duration-300 hover:bg-text-main"
-        >
-          <Github className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-300 group-hover/github:text-[var(--text-inverse)]" />
-        </a>
-
-        {/* linkedin */}
-        <a
-          href="https://www.linkedin.com/in/vighnesh-gaddam/"
-          target="_blank"
-          rel="noreferrer"
-          className="relative flex-1 flex items-center justify-center rounded-[16px] sm:rounded-[24px] bg-card-hover border border-custom overflow-hidden transition-all duration-300 hover:bg-[#0077b5]"
-        >
-          <Linkedin className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-30 hover:text-white" />
-        </a>
-      </div>
-
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (onOpenConnect) onOpenConnect();
-        }}
-        className="group relative h-11 sm:h-14 w-full bg-text-main text-page rounded-[16px] sm:rounded-[24px] flex items-center justify-between px-4 sm:px-6 gap-2 font-bold shadow-md transition-all overflow-hidden hover:shadow-xl active:scale-[0.98]"
+      <a href={socials.github}
+        target="_blank"
+        rel="noreferrer"
+        className="group/github flex-1 flex items-center justify-center rounded-2xl sm:rounded-3xl bg-card-hover border border-custom transition-all duration-300 hover:bg-text-main"
       >
-        <span className="relative z-10 text-xs sm:text-sm tracking-wide">
-          Contact & Resume
-        </span>
-        <div className="relative z-10 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-[var(--bg-page)] group-hover:text-[var(--text-main)]">
-          <ArrowUpRight size={14} className="sm:w-4 sm:h-4" />
-        </div>
-      </button>
-    </div>
-  );
-};
+        <Github className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all duration-300 group-hover/github:text-(--text-inverse)" />
+      </a>
 
-// ----- TECH ICON -----
-const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({ icon, label, hoverColor }) => (
-  <div className="group/tech flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card-hover border border-custom/50 shrink-0 shadow-sm cursor-default transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-[var(--hover-color)]" style={{ ['--hover-color' as string]: hoverColor }}>
-    <span className="text-muted transition-colors duration-300 group-hover/tech:text-[var(--hover-color)]">{icon}</span>
-    <span className="text-[10px] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-[var(--hover-color)]">{label}</span>
+      <a href={socials.linkedin}
+        target="_blank"
+        rel="noreferrer"
+        className="flex-1 flex items-center justify-center rounded-2xl sm:rounded-3xl bg-card-hover border border-custom transition-all duration-300 hover:bg-[#0077b5]"
+      >
+        <Linkedin className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-all hover:text-white" />
+      </a>
+    </div>
+    <button
+      onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenConnect?.(); }}
+      className="group h-11 sm:h-14 w-full bg-text-main text-page rounded-2xl sm:rounded-3xl flex items-center justify-between px-4 sm:px-6 font-bold shadow-md transition-all hover:shadow-xl active:scale-[0.98]"
+    >
+      <span className="text-xs tracking-wide">Contact & Resume</span>
+      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-(--bg-page) group-hover:text-(--text-main)">
+        <ArrowUpRight size={14} />
+      </div>
+    </button>
   </div>
 );
 
-// ----- TECH STACK -----
-export const TechStackContent: React.FC = () => {
-  const row1 = [
-    { icon: <Code2 size={14} />, label: "React", hoverColor: "#61DAFB" },
-    { icon: <Cpu size={14} />, label: "Next.js", hoverColor: "#ffffff" },
-    { icon: <Terminal size={14} />, label: "TypeScript", hoverColor: "#3178C6" },
-    { icon: <Layout size={14} />, label: "Tailwind", hoverColor: "#06B6D4" },
-    { icon: <Brain size={14} />, label: "Gemini API", hoverColor: "#8B5CF6" },
-    { icon: <Database size={14} />, label: "PostgreSQL", hoverColor: "#336791" },
-  ];
+// ─── TECH ICON ───────────────────────────────────────────────
+const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({
+  icon, label, hoverColor,
+}) => (
+  <div
+    className="group/tech flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card-hover border border-custom/50 shrink-0 shadow-sm cursor-default transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-(--hover-color)"
+    style={{ ['--hover-color' as string]: hoverColor }}
+  >
+    <span className="text-muted transition-colors duration-300 group-hover/tech:text-(--hover-color)">{icon}</span>
+    <span className="text-[10px] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-(--hover-color)">{label}</span>
+  </div>
+);
 
-  const row2 = [
-    { icon: <Server size={14} />, label: "Node.js", hoverColor: "#68A063" },
-    { icon: <Code2 size={14} />, label: "Java", hoverColor: "#FFD43B" },
-    { icon: <Database size={14} />, label: "MongoDB", hoverColor: "#00ED64" },
-    { icon: <Layout size={14} />, label: "Framer Motion", hoverColor: "#FF0080" },
-    { icon: <Terminal size={14} />, label: "Docker", hoverColor: "#2496ED" },
-    { icon: <Database size={14} />, label: "Prisma", hoverColor: "#DC382D" },
-  ];
+// ─── TECH STACK ──────────────────────────────────────────────
+const techRow1 = [
+  { icon: <Code2 size={14} />, label: 'React', hoverColor: '#61DAFB' },
+  { icon: <Cpu size={14} />, label: 'Next.js', hoverColor: '#ffffff' },
+  { icon: <Terminal size={14} />, label: 'TypeScript', hoverColor: '#3178C6' },
+  { icon: <Layout size={14} />, label: 'Tailwind', hoverColor: '#06B6D4' },
+  { icon: <Brain size={14} />, label: 'Gemini API', hoverColor: '#8B5CF6' },
+  { icon: <Database size={14} />, label: 'PostgreSQL', hoverColor: '#336791' },
+];
 
-  return (
-    <div className="flex flex-col flex-1 justify-center w-full relative overflow-hidden mask-linear-fade py-4">
-      <div className="flex gap-3 overflow-x-hidden overflow-y-visible w-full mb-3 py-1">
-        <div className="flex shrink-0 animate-marquee items-center gap-3">{row1.map((item, i) => <TechIcon key={`r1-${i}`} {...item} />)}</div>
-        <div className="flex shrink-0 animate-marquee items-center gap-3">{row1.map((item, i) => <TechIcon key={`r1-d-${i}`} {...item} />)}</div>
+const techRow2 = [
+  { icon: <Server size={14} />, label: 'Node.js', hoverColor: '#68A063' },
+  { icon: <Code2 size={14} />, label: 'Java', hoverColor: '#FFD43B' },
+  { icon: <Database size={14} />, label: 'MongoDB', hoverColor: '#00ED64' },
+  { icon: <Layout size={14} />, label: 'Framer Motion', hoverColor: '#FF0080' },
+  { icon: <Terminal size={14} />, label: 'Docker', hoverColor: '#2496ED' },
+  { icon: <Database size={14} />, label: 'Prisma', hoverColor: '#DC382D' },
+];
+
+export const TechStackContent: React.FC = () => (
+  <div className="flex flex-col flex-1 justify-center items-center h-full w-full relative overflow-hidden py-4">
+    <div className="flex gap-3 overflow-x-hidden w-full mb-3 py-1">
+      <div className="flex shrink-0 animate-marquee items-center gap-3">
+        {techRow1.map((item, i) => <TechIcon key={`r1-${i}`} {...item} />)}
       </div>
-      <div className="flex gap-3 overflow-x-hidden overflow-y-visible w-full py-1">
-        <div className="flex shrink-0 animate-marquee-reverse items-center gap-3">{row2.map((item, i) => <TechIcon key={`r2-${i}`} {...item} />)}</div>
-        <div className="flex shrink-0 animate-marquee-reverse items-center gap-3">{row2.map((item, i) => <TechIcon key={`r2-d-${i}`} {...item} />)}</div>
-      </div>
-    </div>
-  );
-};
-
-// ----- ABOUT -----
-export const AboutContent: React.FC = () => {
-  const renderPhrase = () => {
-    // About Text
-    const phrase = "Dedicated to <precision>precision</precision> and <automation>automation</automation>.";
-    const parts = phrase.split(/(<precision>.*?<\/precision>|<automation>.*?<\/automation>)/g);
-
-    return parts.map((part, index) => {
-      if (part.startsWith('<precision>')) {
-        const text = part.replace(/<\/?precision>/g, '');
-        return (
-          <span key={index} className="text-muted decoration-1 underline decoration-custom underline-offset-4">
-            {text}
-          </span>
-        );
-      }
-      if (part.startsWith('<automation>')) {
-        const text = part.replace(/<\/?automation>/g, '');
-        return (
-          <span key={index} className="text-muted decoration-1 underline decoration-custom underline-offset-4">
-            {text}
-          </span>
-        );
-      }
-      return part;
-    });
-  };
-
-  return (
-    <div className="h-full flex flex-col justify-end relative z-10">
-      {/* Background Glow */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl pointer-events-none"></div>
-
-      <div className="space-y-3 sm:space-y-4">
-        {/* Icon Box */}
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card flex items-center justify-center text-main border border-custom shadow-sm">
-          <Sparkles size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={1.5} />
-        </div>
-
-        {/* Text Area */}
-        <p className="text-base sm:text-xl md:text-2xl font-medium text-main leading-tight tracking-tight">
-          {renderPhrase()}
-        </p>
+      <div className="flex shrink-0 animate-marquee items-center gap-3">
+        {techRow1.map((item, i) => <TechIcon key={`r1-d-${i}`} {...item} />)}
       </div>
     </div>
-  );
-};
+    <div className="flex gap-3 overflow-x-hidden w-full py-1">
+      <div className="flex shrink-0 animate-marquee-reverse items-center gap-3">
+        {techRow2.map((item, i) => <TechIcon key={`r2-${i}`} {...item} />)}
+      </div>
+      <div className="flex shrink-0 animate-marquee-reverse items-center gap-3">
+        {techRow2.map((item, i) => <TechIcon key={`r2-d-${i}`} {...item} />)}
+      </div>
+    </div>
+  </div>
+);
 
-// ----- EXPERIENCE -----
-export const ExperienceContent: React.FC = () => {
-  const experiences = [
-    { company: 'Open for work', role: 'Full Stack Developer' },
-    { company: 'Techiebears', role: 'Full Stack Developer' },
-  ];
+// ─── ABOUT ───────────────────────────────────────────────────
+export const AboutContent: React.FC = () => (
+  <div className="h-full flex flex-col justify-end relative z-10">
+    <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-primary/10 to-transparent rounded-full blur-2xl pointer-events-none" />
+    <div className="space-y-3 sm:space-y-4">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card flex items-center justify-center text-main border border-custom shadow-sm">
+        <Sparkles size={16} strokeWidth={1.5} />
+      </div>
+      <p className="text-sm sm:text-base md:text-lg font-medium text-main leading-tight tracking-tight">
+        Dedicated to{' '}
+        <span className="text-muted decoration-1 underline decoration-custom underline-offset-4">precision</span>
+        {' '}and{' '}
+        <span className="text-muted decoration-1 underline decoration-custom underline-offset-4">automation</span>.
+      </p>
+    </div>
+  </div>
+);
 
-  return (
-    <div className="mt-auto space-y-2 sm:space-y-4">
-      {experiences.map((exp, i) => (
-        <React.Fragment key={exp.company}>
-          <div
-            className={`flex items-center gap-2.5 sm:gap-4 transition-all duration-300
-              ${i === 0
-                ? "group"
-                : "opacity-50 hover:opacity-100"
-              }`}
-          >
-            {/* Icon Box */}
-            <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main group-hover:border-primary/20 transition-colors shadow-sm shrink-0">
-              <Briefcase size={16} className="sm:w-5 sm:h-5" strokeWidth={1.5} />
-            </div>
-
-            {/* Text Content */}
-            <div>
-              <p className="text-main font-bold text-sm sm:text-base md:text-lg leading-none mb-0.5 sm:mb-1">
-                {exp.company}
-              </p>
-              <p className="text-muted text-[9px] sm:text-[10px] md:text-xs font-semibold uppercase tracking-wide">
-                {exp.role}
-              </p>
-            </div>
+// ─── EXPERIENCE ──────────────────────────────────────────────
+export const ExperienceContent: React.FC = () => (
+  <div className="mt-auto space-y-2 sm:space-y-3">
+    {experiences.slice(0, 2).map((exp, i) => (
+      <React.Fragment key={exp.company}>
+        <div className={`flex items-center gap-2.5 sm:gap-4 transition-all duration-300 ${i === 0 ? 'group' : 'opacity-50 hover:opacity-100'}`}>
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-card border border-custom flex items-center justify-center text-main group-hover:border-primary/20 transition-colors shadow-sm shrink-0">
+            <Briefcase size={15} strokeWidth={1.5} />
           </div>
+          <div className="min-w-0">
+            <p className="text-main font-bold text-xs sm:text-sm leading-none mb-0.5 truncate">{exp.company}</p>
+            <p className="text-muted text-[9px] font-semibold uppercase tracking-wide truncate">{exp.role}</p>
+          </div>
+        </div>
+        {i === 0 && <div className="w-full h-px bg-custom opacity-20" />}
+      </React.Fragment>
+    ))}
+  </div>
+);
 
-          {/* Separator Line: Only shows after the first item */}
-          {i === 0 && <div className="w-full h-px border border-custom"></div>}
-        </React.Fragment>
-      ))}
-    </div>
-  );
-};
-
-// ----- EDUCATION -----
+// ─── EDUCATION ───────────────────────────────────────────────
 export const EducationContent: React.FC = () => {
+  const current = education[0];
   return (
-    <div className="h-full flex flex-col justify-end py-4 relative">
-      <div className="absolute top-0 right-0 p-24 bg-gradient-to-br from-primary/5 to-purple-500/5 blur-[60px] rounded-full pointer-events-none z-0"></div>
+    <div className="h-full flex flex-col justify-end pt-4 relative">
+      <div className="absolute top-0 right-0 p-24 bg-linear-to-br from-primary/5 to-purple-500/5 blur-[60px] rounded-full pointer-events-none z-0" />
       <div className="mt-auto space-y-2 sm:space-y-3 relative z-10">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm">
-          <GraduationCap size={16} className="sm:w-5 sm:h-5" strokeWidth={1.5} />
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm">
+          <GraduationCap size={18} strokeWidth={1.5} />
         </div>
         <div>
-          <h3 className="text-sm sm:text-base md:text-lg font-bold text-main leading-tight mb-0.5 sm:mb-1">
-            Master of <br /> Computer Applications
+          <h3 className="text-sm sm:text-sm font-bold text-main leading-tight mb-0.5 line-clamp-2">
+            {current.degree.join(' ')}
           </h3>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <span className="h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-500"></span>
-            <p className="text-muted text-[10px] sm:text-xs font-medium">Manipal University</p>
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
+            <p className="text-muted text-xs sm:text-xs font-medium truncate">{current.institution}</p>
           </div>
         </div>
       </div>
@@ -302,93 +233,281 @@ export const EducationContent: React.FC = () => {
   );
 };
 
-// ----- PROJECTS -----
-export const ProjectsTriggerContent: React.FC = () => {
-  return (
-    <div className="relative h-full flex flex-col justify-between group/projects overflow-hidden p-1">
-      {/* Background Glow */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover/projects:bg-primary/25 transition-colors duration-500"></div>
-
-      <div className="relative z-10">
-        {/* Icon Box */}
-        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm mb-4 sm:mb-6 group-hover/projects:border-primary/30 transition-all duration-500">
-          <FolderOpen size={20} className="sm:w-6 sm:h-6" strokeWidth={1.5} />
+// ─── PROJECTS ────────────────────────────────────────────────
+export const ProjectsTriggerContent: React.FC = () => (
+  <div className="relative h-full flex flex-col justify-between group/projects overflow-hidden p-1">
+    <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover/projects:bg-primary/25 transition-colors duration-500" />
+    <div className="relative z-10">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm mb-2 group-hover/projects:border-primary/30 transition-all duration-500">
+        <FolderOpen size={16} strokeWidth={1.5} />
+      </div>
+      <h3 className="text-sm sm:text-base font-bold text-main tracking-tight leading-tight">Featured Projects</h3>
+      <p className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-muted mt-1 flex items-center gap-1.5">
+        <Layers size={11} /> View Portfolio
+      </p>
+    </div>
+    <div className="relative z-10 flex -space-x-2 mt-auto">
+      {projects.slice(0, 3).map((p, i) => (
+        <div
+          key={p.id}
+          className="w-6 h-6 rounded-full border-2 border-custom bg-card-hover flex items-center justify-center text-[9px] font-bold text-muted shadow-sm transition-transform group-hover/projects:-translate-y-0.5"
+          style={{ transitionDelay: `${i * 50}ms` }}
+        >
+          {i === 2 ? `+${projects.length - 2}` : ''}
         </div>
+      ))}
+    </div>
+  </div>
+);
 
-        {/* Title */}
-        <h3 className="text-lg sm:text-2xl font-bold text-main tracking-tight leading-tight">
-          Featured Projects
-        </h3>
-
-        {/* Subtitle with Icon */}
-        <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-muted mt-2 flex items-center gap-2">
-          <Layers size={12} />
-          View Portfolio
+// ─── TESTIMONIALS ────────────────────────────────────────────
+export const TestimonialsContent: React.FC = () => {
+  const t = testimonials[0];
+  return (
+    <div className="h-full flex flex-col justify-between relative z-10">
+      <div className="flex items-center gap-1.5">
+        <Quote size={12} className="text-primary/60" strokeWidth={2} />
+        <span className="text-[9px] font-bold uppercase tracking-widest text-muted">Testimonial</span>
+      </div>
+      <div className="flex-1 flex items-center py-2">
+        <p className="text-[11px] sm:text-xs text-main font-medium leading-relaxed line-clamp-3 italic">
+          &quot;{t.text}&quot;
         </p>
       </div>
-
-      {/* Avatar / Project Stack */}
-      <div className="relative z-10 flex items-center justify-start mt-auto">
-        <div className="flex -space-x-2">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-custom bg-card-hover flex items-center justify-center text-[10px] font-bold text-muted shadow-sm transition-transform group-hover/projects:translate-y-[-2px]"
-              style={{ transitionDelay: `${i * 50}ms` }}
-            >
-              {i === 3 ? "+3" : ""}
-            </div>
-          ))}
+      <div className="flex items-center gap-2 pt-2 border-t border-custom">
+        <div className="w-6 h-6 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-[9px] shrink-0">
+          {t.name.charAt(0)}
+        </div>
+        <div className="min-w-0">
+          <p className="text-[10px] font-bold text-main truncate">{t.name}</p>
+          <p className="text-[9px] text-muted uppercase tracking-wider font-semibold truncate">
+            {t.role} · {t.company}
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-// ----- CONTACT -----
-export const ContactContent = ({ copyToClipboard, copiedText }: ContactProps) => {
-  const email = "vgnshgdm@gmail.com";
+// ─── BLOG ────────────────────────────────────────────────────
+export const BlogContent: React.FC = () => {
+  const latest = blogPosts[0];
 
   return (
-    <div className="flex flex-col justify-between h-full relative z-10 p-4">
-      <div className="max-w-[80%]">
-        <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm mb-2 sm:mb-4">
-          <Mail size={18} className="sm:w-6 sm:h-6" strokeWidth={1.5} />
+    <div className="h-full flex flex-col justify-between relative z-10">
+
+      {/* background glow */}
+      <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
+
+      {/* TOP SECTION */}
+      <div className="flex-1 flex flex-col justify-center py-2 relative z-10">
+
+        {/* compact meta row */}
+        <div className="flex items-center justify-between mb-1.5">
+          <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-muted">
+            Latest
+          </p>
+
+          <span className="text-[8px] font-mono text-muted/50 tabular-nums">
+            {String(blogPosts.length).padStart(2, '0')}
+          </span>
         </div>
-        <h3 className="text-lg sm:text-2xl md:text-3xl font-semibold text-main mb-1 sm:mb-2 tracking-tight">
-          Contact Me
+
+        {/* title */}
+        <h3 className="text-xs font-bold text-main tracking-tight leading-snug line-clamp-2 mb-2">
+          {latest.title}
         </h3>
+
+        {/* tags + read time */}
+        <div className="hidden sm:flex items-center gap-1.5">
+          {latest.tags.slice(0, 1).map(tag => (
+            <span
+              key={tag}
+              className="text-[8px] font-bold uppercase tracking-[0.12em] px-1.5 py-0.5 rounded-md bg-card border border-custom text-muted"
+            >
+              {tag}
+            </span>
+          ))}
+
+          <span className="text-[9px] text-muted/50 font-medium">
+            {latest.readTime}
+          </span>
+        </div>
       </div>
 
-      <div className="w-full space-y-2">
-        <button
-          onClick={() => copyToClipboard(email, "Email")}
-          className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
-        >
-          <span className="truncate font-medium text-muted group-hover:text-main transition-colors">
-            {email}
-          </span>
-          <span className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 ${copiedText === "Email"
-            ? "bg-green-500 text-white"
-            : "bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg"
-            }`}>
-            {copiedText === "Email" ? "Copied" : "Copy"}
-          </span>
-        </button>
+      {/* FOOTER */}
+      <div className="shrink-0 flex items-center justify-between pt-2 border-t border-custom/50 relative z-10">
+        <span className="text-[9px] font-semibold uppercase tracking-widest text-muted">
+          View all posts
+        </span>
+        <ArrowUpRight size={11} className="text-muted/50" />
+      </div>
+    </div>
+  );
+};
 
-        
-          <a href="https://www.linkedin.com/in/vighnesh-gaddam/"
+// ─── GITHUB ──────────────────────────────────────────────────
+type Level = 0 | 1 | 2 | 3;
+
+const DISPLAY_WEEKS = 39;
+const CELL = 10;
+const GAP = 2;
+const STEP = CELL + GAP;
+const TOP_OFFSET = 14;
+
+const getLevel = (count: number): Level => {
+  if (count === 0) return 0;
+  if (count <= 2) return 1;
+  if (count <= 5) return 2;
+  return 3;
+};
+
+const generateFallback = (): Level[][] =>
+  Array.from({ length: DISPLAY_WEEKS }, (_, w) =>
+    Array.from({ length: 7 }, (_, d): Level => {
+      const seed = (w * 7 + d + 1) * 17;
+      const r = Math.abs(Math.sin(seed * 9301 + 49297));
+      return r > 0.82 ? 3 : r > 0.65 ? 2 : r > 0.45 ? 1 : 0;
+    })
+  );
+
+const fallbackGrid = generateFallback();
+
+export const GitHubContent: React.FC = () => {
+  const [grid, setGrid] = React.useState<Level[][]>(fallbackGrid);
+  const [total, setTotal] = React.useState<number | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const { resolvedTheme } = useTheme();
+
+  const fillColor: Record<Level, string> = resolvedTheme === 'light'
+    ? {
+      0: 'rgba(0,0,0,0.06)',        // subtle gray on white
+      1: 'rgba(16,185,129,0.25)',    // emerald tint
+      2: 'rgba(16,185,129,0.55)',    // medium emerald
+      3: '#059669',                  // solid darker emerald for contrast
+    }
+    : {
+      0: 'rgba(255,255,255,0.045)', // existing dark mode
+      1: 'rgba(16,185,129,0.20)',
+      2: 'rgba(16,185,129,0.48)',
+      3: '#10b981',
+    };
+
+  const labelColor = resolvedTheme === 'light'
+    ? 'rgba(100,100,100,0.6)'
+    : 'rgba(107,105,101,0.5)';
+
+  React.useEffect(() => {
+    fetch('/api/github')
+      .then(r => r.json())
+      .then(data => {
+        if (data.weeks) {
+          const mapped: Level[][] = data.weeks
+            .slice(-DISPLAY_WEEKS)
+            .map((week: { count: number; date: string }[]) =>
+              week.map(day => getLevel(day.count))
+            );
+          setGrid(mapped);
+          setTotal(data.total ?? null);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const monthPositions = React.useMemo(() => {
+    const now = new Date();
+    const result: { weekIdx: number; name: string }[] = [];
+    let lastMonth = -1;
+    let lastWeekIdx = -999;
+    for (let w = 0; w < DISPLAY_WEEKS; w++) {
+      const date = new Date(now);
+      date.setDate(date.getDate() - (DISPLAY_WEEKS - w) * 7);
+      const month = date.getMonth();
+      if (month !== lastMonth && w - lastWeekIdx >= 3) {
+        result.push({ weekIdx: w, name: date.toLocaleString('en-US', { month: 'short' }) });
+        lastMonth = month;
+        lastWeekIdx = w;
+      }
+    }
+    return result;
+  }, []);
+
+  const svgW = DISPLAY_WEEKS * STEP - GAP;
+  const svgH = TOP_OFFSET + 7 * STEP - GAP;
+
+  return (
+    <div className="h-full flex flex-col gap-2">
+      <div className="flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-1.5">
+          <Github size={11} strokeWidth={1.5} className="text-muted" />
+          <span className="text-[9px] font-bold uppercase tracking-widest text-muted">
+            {loading ? 'Loading…' : total !== null ? `${total} contributions` : 'Activity'}
+          </span>
+        </div>
+        <span className="text-[9px] font-bold uppercase tracking-[.12em] text-emerald-500">
+          Consistent builder
+        </span>
+      </div>
+
+      <div className="flex-1 min-h-0 w-full">
+        <svg width="100%" height="100%" viewBox={`0 0 ${svgW} ${svgH}`} preserveAspectRatio="xMidYMid meet">
+          {monthPositions.map(({ weekIdx, name }) => (
+            <text
+              key={weekIdx}
+              x={weekIdx * STEP}
+              y={10}
+              fontSize="6"
+              fontWeight="700"
+              letterSpacing="0.05em"
+              fill={labelColor}
+              fontFamily="system-ui, sans-serif"
+            >
+              {name.toUpperCase()}
+            </text>
+          ))}
+          {loading
+            ? Array.from({ length: DISPLAY_WEEKS }, (_, w) =>
+              Array.from({ length: 7 }, (_, d) => (
+                <rect
+                  key={`sk-${w}-${d}`}
+                  x={w * STEP} y={TOP_OFFSET + d * STEP}
+                  width={CELL} height={CELL} rx="2"
+                  fill="rgba(255,255,255,0.04)"
+                />
+              ))
+            )
+            : grid.map((week, w) =>
+              week.map((level, d) => (
+                <rect
+                  key={`${w}-${d}`}
+                  x={w * STEP} y={TOP_OFFSET + d * STEP}
+                  width={CELL} height={CELL} rx="2"
+                  fill={fillColor[level]}
+                />
+              ))
+            )
+          }
+        </svg>
+      </div>
+
+      <div className="flex items-center justify-between shrink-0">
+
+        <a href={socials.github}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 sm:py-4 rounded-[14px] sm:rounded-[20px] bg-card hover:bg-card-hover border border-custom transition-all text-xs sm:text-sm group w-full shadow-sm hover:shadow-lg hover:border-primary/20 active:scale-[0.99]"
+          className="text-[9px] font-bold uppercase tracking-widest text-muted hover:text-main transition-colors"
+          onClick={e => e.stopPropagation()}
         >
-          <span className="truncate font-medium text-muted group-hover:text-main transition-colors">
-            Connect on LinkedIn
-          </span>
-          <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md transition-all shrink-0 bg-border/50 text-muted group-hover:bg-primary group-hover:text-primary-fg">
-            Open
-          </span>
+          @Vighnesh-Gaddam
         </a>
+        <div className="flex items-center gap-1">
+          <span className="text-[9px] text-muted/50">Less</span>
+          {([0, 1, 2, 3] as Level[]).map(l => (
+            <div key={l} className="w-1.5 h-1.5 rounded-xs" style={{ background: fillColor[l] }} />
+          ))}
+          <span className="text-[9px] text-muted/50">More</span>
+        </div>
       </div>
     </div>
   );
