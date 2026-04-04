@@ -1,0 +1,273 @@
+---
+title: How I Structure Full Stack Apps with Next.js and Prisma
+description: A practical breakdown of building scalable and maintainable full-stack applications using Next.js, Prisma, and TypeScript.
+date: 2026-04-04
+readTime: 6 min
+tags: [Next.js, Prisma, TypeScript, Full Stack, Backend]
+slug: nextjs-prisma-production-architecture
+---
+When I started building full-stack applications, everything felt simple: frontend, backend, database — and it just worked.
+But as projects grew, things started breaking in unexpected ways.
+Code became harder to manage, API logic got duplicated, and small changes started affecting unrelated parts of the system.
+
+That’s when I realized something important:
+Most full-stack applications don’t fail because of bad ideas, but because of poor structure.
+This shift changed how I build everything.
+
+In this blog, I’ll break down how I structure my Next.js, Prisma, and TypeScript projects for scalable, production-ready applications.
+Specifically, I’ll cover:
+- How I organize my folder structure for scalability  
+- How I separate API, services, and database logic  
+- Why Prisma acts as the core data layer in my architecture  
+- How I keep Next.js projects clean as they grow  
+- The common mistakes I avoid when building full-stack apps   
+
+---
+
+## My Tech Stack
+
+For most of my full-stack projects, I use a consistent stack built around TypeScript and Next.js.
+
+- Frontend + Backend: Next.js (App Router)  
+- Database ORM: Prisma  
+- Database: PostgreSQL or MongoDB depending on the use case  
+- Language: TypeScript  
+- Authentication: Clerk or Auth0  
+- Styling: Tailwind CSS  
+
+Each tool is chosen with a specific purpose in mind, rather than following trends.
+
+---
+## Why I Use This Stack
+
+I prefer this stack because it allows me to build full-stack applications with a balance of speed, structure, and scalability.
+
+### Next.js
+
+Next.js allows me to handle both frontend and backend in a single project.
+
+This reduces complexity and lets me:
+
+- Build UI and APIs in one codebase  
+- Use server-side rendering when needed  
+- Avoid maintaining separate backend services for most projects  
+
+---
+
+### Prisma
+
+Prisma acts as the central data layer in my applications.
+
+It gives me:
+
+- Type-safe database queries  
+- A single source of truth for schema design  
+- Cleaner relationship handling between models  
+
+This makes database logic predictable and easier to maintain.
+
+---
+
+### TypeScript
+
+TypeScript ensures my applications stay reliable as they grow.
+
+It helps me:
+
+- Catch errors early during development  
+- Maintain clear API contracts  
+- Reduce bugs in large codebases  
+
+---
+
+### Authentication (Clerk / Auth0)
+
+Instead of building authentication from scratch, I use tools like Clerk or Auth0.
+
+They handle:
+
+- Authentication flows  
+- Session management  
+- Security best practices  
+
+This allows me to focus on building product features.
+---
+
+## How I Structure My Full-Stack Projects
+
+A clean structure is one of the most important parts of building scalable applications.
+
+Here is the approach I follow for most Next.js projects:
+
+```
+src/
+├── app/
+│   ├── (auth)/
+│   ├── (dashboard)/
+│   ├── api/
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── ui/
+│   └── shared/
+│
+├── features/
+│   ├── auth/
+│   ├── users/
+│   ├── dashboard/
+│   └── jobs/
+│
+├── lib/
+│   ├── prisma/
+│   │   └── client.ts
+│   ├── auth/
+│   └── utils/
+│
+├── services/
+│   ├── auth.service.ts
+│   ├── user.service.ts
+│   └── job.service.ts
+│
+├── hooks/
+│   ├── useAuth.ts
+│   └── useDebounce.ts
+│
+├── types/
+│   ├── api.ts
+│   ├── user.ts
+│   └── job.ts
+│
+└── styles/
+    └── globals.css
+```
+
+---
+
+### Key Principles Behind This Structure
+
+#### 1. Feature-based organization
+
+Instead of grouping code by type only, I also group by feature when needed.
+
+For example:
+- All job-related logic stays together
+- All user-related logic stays together
+
+This makes scaling easier as the app grows.
+
+---
+
+#### 2. Separation of concerns
+
+I avoid mixing responsibilities:
+
+- UI stays in components  
+- Business logic stays in services  
+- Database logic stays in Prisma layer  
+- Utilities stay isolated  
+
+This keeps the codebase predictable.
+
+---
+
+#### 3. Clean API layer
+
+API routes in Next.js are kept thin.
+
+They only:
+
+- Receive requests  
+- Call service functions  
+- Return responses  
+
+All heavy logic stays outside API routes.
+
+---
+
+## Prisma as the Core Data Layer
+
+In my architecture, Prisma is not just an ORM — it acts as the **central data layer** of the entire system.
+
+Instead of allowing database queries to be scattered across API routes or components, I strictly route all database interactions through a dedicated service layer.
+
+This creates a clear separation between request handling, business logic, and data access.
+
+---
+
+### Folder Structure
+```txt
+src/
+├── lib/
+│   └── prisma/
+│       └── client.ts
+│
+├── services/
+│   ├── auth.service.ts
+│   ├── user.service.ts
+│   └── job.service.ts
+```
+
+---
+
+
+### Why this matters
+
+This structure becomes important as the application grows.
+
+- All database logic stays in one controlled layer  
+- Queries become reusable across features  
+- API routes remain thin and focused only on request/response handling  
+- Schema changes don’t affect the entire codebase  
+- Debugging becomes significantly easier  
+
+### Mental model 
+
+I think of the system like this:
+
+- API layer → handles requests  
+- Service layer → handles business logic  
+- Prisma layer → handles data access  
+
+This separation keeps the application predictable and scalable over time.
+
+---
+
+## Authentication and Role Handling
+
+For authentication, I typically use Clerk or Auth0 and integrate it into the service layer.
+
+A common pattern I follow:
+
+- Middleware handles session validation  
+- Services handle role-based access logic  
+- API routes remain minimal  
+
+This keeps security logic consistent across the application.
+
+---
+
+## Common Mistakes I Avoid
+
+Over time, I’ve learned to avoid patterns that make projects harder to scale:
+
+- Mixing database logic inside UI components  
+- Writing business logic directly inside API routes  
+- Duplicating service logic across files  
+- Ignoring folder structure until the project becomes large  
+- Skipping type definitions for API responses  
+
+Avoiding these early makes a huge difference later.
+
+---
+
+## Final Thoughts
+
+Building full-stack applications is not just about choosing the right tools — it’s about designing systems that remain clean and scalable as they grow.
+
+For me, Next.js, Prisma, and TypeScript provide a strong foundation, but the real improvement comes from how the project is structured and maintained.
+
+Once you separate responsibilities clearly — UI, business logic, and data access — the entire system becomes easier to scale, debug, and extend.
+
+This is the mindset I now follow in every project I build — focusing on structure first, features second, and scalability from day one.
+

@@ -6,18 +6,27 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   if (!mounted) return null;
 
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+  const currentTheme = theme === "system" ? resolvedTheme : theme;
+
+  const toggleTheme = () =>
+    setTheme(currentTheme === "dark" ? "light" : "dark");
 
   return (
     <motion.button
-      className="fixed bottom-6 right-6 z-[200] p-4 rounded-full bg-card/80 backdrop-blur-xl border border-custom shadow-2xl text-main hover:bg-card-hover transition-colors ring-1 ring-white/10"
+      className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-card/80 backdrop-blur-xl border border-custom shadow-2xl text-main hover:bg-card-hover transition-colors ring-1 ring-white/10"
       onClick={toggleTheme}
       aria-label="Toggle theme"
       whileTap={{ scale: 0.9 }}
@@ -25,7 +34,7 @@ export function ThemeToggle() {
       animate={{ opacity: 1, y: 0 }}
     >
       <AnimatePresence mode="wait">
-        {theme === "dark" ? (
+        {currentTheme === "dark" ? (
           <motion.span
             key="sun"
             initial={{ rotate: -90, opacity: 0 }}
