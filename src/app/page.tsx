@@ -65,10 +65,10 @@ export default function HomePage() {
   const router = useRouter();
   const { start } = usePageLoading();
 
-  useEffect(() => {
-    const loader = document.getElementById("initial-loader");
-    if (loader) loader.classList.add("loaded");
-  }, []);
+  // useEffect(() => {
+  //   const loader = document.getElementById("initial-loader");
+  //   if (loader) loader.classList.add("loaded");
+  // }, []);
 
   useEffect(() => {
     document.body.style.overflow = activeModal || isConnectOpen ? "hidden" : "unset";
@@ -100,7 +100,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-page">
-      <div className="flex flex-col items-center p-3 sm:p-4 md:p-4 md:pt-7 pt-6 sm:pt-8 pb-8">
+      <div className="flex flex-col p-3 sm:p-4 md:p-4 md:pt-7 pt-6 sm:pt-8 pb-8">
         <AnimatePresence>
           {activeModal && (
             <DetailView onClose={() => setActiveModal(null)} type={activeModal} />
@@ -112,8 +112,8 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
-        <div className="w-full max-w-[90vw] mx-auto">
           {/* <div className="w-full max-w-7xl mx-auto"> */}
+          <div className="w-full max-w-350 mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
             initial="hidden"
