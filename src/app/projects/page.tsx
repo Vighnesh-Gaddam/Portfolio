@@ -42,7 +42,7 @@ const TimelineItem = memo(({ project, isLast, index }: { project: typeof project
           <div className="space-y-6">
             <div className="flex flex-wrap gap-2">
               {project.tags.map(tag => (
-                <span key={tag} className="text-[10px] font-medium text-text-muted px-2 py-1 rounded border border-custom uppercase tracking-wider">
+                <span key={tag} className="text-[0.65rem] font-medium text-text-muted px-2 py-1 rounded border border-custom uppercase tracking-wider">
                   {tag}
                 </span>
               ))}

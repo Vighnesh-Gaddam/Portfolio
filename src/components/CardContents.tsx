@@ -60,7 +60,7 @@ export const IntroContent: React.FC = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-emerald-500" />
           </div>
-          <span className="text-[8px] sm:text-[10px] font-semibold tracking-wider uppercase text-muted group-hover:text-main transition-colors duration-200">
+          <span className="text-[8px] sm:text-[0.65rem] font-semibold tracking-wider uppercase text-muted group-hover:text-main transition-colors duration-200">
             {person.available ? 'AVAILABLE FOR WORK' : 'NOT AVAILABLE'}
           </span>
         </div>
@@ -76,7 +76,7 @@ export const IntroContent: React.FC = () => {
           </h1>
         </div>
         <div className="block md:max-w-40 md:text-right pb-1">
-          <p className="text-[10px] sm:text-xs text-muted font-medium leading-relaxed opacity-80">
+          <p className="text-[0.65rem] sm:text-xs text-muted font-medium leading-relaxed opacity-80">
             {renderBio()}
           </p>
         </div>
@@ -127,7 +127,7 @@ const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: str
     style={{ ['--hover-color' as string]: hoverColor }}
   >
     <span className="text-muted transition-colors duration-300 group-hover/tech:text-(--hover-color)">{icon}</span>
-    <span className="text-[10px] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-(--hover-color)">{label}</span>
+    <span className="text-[0.65rem] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-(--hover-color)">{label}</span>
   </div>
 );
 
@@ -200,7 +200,7 @@ export const ExperienceContent: React.FC = () => (
           </div>
           <div className="min-w-0">
             <p className="text-main font-bold text-xs sm:text-sm leading-none mb-0.5 truncate">{exp.company}</p>
-            <p className="text-muted text-[9px] font-semibold uppercase tracking-wide truncate">{exp.role}</p>
+            <p className="text-muted text-[0.55rem] font-semibold uppercase tracking-wide truncate">{exp.role}</p>
           </div>
         </div>
         {i === 0 && <div className="w-full h-px bg-custom opacity-20" />}
@@ -246,7 +246,7 @@ export const ProjectsTriggerContent: React.FC = () => (
         <FolderOpen size={16} strokeWidth={1.5} />
       </div>
       <h3 className="text-sm sm:text-base font-bold text-main tracking-tight leading-tight">Featured Projects</h3>
-      <p className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-muted mt-1 flex items-center gap-1.5">
+      <p className="text-[0.55rem] sm:text-[0.65rem] font-semibold uppercase tracking-widest text-muted mt-1 flex items-center gap-1.5">
         <Layers size={11} /> View Portfolio
       </p>
     </div>
@@ -254,7 +254,7 @@ export const ProjectsTriggerContent: React.FC = () => (
       {projects.slice(0, 3).map((p, i) => (
         <div
           key={p.id}
-          className="w-6 h-6 rounded-full border-2 border-custom bg-card-hover flex items-center justify-center text-[9px] font-bold text-muted shadow-sm transition-transform group-hover/projects:-translate-y-0.5"
+          className="w-6 h-6 rounded-full border-2 border-custom bg-card-hover flex items-center justify-center text-[0.55rem] font-bold text-muted shadow-sm transition-transform group-hover/projects:-translate-y-0.5"
           style={{ transitionDelay: `${i * 50}ms` }}
         >
           {i === 2 ? `+${projects.length - 2}` : ''}
@@ -271,20 +271,20 @@ export const TestimonialsContent: React.FC = () => {
     <div className="h-full flex flex-col justify-between relative z-10">
       <div className="flex items-center gap-1.5">
         <Quote size={12} className="text-primary/60" strokeWidth={2} />
-        <span className="text-[9px] font-bold uppercase tracking-widest text-muted">Testimonial</span>
+        <span className="text-[0.55rem] font-bold uppercase tracking-widest text-muted">Testimonial</span>
       </div>
       <div className="flex-1 flex items-center py-2">
-        <p className="text-[11px] sm:text-xs text-main font-medium leading-relaxed line-clamp-3 italic">
+        <p className="text-[0.7rem] sm:text-xs text-main font-medium leading-relaxed line-clamp-3 italic">
           &quot;{t.text}&quot;
         </p>
       </div>
       <div className="flex items-center gap-2 pt-2 border-t border-custom">
-        <div className="w-6 h-6 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-[9px] shrink-0">
+        <div className="w-6 h-6 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-[0.55rem] shrink-0">
           {t.name.charAt(0)}
         </div>
         <div className="min-w-0">
-          <p className="text-[10px] font-bold text-main truncate">{t.name}</p>
-          <p className="text-[9px] text-muted uppercase tracking-wider font-semibold truncate">
+          <p className="text-[0.65rem] font-bold text-main truncate">{t.name}</p>
+          <p className="text-[0.55rem] text-muted uppercase tracking-wider font-semibold truncate">
             {t.role} · {t.company}
           </p>
         </div>
@@ -333,7 +333,7 @@ export const BlogContent: React.FC = () => {
             </span>
           ))}
 
-          <span className="text-[9px] text-muted/50 font-medium">
+          <span className="text-[0.55rem] text-muted/50 font-medium">
             {latest.readTime}
           </span>
         </div>
@@ -341,7 +341,7 @@ export const BlogContent: React.FC = () => {
 
       {/* FOOTER */}
       <div className="shrink-0 flex items-center justify-between pt-2 border-t border-custom/50 relative z-10">
-        <span className="text-[9px] font-semibold uppercase tracking-widest text-muted">
+        <span className="text-[0.55rem] font-semibold uppercase tracking-widest text-muted">
           View all posts
         </span>
         <ArrowUpRight size={11} className="text-muted/50" />
@@ -445,11 +445,11 @@ export const GitHubContent: React.FC = () => {
       <div className="flex items-center justify-between shrink-0">
         <div className="flex items-center gap-1.5">
           <Github size={11} strokeWidth={1.5} className="text-muted" />
-          <span className="text-[9px] font-bold uppercase tracking-widest text-muted">
+          <span className="text-[0.55rem] font-bold uppercase tracking-widest text-muted">
             {loading ? 'Loading…' : total !== null ? `${total} contributions` : 'Activity'}
           </span>
         </div>
-        <span className="text-[9px] font-bold uppercase tracking-[.12em] text-emerald-500">
+        <span className="text-[0.55rem] font-bold uppercase tracking-[.12em] text-emerald-500">
           Consistent builder
         </span>
       </div>
@@ -500,17 +500,17 @@ export const GitHubContent: React.FC = () => {
         <a href={socials.github}
           target="_blank"
           rel="noreferrer"
-          className="text-[9px] font-bold uppercase tracking-widest text-muted hover:text-main transition-colors"
+          className="text-[0.55rem] font-bold uppercase tracking-widest text-muted hover:text-main transition-colors"
           onClick={e => e.stopPropagation()}
         >
           @Vighnesh-Gaddam
         </a>
         <div className="flex items-center gap-1">
-          <span className="text-[9px] text-muted/50">Less</span>
+          <span className="text-[0.55rem] text-muted/50">Less</span>
           {([0, 1, 2, 3] as Level[]).map(l => (
             <div key={l} className="w-1.5 h-1.5 rounded-xs" style={{ background: fillColor[l] }} />
           ))}
-          <span className="text-[9px] text-muted/50">More</span>
+          <span className="text-[0.55rem] text-muted/50">More</span>
         </div>
       </div>
     </div>

@@ -121,21 +121,21 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
             {type === 'about' && (
               <div className="flex flex-col md:flex-row min-h-full">
                 <div className="w-full md:w-2/5 p-5 sm:p-7 md:p-10 flex flex-col justify-center bg-card-hover md:border-r border-b md:border-b-0 border-custom">
-                  <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-5 opacity-60 mt-5 sm:mt-0">Profile</h4>
+                  <h4 className="text-[0.65rem] font-bold text-primary uppercase tracking-widest mb-5 opacity-60 mt-5 sm:mt-0">Profile</h4>
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-main mb-4 leading-tight tracking-tight uppercase">
                     Fullstack <br />
                     <span className="text-muted opacity-60">Scalable <br /> Architect</span>
                   </h2>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {['Modular', 'Type-Safe', 'Optimized'].map((tag) => (
-                      <span key={tag} className="px-3 py-1.5 rounded-lg bg-card text-main text-[11px] font-medium border border-custom shadow-sm">{tag}</span>
+                      <span key={tag} className="px-3 py-1.5 rounded-lg bg-card text-main text-[0.7rem] font-medium border border-custom shadow-sm">{tag}</span>
                     ))}
                   </div>
                 </div>
                 <div className="w-full md:w-3/5 p-5 sm:p-7 md:p-10 pb-7 bg-card">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-muted text-[10px] font-bold uppercase tracking-widest mb-3">Bio</h3>
+                      <h3 className="text-muted text-[0.65rem] font-bold uppercase tracking-widest mb-3">Bio</h3>
                       <p className="text-main leading-relaxed text-sm font-light">
                         I&apos;m a developer who bridges the gap between complex backends and sharp frontends.
                         I spend my time in <strong>React and NestJS</strong>, ensuring data flows correctly from
@@ -143,7 +143,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                       </p>
                     </div>
                     <div>
-                      <h3 className="text-muted text-[10px] font-bold uppercase tracking-widest mb-3">The Approach</h3>
+                      <h3 className="text-muted text-[0.65rem] font-bold uppercase tracking-widest mb-3">The Approach</h3>
                       <div className="grid gap-2.5 pb-2">
                         <div className="group flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-card-hover/40 hover:bg-card-hover border border-custom hover:border-blue-500/20 transition-all duration-300">
                           <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/10 flex items-center justify-center text-blue-500 shrink-0 group-hover:scale-105 transition-transform">
@@ -151,7 +151,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                           </div>
                           <div className="flex-1 min-w-0 pt-0.5">
                             <h4 className="text-main font-bold text-xs mb-1">Execution</h4>
-                            <p className="text-muted text-[11px]">Secure auth and payment flows via Clerk and Razorpay — built to be reliable.</p>
+                            <p className="text-muted text-[0.7rem]">Secure auth and payment flows via Clerk and Razorpay — built to be reliable.</p>
                           </div>
                         </div>
                         <div className="group flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-card-hover/40 hover:bg-card-hover border border-custom hover:border-amber-500/20 transition-all duration-300">
@@ -160,7 +160,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                           </div>
                           <div className="flex-1 min-w-0 pt-0.5">
                             <h4 className="text-main font-bold text-xs mb-1">Structure</h4>
-                            <p className="text-muted text-[11px]">Predictable, type-safe architecture using strict TypeScript and Prisma schemas.</p>
+                            <p className="text-muted text-[0.7rem]">Predictable, type-safe architecture using strict TypeScript and Prisma schemas.</p>
                           </div>
                         </div>
                       </div>
@@ -182,8 +182,8 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                     {experiences.map((exp) => (
                       <div key={exp.company} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                         <div className={`flex items-center justify-center w-8 h-8 rounded-full border-4 shadow shrink-0 md:order-1 md:group-odd:-translate-x-6 md:group-even:translate-x-6 z-10 ${exp.current
-                            ? "border-gray-500 bg-text-main text-page shadow-lg"
-                            : "border-card bg-card-hover text-primary border-custom"
+                          ? "border-gray-500 bg-text-main text-page shadow-lg"
+                          : "border-card bg-card-hover text-primary border-custom"
                           }`}>
                           <Building2 size={13} strokeWidth={exp.current ? 2 : 1.5} />
                         </div>
@@ -193,13 +193,13 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                             <h3 className="font-bold text-main text-sm tracking-tight uppercase">
                               {exp.current ? "Available for Hire" : exp.role}
                             </h3>
-                            <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full w-fit whitespace-nowrap ${exp.current ? "text-primary bg-primary/10" : "text-muted bg-card border border-custom"
+                            <span className={`text-[0.55rem] font-bold uppercase px-2 py-0.5 rounded-full w-fit whitespace-nowrap ${exp.current ? "text-primary bg-primary/10" : "text-muted bg-card border border-custom"
                               }`}>{exp.period}</span>
                           </div>
-                          <div className="text-muted font-semibold mb-1.5 text-[11px] sm:text-xs">
+                          <div className="text-muted font-semibold mb-1.5 text-[0.7rem] sm:text-xs">
                             {exp.current ? "Freelance & Full-time" : exp.company}
                           </div>
-                          <p className="text-main/80 text-[11px] leading-relaxed">{exp.description}</p>
+                          <p className="text-main/80 text-[0.7rem] leading-relaxed">{exp.description}</p>
                         </div>
                       </div>
                     ))}
@@ -232,12 +232,12 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                                 <h3 className="text-sm font-bold text-main leading-tight">
                                   {edu.degree.join(' ')}
                                 </h3>
-                                <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full w-fit whitespace-nowrap ${colors.badge} ${edu.status === 'current' ? 'animate-pulse' : ''}`}>
+                                <span className={`text-[0.55rem] font-bold uppercase px-2 py-0.5 rounded-full w-fit whitespace-nowrap ${colors.badge} ${edu.status === 'current' ? 'animate-pulse' : ''}`}>
                                   {edu.grade ? `${edu.grade} • ${edu.period}` : edu.period}
                                 </span>
                               </div>
-                              <p className="text-main font-medium text-[11px] mb-0.5">{edu.institution}</p>
-                              <p className="text-muted text-[10px]">{edu.location}</p>
+                              <p className="text-main font-medium text-[0.7rem] mb-0.5">{edu.institution}</p>
+                              <p className="text-muted text-[0.65rem]">{edu.location}</p>
                             </div>
                           </div>
                         </div>
@@ -270,7 +270,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {['Next.js', 'React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Shadcn'].map(name => (
-                        <span key={name} className="py-1.5 px-2.5 rounded-xl bg-card border border-custom text-muted text-[10px] transition-all duration-300 hover:text-main hover:border-cyan-500/50 hover:scale-105 cursor-default">
+                        <span key={name} className="py-1.5 px-2.5 rounded-xl bg-card border border-custom text-muted text-[0.65rem] transition-all duration-300 hover:text-main hover:border-cyan-500/50 hover:scale-105 cursor-default">
                           {name}
                         </span>
                       ))}
@@ -287,7 +287,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                       {techStack.row1.filter(t => ['PostgreSQL'].includes(t.label)).concat(
                         [{ label: 'MongoDB', hoverColor: '#00ED64' }, { label: 'Prisma', hoverColor: '#DC382D' }, { label: 'Redis', hoverColor: '#DC382D' }]
                       ).map(({ label }) => (
-                        <span key={label} className="px-2 py-1.5 rounded-lg bg-card text-muted text-[10px] border border-custom hover:border-orange-500/50 transition-colors">
+                        <span key={label} className="px-2 py-1.5 rounded-lg bg-card text-muted text-[0.65rem] border border-custom hover:border-orange-500/50 transition-colors">
                           {label}
                         </span>
                       ))}
@@ -302,12 +302,12 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                     </div>
                     <h3 className="text-sm font-bold mb-3 relative z-10 text-blue-500">Deployment</h3>
                     <div className="relative z-10 space-y-3">
-                      <span className="px-2.5 py-1 rounded-lg bg-page text-main text-[11px] font-bold border border-custom inline-block">
+                      <span className="px-2.5 py-1 rounded-lg bg-page text-main text-[0.7rem] font-bold border border-custom inline-block">
                         Git & Version Control
                       </span>
                       <div className="pt-2.5 border-t border-custom">
-                        <span className="text-[9px] uppercase tracking-widest font-bold text-blue-500 block mb-1.5">Learning Path</span>
-                        <p className="text-muted text-[11px] italic leading-relaxed">
+                        <span className="text-[0.55rem] uppercase tracking-widest font-bold text-blue-500 block mb-1.5">Learning Path</span>
+                        <p className="text-muted text-[0.7rem] italic leading-relaxed">
                           Currently mastering <span className="text-main font-semibold not-italic">Docker</span> & <span className="text-main font-semibold not-italic">CI/CD</span> to bridge the gap to cloud. ⚡
                         </p>
                       </div>
@@ -321,12 +321,12 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                       <h3 className="text-base sm:text-lg font-bold text-main">Robust Backend</h3>
                     </div>
-                    <p className="text-muted text-[10px] mb-3.5 leading-relaxed">
+                    <p className="text-muted text-[0.65rem] mb-3.5 leading-relaxed">
                       Developing secure, scalable logic and APIs that power complex business workflows.
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {['NestJS', 'Node.js', 'Express', 'Java', 'Python'].map(name => (
-                        <span key={name} className="py-1.5 px-2.5 rounded-xl bg-card border border-custom text-muted text-[10px] transition-all duration-300 hover:text-main hover:border-emerald-500/50 hover:scale-105 cursor-default">
+                        <span key={name} className="py-1.5 px-2.5 rounded-xl bg-card border border-custom text-muted text-[0.65rem] transition-all duration-300 hover:text-main hover:border-emerald-500/50 hover:scale-105 cursor-default">
                           {name}
                         </span>
                       ))}
@@ -356,7 +356,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                           </div>
                           <div>
                             <p className="text-main font-bold text-xs">{t.name}</p>
-                            <p className="text-muted text-[10px] font-semibold uppercase tracking-wider mt-0.5">{t.role} · {t.company}</p>
+                            <p className="text-muted text-[0.65rem] font-semibold uppercase tracking-wider mt-0.5">{t.role} · {t.company}</p>
                           </div>
                         </div>
                       </div>
@@ -391,12 +391,12 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                           <div className="flex-1 min-w-0">
                             {/* Number + tags row */}
                             <div className="flex items-center gap-2 mb-2">
-                              <span className="text-[9px] font-mono text-muted/50">
+                              <span className="text-[0.55rem] font-mono text-muted/50">
                                 {String(i + 1).padStart(2, '0')}
                               </span>
                               <div className="flex gap-1">
                                 {post.tags.slice(0, 2).map(tag => (
-                                  <span key={tag} className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-card border border-custom text-muted">
+                                  <span key={tag} className="text-[0.55rem] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-card border border-custom text-muted">
                                     {tag}
                                   </span>
                                 ))}
@@ -409,19 +409,19 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                             </h3>
 
                             {/* Description */}
-                            <p className="text-muted text-[11px] leading-relaxed line-clamp-2">
+                            <p className="text-muted text-[0.7rem] leading-relaxed line-clamp-2">
                               {post.description}
                             </p>
 
                             {/* Meta */}
                             <div className="flex items-center gap-3 mt-2.5">
-                              <span className="flex items-center gap-1 text-[9px] text-muted font-medium">
+                              <span className="flex items-center gap-1 text-[0.55rem] text-muted font-medium">
                                 <Calendar size={9} />
                                 {new Date(post.date).toLocaleDateString('en-IN', {
                                   year: 'numeric', month: 'short', day: 'numeric'
                                 })}
                               </span>
-                              <span className="flex items-center gap-1 text-[9px] text-muted font-medium">
+                              <span className="flex items-center gap-1 text-[0.55rem] text-muted font-medium">
                                 <Clock size={9} />
                                 {post.readTime} read
                               </span>

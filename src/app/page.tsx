@@ -110,14 +110,14 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
-        {/* <div className="w-full max-w-[90vw] mx-auto"> */}
-        <div className="w-full max-w-7xl mx-auto">
+        <div className="w-full max-w-[90vw] mx-auto">
+          {/* <div className="w-full max-w-7xl mx-auto"> */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            // className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 auto-rows-[24vh] sm:auto-rows-[26vh] md:auto-rows-[27vh] lg:auto-rows-[28vh]">
-            className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4auto-rows-[152px] sm:auto-rows-[175px] md:auto-rows-[200px] lg:auto-rows-[195px]" >
+            className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 auto-rows-[24vh] sm:auto-rows-[26vh] md:auto-rows-[27vh] lg:auto-rows-[28vh]">
+            {/* className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4auto-rows-[152px] sm:auto-rows-[175px] md:auto-rows-[200px] lg:auto-rows-[195px]" >  */}
             {BENTO_ITEMS.map((item) => (
               <motion.div
                 key={item.id}
@@ -143,15 +143,15 @@ export default function HomePage() {
             ))}
           </motion.div>
 
-          <footer className="mt-5 flex flex-row justify-between items-center text-muted text-[10px] font-medium uppercase tracking-wider opacity-40">
-            <p>© {person.year} {person.name}</p>
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-              <p>{person.role}</p>
-            </div>
-          </footer>
-        </div>
+        <footer className="mt-5 flex flex-row justify-between items-center text-muted text-[0.65rem] font-medium uppercase tracking-wider opacity-40">
+          <p>© {person.year} {person.name}</p>
+          <div className="flex items-center gap-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            <p>{person.role}</p>
+          </div>
+        </footer>
       </div>
-    </main>
+    </div>
+    </main >
   );
 }

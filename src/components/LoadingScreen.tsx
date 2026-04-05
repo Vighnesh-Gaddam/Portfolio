@@ -38,7 +38,7 @@ export const LoadingScreen = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-[10px] uppercase tracking-[0.25em] text-white mt-4 font-medium"
+            className="text-[0.65rem] uppercase tracking-[0.25em] text-white mt-4 font-medium"
           >
             Portfolio 2026
           </motion.p>
@@ -72,7 +72,7 @@ export const LoadingScreen = () => {
             />
           </svg>
 
-          <span className="text-[9px] font-mono text-white/60 tabular-nums">
+          <span className="text-[0.55rem] font-mono text-white/60 tabular-nums">
             {progress}%
           </span>
         </div>

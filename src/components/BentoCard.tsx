@@ -91,7 +91,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
       >
         {title && (
           <h3
-            className={`text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-auto mt-1.5 flex items-center gap-2 ${backgroundImage ? "text-white/70" : "text-muted"
+            className={`text-[8px] sm:text-[0.55rem] font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-auto mt-1.5 flex items-center gap-2 ${backgroundImage ? "text-white/70" : "text-muted"
               } ${noPadding
                 ? "absolute top-4 left-4 sm:top-6 sm:left-6 md:top-7 md:left-7 z-20"
                 : ""
