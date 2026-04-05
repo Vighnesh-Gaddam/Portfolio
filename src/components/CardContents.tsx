@@ -220,8 +220,12 @@ export const EducationContent: React.FC = () => {
           <GraduationCap size={18} strokeWidth={1.5} />
         </div>
         <div>
-          <h3 className="text-sm sm:text-sm font-bold text-main leading-tight mb-0.5 line-clamp-2">
-            {current.degree.join(' ')}
+          <h3 className="text-sm font-bold text-main leading-tight mb-0.5 line-clamp-2">
+            {current.degree.map((line, i) => (
+              <span key={i} className="block">
+                {line}
+              </span>
+            ))}
           </h3>
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
