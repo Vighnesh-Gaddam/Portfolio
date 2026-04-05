@@ -110,7 +110,7 @@ export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => (
       onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenConnect?.(); }}
       className="group h-11 sm:h-14 w-full bg-text-main text-page rounded-2xl sm:rounded-3xl flex items-center justify-between px-4 sm:px-6 font-bold shadow-md transition-all hover:shadow-xl active:scale-[0.98]"
     >
-      <span className="text-xs tracking-wide">Contact & Resume</span>
+      <span className="text-[0.65rem] sm:text-xs tracking-wide">Contact & Resume</span>
       <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-(--bg-page) group-hover:text-(--text-main)">
         <ArrowUpRight size={14} />
       </div>
@@ -174,40 +174,69 @@ export const TechStackContent: React.FC = () => (
 // ─── ABOUT ───────────────────────────────────────────────────
 export const AboutContent: React.FC = () => (
   <div className="h-full flex flex-col justify-end relative z-10">
-    <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-primary/10 to-transparent rounded-full blur-2xl pointer-events-none" />
-    <div className="space-y-3 sm:space-y-4">
-      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card flex items-center justify-center text-main border border-custom shadow-sm">
-        <Sparkles size={16} strokeWidth={1.5} />
+    <div className="mb-1.5 sm:space-y-1 sm:mb-3">
+      <div className="flex items-baseline gap-2">
+        <span className="text-[0.6rem] font-bold text-muted opacity-40 font-mono">01</span>
+        <p className="text-xs font-semibold text-main">Build with precision</p>
       </div>
-      <p className="text-sm sm:text-base md:text-lg font-medium text-main leading-tight tracking-tight">
-        Dedicated to{' '}
-        <span className="text-muted decoration-1 underline decoration-custom underline-offset-4">precision</span>
-        {' '}and{' '}
-        <span className="text-muted decoration-1 underline decoration-custom underline-offset-4">automation</span>.
-      </p>
+      <div className="flex items-baseline gap-2">
+        <span className="text-[0.6rem] font-bold text-muted opacity-40 font-mono">02</span>
+        <p className="text-xs font-semibold text-muted">Ship clean code</p>
+      </div>
+      <div className="flex items-baseline gap-2">
+        <span className="text-[0.6rem] font-bold text-muted opacity-40 font-mono">03</span>
+        <p className="text-xs font-semibold text-muted opacity-50">Scale quietly</p>
+      </div>
     </div>
+    <p className="text-[0.7rem] text-muted leading-relaxed">
+      No fluff — just functional code.
+    </p>
   </div>
 );
 
 // ─── EXPERIENCE ──────────────────────────────────────────────
-export const ExperienceContent: React.FC = () => (
-  <div className="mt-auto space-y-2 sm:space-y-3">
-    {experiences.slice(0, 2).map((exp, i) => (
-      <React.Fragment key={exp.company}>
-        <div className={`flex items-center gap-2.5 sm:gap-4 transition-all duration-300 ${i === 0 ? 'group' : 'opacity-50 hover:opacity-100'}`}>
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-card border border-custom flex items-center justify-center text-main group-hover:border-primary/20 transition-colors shadow-sm shrink-0">
-            <Briefcase size={15} strokeWidth={1.5} />
+
+export const ExperienceContent: React.FC = () => {
+  const previous = experiences.find(e => !e.current);
+
+  return (
+    <div className="h-full flex flex-col justify-end">
+
+      <div className="flex flex-col gap-2 sm:gap-3">
+
+        <div className="flex flex-col gap-0.5">
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+            <p className="text-[11px] sm:text-xs font-bold text-main leading-none">
+              Freelance & Full-time
+            </p>
           </div>
-          <div className="min-w-0">
-            <p className="text-main font-bold text-xs sm:text-sm leading-none mb-0.5 truncate">{exp.company}</p>
-            <p className="text-muted text-[0.55rem] font-semibold uppercase tracking-wide truncate">{exp.role}</p>
-          </div>
+          <p className="text-[8px] sm:text-[9px] font-semibold uppercase tracking-[0.15em] text-muted/50 pl-3.5">
+            Seeking new roles
+          </p>
         </div>
-        {i === 0 && <div className="w-full h-px bg-custom opacity-20" />}
-      </React.Fragment>
-    ))}
-  </div>
-);
+
+        <div className="flex flex-col gap-0.5 opacity-35">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-1.5 h-1.5 rounded-full border border-white/30 shrink-0" />
+            <p className="text-[10px] sm:text-[11px] font-bold text-muted leading-none truncate">
+              {previous?.company}
+            </p>
+            <span className="text-muted/30 text-[8px] shrink-0">·</span>
+            <span className="text-[8px] font-mono text-muted/40 shrink-0 tabular-nums">
+              {previous?.period}
+            </span>
+          </div>
+          <p className="text-[8px] sm:text-[9px] font-semibold uppercase tracking-[0.15em] text-muted/50 pl-3.5 truncate">
+            {previous?.role}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  );
+};
 
 // ─── EDUCATION ───────────────────────────────────────────────
 export const EducationContent: React.FC = () => {
@@ -220,7 +249,7 @@ export const EducationContent: React.FC = () => {
           <GraduationCap size={18} strokeWidth={1.5} />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-main leading-tight mb-0.5 line-clamp-2">
+          <h3 className="text-[10px] sm:text-[11px] md:text-lg font-bold text-main leading-tight mb-0.5">
             {current.degree.map((line, i) => (
               <span key={i} className="block">
                 {line}
@@ -229,7 +258,7 @@ export const EducationContent: React.FC = () => {
           </h3>
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-            <p className="text-muted text-xs sm:text-xs font-medium truncate">{current.institution}</p>
+            <p className="text-muted text-[0.65rem] sm:text-xs font-medium truncate">{current.institution}</p>
           </div>
         </div>
       </div>
@@ -239,18 +268,18 @@ export const EducationContent: React.FC = () => {
 
 // ─── PROJECTS ────────────────────────────────────────────────
 export const ProjectsTriggerContent: React.FC = () => (
-  <div className="relative h-full flex flex-col justify-between group/projects overflow-hidden p-1">
+  <div className="relative h-full flex flex-col justify-end group/projects overflow-hidden p-1">
     <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover/projects:bg-primary/25 transition-colors duration-500" />
     <div className="relative z-10">
       <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm mb-2 group-hover/projects:border-primary/30 transition-all duration-500">
         <FolderOpen size={16} strokeWidth={1.5} />
       </div>
-      <h3 className="text-sm sm:text-base font-bold text-main tracking-tight leading-tight">Featured Projects</h3>
-      <p className="text-[0.55rem] sm:text-[0.65rem] font-semibold uppercase tracking-widest text-muted mt-1 flex items-center gap-1.5">
+      <h3 className="text-xs sm:text-base font-bold text-main tracking-tight leading-tight">Featured Projects</h3>
+      <p className="text-[0.45rem] sm:text-[0.65rem] font-semibold uppercase tracking-widest text-muted mt-1 flex items-center gap-1.5">
         <Layers size={11} /> View Portfolio
       </p>
     </div>
-    <div className="relative z-10 flex -space-x-2 mt-auto">
+    <div className="relative z-10 flex -space-x-2">
       {projects.slice(0, 3).map((p, i) => (
         <div
           key={p.id}
@@ -274,7 +303,7 @@ export const TestimonialsContent: React.FC = () => {
         <span className="text-[0.55rem] font-bold uppercase tracking-widest text-muted">Testimonial</span>
       </div>
       <div className="flex-1 flex items-center py-2">
-        <p className="text-[0.7rem] sm:text-xs text-main font-medium leading-relaxed line-clamp-3 italic">
+        <p className="text-[0.55rem] sm:text-[0.65rem] text-main font-medium leading-relaxed line-clamp-4 italic">
           &quot;{t.text}&quot;
         </p>
       </div>
@@ -318,7 +347,7 @@ export const BlogContent: React.FC = () => {
         </div>
 
         {/* title */}
-        <h3 className="text-xs font-bold text-main tracking-tight leading-snug line-clamp-2 mb-2">
+        <h3 className="text-[0.65rem] sm:text-xs font-bold text-main leading-snug line-clamp-3 mb-2">
           {latest.title}
         </h3>
 

@@ -120,53 +120,106 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
             {/* ===== ABOUT ===== */}
             {type === 'about' && (
               <div className="flex flex-col md:flex-row min-h-full">
-                <div className="w-full md:w-2/5 p-5 sm:p-7 md:p-10 flex flex-col justify-center bg-card-hover md:border-r border-b md:border-b-0 border-custom">
-                  <h4 className="text-[0.65rem] font-bold text-primary uppercase tracking-widest mb-5 opacity-60 mt-5 sm:mt-0">Profile</h4>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-main mb-4 leading-tight tracking-tight uppercase">
-                    Fullstack <br />
-                    <span className="text-muted opacity-60">Scalable <br /> Architect</span>
-                  </h2>
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {['Modular', 'Type-Safe', 'Optimized'].map((tag) => (
-                      <span key={tag} className="px-3 py-1.5 rounded-lg bg-card text-main text-[0.7rem] font-medium border border-custom shadow-sm">{tag}</span>
-                    ))}
+
+                {/* ── Left panel — WHO you are ── */}
+                <div className="w-full md:w-2/5 p-5 sm:p-7 md:p-10 pt-12 sm:pt-7 flex flex-col justify-between bg-card-hover md:border-r border-b md:border-b-0 border-custom">
+                  <div>
+                    <h4 className="text-[0.65rem] font-bold text-primary uppercase tracking-widest mb-5 opacity-60">
+                      Profile
+                    </h4>
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-main leading-tight tracking-tight mb-1">
+                      Vighnesh<br />
+                      <span className="text-muted opacity-50">Gaddam.</span>
+                    </h2>
+                    <p className="text-[0.7rem] text-muted mt-3 leading-relaxed">
+                      MCA student at Manipal University. Full stack developer based in Mumbai, India.
+                      Building production-ready systems since 2021.
+                    </p>
+                  </div>
+
+                  {/* Status + quick facts */}
+                  <div className="mt-auto pt-6 space-y-2">
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {['Mumbai, IN', '3+ yrs exp', 'Freelance OK'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 rounded-lg bg-card text-main text-[0.65rem] font-medium border border-custom"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
+
+                {/* ── Right panel — HOW you work ── */}
                 <div className="w-full md:w-3/5 p-5 sm:p-7 md:p-10 pb-7 bg-card">
                   <div className="space-y-6">
+
+                    {/* Bio */}
                     <div>
-                      <h3 className="text-muted text-[0.65rem] font-bold uppercase tracking-widest mb-3">Bio</h3>
+                      <h3 className="text-muted text-[0.65rem] font-bold uppercase tracking-widest mb-3">
+                        Bio
+                      </h3>
                       <p className="text-main leading-relaxed text-sm font-light">
-                        I&apos;m a developer who bridges the gap between complex backends and sharp frontends.
-                        I spend my time in <strong>React and NestJS</strong>, ensuring data flows correctly from
-                        PostgreSQL to the user&apos;s screen. I build tools that work — no fluff, just functional code.
+                        I build full stack applications that actually work in production — not just in demos.
+                        My focus is on <strong>clean architecture</strong> and <strong>type-safe systems</strong> that
+                        scale without becoming a maintenance nightmare. I care deeply about the details
+                        that most developers skip.
                       </p>
                     </div>
+
+                    {/* Approach */}
                     <div>
-                      <h3 className="text-muted text-[0.65rem] font-bold uppercase tracking-widest mb-3">The Approach</h3>
+                      <h3 className="text-muted text-[0.65rem] font-bold uppercase tracking-widest mb-3">
+                        The Approach
+                      </h3>
                       <div className="grid gap-2.5 pb-2">
+
                         <div className="group flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-card-hover/40 hover:bg-card-hover border border-custom hover:border-blue-500/20 transition-all duration-300">
                           <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/10 flex items-center justify-center text-blue-500 shrink-0 group-hover:scale-105 transition-transform">
                             <ShieldCheck size={15} />
                           </div>
                           <div className="flex-1 min-w-0 pt-0.5">
-                            <h4 className="text-main font-bold text-xs mb-1">Execution</h4>
-                            <p className="text-muted text-[0.7rem]">Secure auth and payment flows via Clerk and Razorpay — built to be reliable.</p>
+                            <h4 className="text-main font-bold text-xs mb-1">Execution first</h4>
+                            <p className="text-muted text-[0.7rem] leading-relaxed">
+                              I ship features end-to-end — auth, payments, APIs — built to be reliable
+                              and secure from day one, not bolted on later.
+                            </p>
                           </div>
                         </div>
+
                         <div className="group flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-card-hover/40 hover:bg-card-hover border border-custom hover:border-amber-500/20 transition-all duration-300">
                           <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/10 flex items-center justify-center text-amber-500 shrink-0 group-hover:scale-105 transition-transform">
                             <Database size={15} />
                           </div>
                           <div className="flex-1 min-w-0 pt-0.5">
-                            <h4 className="text-main font-bold text-xs mb-1">Structure</h4>
-                            <p className="text-muted text-[0.7rem]">Predictable, type-safe architecture using strict TypeScript and Prisma schemas.</p>
+                            <h4 className="text-main font-bold text-xs mb-1">Structure over shortcuts</h4>
+                            <p className="text-muted text-[0.7rem] leading-relaxed">
+                              Strict TypeScript, Prisma schemas, modular architecture — every decision
+                              is made so the next developer (or future me) doesn&apos;t suffer.
+                            </p>
                           </div>
                         </div>
+
+                        <div className="group flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-card-hover/40 hover:bg-card-hover border border-custom hover:border-emerald-500/20 transition-all duration-300">
+                          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 group-hover:scale-105 transition-transform">
+                            <Building2 size={15} />
+                          </div>
+                          <div className="flex-1 min-w-0 pt-0.5">
+                            <h4 className="text-main font-bold text-xs mb-1">Always learning</h4>
+                            <p className="text-muted text-[0.7rem] leading-relaxed">
+                              Currently deepening expertise in system design, Docker, and cloud infrastructure
+                              while pursuing my MCA at Manipal University.
+                            </p>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   </div>
                 </div>
+
               </div>
             )}
 
@@ -257,7 +310,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                     A strategic selection of technologies for building scalable, high-performance web applications.
                   </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-6 gap-2.5 sm:gap-3 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-2.5 sm:gap-3 w-full">
 
                   {/* Frontend */}
                   <div className="md:col-span-4 p-4 sm:p-5 rounded-[18px] sm:rounded-[22px] bg-card-hover border border-custom flex flex-col group">
