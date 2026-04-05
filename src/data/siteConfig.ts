@@ -36,20 +36,20 @@ export interface TechItem {
 
 export const techStack: { row1: TechItem[]; row2: TechItem[] } = {
   row1: [
-    { label: "React",      hoverColor: "#61DAFB" },
-    { label: "Next.js",    hoverColor: "#ffffff" },
+    { label: "React", hoverColor: "#61DAFB" },
+    { label: "Next.js", hoverColor: "#ffffff" },
     { label: "TypeScript", hoverColor: "#3178C6" },
-    { label: "Tailwind",   hoverColor: "#06B6D4" },
+    { label: "Tailwind", hoverColor: "#06B6D4" },
     { label: "Gemini API", hoverColor: "#8B5CF6" },
     { label: "PostgreSQL", hoverColor: "#336791" },
   ],
   row2: [
-    { label: "Node.js",       hoverColor: "#68A063" },
-    { label: "Java",          hoverColor: "#FFD43B" },
-    { label: "MongoDB",       hoverColor: "#00ED64" },
+    { label: "Node.js", hoverColor: "#68A063" },
+    { label: "Java", hoverColor: "#FFD43B" },
+    { label: "MongoDB", hoverColor: "#00ED64" },
     { label: "Framer Motion", hoverColor: "#FF0080" },
-    { label: "Docker",        hoverColor: "#2496ED" },
-    { label: "Prisma",        hoverColor: "#DC382D" },
+    { label: "Docker", hoverColor: "#2496ED" },
+    { label: "Prisma", hoverColor: "#DC382D" },
   ],
 };
 
@@ -208,13 +208,20 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "2",
+    name: "Srushtika Vallal",
+    role: "College Student",
+    company: "Freelance Client",
+    text: "I had only 24 hours left and my project was just a basic frontend with static data. He turned it into a fully working project with everything needed. I was really stressed at first, but seeing it all come together properly at the end was a huge relief."
+  },
+  {
+    id: "3",
     name: "Twinkle Hanwate",
     role: "College Student",
     company: "Freelance Client",
     text: "I had to get a project done within a week for college, and he helped me pull it off without stress. Everything was ready on time, looked clean, and worked properly. Really helped me meet my deadline.",
   },
   {
-    id: "3",
+    id: "4",
     name: "Vishal Kirtyanya",
     role: "SDE",
     company: "Freelance Client",

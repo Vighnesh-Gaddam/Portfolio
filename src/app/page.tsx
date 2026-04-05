@@ -31,18 +31,18 @@ interface BentoItem {
 }
 
 const BENTO_ITEMS: BentoItem[] = [
-  { id: "intro",             colSpan: "col-span-2 lg:col-span-2", mobileOrder: 1 },
-  { id: "photo",             colSpan: "col-span-1 lg:col-span-1", mobileOrder: 2, bgImage: "/vighnesh1.webp" },
-  { id: "socials",           colSpan: "col-span-1 lg:col-span-1", mobileOrder: 3 },
-  { id: "about",             colSpan: "col-span-1 lg:col-span-1", mobileOrder: 4,  hasArrow: true, onClickModal: "about" },
-  { id: "experience",        colSpan: "col-span-1 lg:col-span-1", mobileOrder: 5,  hasArrow: true, onClickModal: "experience" },
-  { id: "education",         colSpan: "col-span-1 lg:col-span-1", mobileOrder: 7,  hasArrow: true, onClickModal: "education" },
-  { id: "featured projects", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 8,  hasArrow: true },
-  { id: "stack",             colSpan: "col-span-2 lg:col-span-2", mobileOrder: 6,  hasArrow: true, onClickModal: "stack" },
-  { id: "blog",              colSpan: "col-span-1 lg:col-span-1", mobileOrder: 9,  hasArrow: true, onClickModal: "blog" },
-  { id: "testimonials",      colSpan: "col-span-1 lg:col-span-1", mobileOrder: 10, hasArrow: true, onClickModal: "testimonials" },
-  { id: "github",            colSpan: "col-span-2 lg:col-span-2", mobileOrder: 11 },
-  { id: "map",               colSpan: "col-span-2 lg:col-span-1", mobileOrder: 12, noPadding: true },
+  { id: "intro", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 1 },
+  { id: "photo", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 2, bgImage: "/vighnesh1.webp" },
+  { id: "socials", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 3 },
+  { id: "about", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 4, hasArrow: true, onClickModal: "about" },
+  { id: "experience", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 5, hasArrow: true, onClickModal: "experience" },
+  { id: "education", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 7, hasArrow: true, onClickModal: "education" },
+  { id: "featured projects", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 8, hasArrow: true },
+  { id: "stack", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 6, hasArrow: true, onClickModal: "stack" },
+  { id: "blog", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 9, hasArrow: true, onClickModal: "blog" },
+  { id: "testimonials", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 10, hasArrow: true, onClickModal: "testimonials" },
+  { id: "github", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 11 },
+  { id: "map", colSpan: "col-span-2 lg:col-span-1", mobileOrder: 12, noPadding: true },
 ];
 
 const NO_TITLE_CARDS = new Set(["intro", "socials", "photo", "map", "github", "testimonials"]);
@@ -81,18 +81,18 @@ export default function HomePage() {
 
   const renderCardContent = useCallback((id: string) => {
     switch (id) {
-      case "intro":             return <IntroContent />;
-      case "socials":           return <SocialsContent onOpenConnect={() => setIsConnectOpen(true)} />;
-      case "stack":             return <TechStackContent />;
-      case "about":             return <AboutContent />;
-      case "experience":        return <ExperienceContent />;
-      case "education":         return <EducationContent />;
+      case "intro": return <IntroContent />;
+      case "socials": return <SocialsContent onOpenConnect={() => setIsConnectOpen(true)} />;
+      case "stack": return <TechStackContent />;
+      case "about": return <AboutContent />;
+      case "experience": return <ExperienceContent />;
+      case "education": return <EducationContent />;
       case "featured projects": return <ProjectsTriggerContent />;
-      case "testimonials":      return <TestimonialsContent />;
-      case "blog":              return <BlogContent />;
-      case "github":            return <GitHubContent />;
-      case "map":               return <MapContent theme={resolvedTheme} />;
-      default:                  return null;
+      case "testimonials": return <TestimonialsContent />;
+      case "blog": return <BlogContent />;
+      case "github": return <GitHubContent />;
+      case "map": return <MapContent theme={resolvedTheme} />;
+      default: return null;
     }
   }, [resolvedTheme]);
 
@@ -110,14 +110,14 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
+        {/* <div className="w-full max-w-[90vw] mx-auto"> */}
         <div className="w-full max-w-7xl mx-auto">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4
-              auto-rows-[152px] sm:auto-rows-[175px] md:auto-rows-[200px] lg:auto-rows-[195px]"
-          >
+            // className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 auto-rows-[24vh] sm:auto-rows-[26vh] md:auto-rows-[27vh] lg:auto-rows-[28vh]">
+            className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4auto-rows-[152px] sm:auto-rows-[175px] md:auto-rows-[200px] lg:auto-rows-[195px]" >
             {BENTO_ITEMS.map((item) => (
               <motion.div
                 key={item.id}
