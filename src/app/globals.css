@@ -28,6 +28,15 @@
   --text-muted: #909090;
   --text-inverse: #000000;
   --overlay: rgba(8, 8, 8, 0.9);
+
+
+  --grid-row-height: clamp(150px, 28dvh, 200px);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --grid-row-height: clamp(120px, 20dvh, 165px);
+  }
 }
 
 /* ============================
