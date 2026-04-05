@@ -11,6 +11,7 @@
   "dependencies": {
     "@next/mdx": "^16.2.2",
     "@tailwindcss/typography": "^0.5.19",
+    "@vercel/analytics": "^2.0.1",
     "cobe": "^0.6.5",
     "framer-motion": "^12.26.1",
     "gray-matter": "^4.0.3",

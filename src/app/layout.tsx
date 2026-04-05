@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://whoisvighnesh.in"),
@@ -132,6 +133,7 @@ export default function RootLayout({
           {children}
           <ThemeToggle />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
