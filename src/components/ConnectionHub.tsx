@@ -56,9 +56,9 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-bold tracking-[0.2em] text-muted uppercase">Sync_Active</span>
+                <span className="text-[0.65rem] font-bold tracking-[0.2em] text-muted uppercase">Sync_Active</span>
               </div>
-              <p className="text-[9px] text-muted opacity-50 font-bold uppercase tracking-widest">
+              <p className="text-[0.55rem] text-muted opacity-50 font-bold uppercase tracking-widest">
                 {time} • {person.location.split(',')[0].toUpperCase()} • {person.year}
               </p>
             </div>
@@ -92,7 +92,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
               </div>
               <div>
                 <h3 className="text-xl font-bold uppercase italic tracking-tighter leading-none">View Resume</h3>
-                <p className="text-[10px] opacity-60 uppercase tracking-widest mt-3 font-bold">PDF • {person.year} Edition</p>
+                <p className="text-[0.65rem] opacity-60 uppercase tracking-widest mt-3 font-bold">PDF • {person.year} Edition</p>
               </div>
             </a>
 
@@ -121,7 +121,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
               className="col-span-2 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#1DA1F2]/30"
             >
               <Twitter size={20} className="text-muted group-hover:text-[#1DA1F2] transition-colors" />
-              <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-[#1DA1F2]">Twitter</span>
+              <span className="text-[0.65rem] font-black uppercase tracking-widest group-hover:text-[#1DA1F2]">Twitter</span>
             </a>
 
             {/* LEETCODE */}
@@ -131,7 +131,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
               className="col-span-2 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#FFA116]/30"
             >
               <Terminal size={20} className="text-muted group-hover:text-[#FFA116] transition-colors" />
-              <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-[#FFA116]">LeetCode</span>
+              <span className="text-[0.65rem] font-black uppercase tracking-widest group-hover:text-[#FFA116]">LeetCode</span>
             </a>
 
             {/* EMAIL */}
@@ -140,7 +140,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
                 <Send size={18} className="text-emerald-500" strokeWidth={2} />
                 <div className="flex flex-col">
                   <span className="text-main font-bold text-xs uppercase tracking-tight italic leading-none">Drop Inquiry</span>
-                  <span className="text-muted text-[10px] font-bold uppercase truncate mt-1 opacity-70">{person.email}</span>
+                  <span className="text-muted text-[0.65rem] font-bold uppercase truncate mt-1 opacity-70">{person.email}</span>
                 </div>
               </a>
               <button

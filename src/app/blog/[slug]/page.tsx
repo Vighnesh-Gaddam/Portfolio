@@ -137,7 +137,7 @@ export default async function BlogPostPage({ params }: Props) {
             </span>
             <span className="text-muted/30">·</span>
             {meta.tags.map(tag => (
-              <span key={tag} className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md bg-card border border-custom text-muted">
+              <span key={tag} className="text-[0.65rem] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md bg-card border border-custom text-muted">
                 {tag}
               </span>
             ))}
@@ -164,7 +164,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <ArrowLeft size={14} className="text-main" />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted mb-0.5">Older</p>
+                  <p className="text-[0.65rem] font-bold uppercase tracking-widest text-muted mb-0.5">Older</p>
                   <p className="text-sm font-bold text-main truncate">{olderPost.title}</p>
                 </div>
               </Link>
@@ -181,7 +181,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <ArrowLeft size={14} className="text-main rotate-180" />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted mb-0.5">Newer</p>
+                  <p className="text-[0.65rem] font-bold uppercase tracking-widest text-muted mb-0.5">Newer</p>
                   <p className="text-sm font-bold text-main truncate">{newerPost.title}</p>
                 </div>
               </Link>

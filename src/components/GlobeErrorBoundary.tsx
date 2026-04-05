@@ -49,7 +49,7 @@ export class GlobeErrorBoundary extends React.Component<Props, State> {
               />
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-[9px] font-bold text-muted uppercase tracking-wider leading-tight mb-0.5">
+              <p className="text-[0.55rem] font-bold text-muted uppercase tracking-wider leading-tight mb-0.5">
                 Based in
               </p>
               <h3 className="text-sm font-bold text-main leading-tight">
