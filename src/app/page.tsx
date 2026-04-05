@@ -14,6 +14,7 @@ import {
 } from "../components/CardContents";
 import { ConnectionHub } from "@/components/ConnectionHub";
 import { person } from "@/data/siteConfig";
+import { usePageLoading } from '@/components/PageLoadingContext';
 
 const MapContent = dynamic(
   () => import("@/components/GlobeClient").then((m) => m.MapContent),
@@ -62,6 +63,7 @@ export default function HomePage() {
   const [isConnectOpen, setIsConnectOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const router = useRouter();
+  const { start } = usePageLoading();
 
   useEffect(() => {
     const loader = document.getElementById("initial-loader");
@@ -75,9 +77,9 @@ export default function HomePage() {
 
   const handleCardClick = useCallback((item: BentoItem) => {
     if (item.onClickModal) return () => setActiveModal(item.onClickModal!);
-    if (item.id === "featured projects") return () => router.push("/projects");
+    if (item.id === "featured projects") return () => { start(); router.push("/projects"); };
     return undefined;
-  }, [router]);
+  }, [router, start]);
 
   const renderCardContent = useCallback((id: string) => {
     switch (id) {

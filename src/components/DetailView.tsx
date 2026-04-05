@@ -5,6 +5,7 @@ import { X, Building2, GraduationCap, Award, BookOpen, Database, ShieldCheck, Bo
 import { motion } from 'framer-motion';
 import { testimonials, experiences, education, techStack, blogPosts } from '@/data/siteConfig';
 import { useRouter } from 'next/navigation';
+import { usePageLoading } from '@/components/PageLoadingContext';
 
 
 export type DetailType = 'about' | 'experience' | 'education' | 'stack' | 'testimonials' | 'blog';
@@ -53,10 +54,12 @@ const educationIcons = {
   muted: BookMarked,
 };
 
+
 export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+  const { start } = usePageLoading();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -436,6 +439,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                       <button
                         key={post.slug}
                         onClick={() => {
+                          start();
                           router.push(`/blog/${post.slug}`);
                         }}
                         className="group w-full text-left p-4 sm:p-5 rounded-2xl sm:rounded-[20px] bg-card-hover border border-custom hover:border-primary/20 transition-all shadow-sm"

@@ -33,7 +33,7 @@ export default function ReadingProgress() {
         style={{
           height: '100%',
           width: `${progress}%`,
-          backgroundColor: 'var(--color-primary, #6366f1)',
+          backgroundColor: 'var(--primary, #1a1a1a)',
           transition: 'width 80ms ease-out',
         }}
       />

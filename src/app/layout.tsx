@@ -2,7 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script";
+import { PageLoadingProvider } from "@/components/PageLoadingContext";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://whoisvighnesh.in"),
@@ -74,7 +76,7 @@ export const metadata: Metadata = {
     title: "Vighnesh Gaddam | Software Engineer",
     description:
       "I build web apps using React, Next.js, and TypeScript — the kind that stay fast, scale smoothly, and don’t fall apart once real users show up.",
-    
+
     images: ["https://whoisvighnesh.in/vighnesh1.png"],
   },
 
@@ -90,7 +92,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-page text-main antialiased">
-        
+
         {/* Loader safety script */}
         <Script id="loader-safety-switch" strategy="afterInteractive">
           {`
@@ -129,9 +131,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <ThemeToggle />
+          <PageLoadingProvider>
+            {children}
+            <ThemeToggle />
+          </PageLoadingProvider>
         </ThemeProvider>
+        <Analytics  mode="production" />
       </body>
     </html>
   );
