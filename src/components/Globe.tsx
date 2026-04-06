@@ -29,7 +29,17 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
   const sizeRef = useRef(0);
   const themeRef = useRef(theme);
   const globeRef = useRef<{ destroy: () => void } | null>(null);
+  const isVisibleRef = useRef(true);
   const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      isVisibleRef.current = !document.hidden;
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
 
   useEffect(() => {
     themeRef.current = theme;
@@ -86,8 +96,10 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
             globeState.height = currentPx;
           }
 
-          globeState.phi = phiRef.current + 0.003;
-          phiRef.current = globeState.phi;
+          if (isVisibleRef.current) {
+            globeState.phi = phiRef.current + 0.003;
+            phiRef.current = globeState.phi;
+          }
 
           // Mumbai ripple
           const cx = 19.0760;

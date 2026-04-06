@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Github,
   Linkedin,
@@ -119,17 +119,44 @@ export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => (
 );
 
 // ─── TECH ICON ───────────────────────────────────────────────
-const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({
-  icon, label, hoverColor,
-}) => (
-  <div
-    className="group/tech flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card-hover border border-custom/50 shrink-0 shadow-sm cursor-default transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-(--hover-color)"
-    style={{ ['--hover-color' as string]: hoverColor }}
-  >
-    <span className="text-muted transition-colors duration-300 group-hover/tech:text-(--hover-color)">{icon}</span>
-    <span className="text-[0.65rem] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-(--hover-color)">{label}</span>
-  </div>
-);
+// const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({
+//   icon, label, hoverColor,
+// }) => (
+//   <div
+//     className="group/tech flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card-hover border border-custom/50 shrink-0 shadow-sm cursor-default transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-(--hover-color)"
+//     style={{ ['--hover-color' as string]: hoverColor }}
+//   >
+//     <span className="text-muted transition-colors duration-300 group-hover/tech:text-(--hover-color)">{icon}</span>
+//     <span className="text-[0.65rem] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-(--hover-color)">{label}</span>
+//   </div>
+// );
+
+const TechIcon = React.memo(function TechIcon({
+  icon,
+  label,
+  hoverColor,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  hoverColor: string;
+}) {
+  return (
+    <div
+      className="group/tech flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-card-hover border border-custom/50 shrink-0 shadow-sm cursor-default transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-(--hover-color)"
+      style={{ ['--hover-color' as string]: hoverColor }}
+    >
+      <span className="text-muted transition-colors duration-300 group-hover/tech:text-(--hover-color)">
+        {icon}
+      </span>
+
+      <span className="text-[0.65rem] sm:text-xs font-semibold text-main whitespace-nowrap transition-colors duration-300 group-hover/tech:text-(--hover-color)">
+        {label}
+      </span>
+    </div>
+  );
+});
+
+
 
 // ─── TECH STACK ──────────────────────────────────────────────
 const techRow1 = [
@@ -150,7 +177,7 @@ const techRow2 = [
   { icon: <Database size={14} />, label: 'Prisma', hoverColor: '#DC382D' },
 ];
 
-export const TechStackContent: React.FC = () => (
+const TechStackCard: React.FC = () => (
   <div className="flex flex-col flex-1 justify-center items-center h-full w-full relative overflow-hidden py-4">
     <div className="flex gap-3 overflow-x-hidden w-full mb-3 py-1">
       <div className="flex shrink-0 animate-marquee items-center gap-3">
@@ -170,6 +197,10 @@ export const TechStackContent: React.FC = () => (
     </div>
   </div>
 );
+
+export const TechStackContent = React.memo(function TechStackContent() {
+  return <TechStackCard />;
+});
 
 // ─── ABOUT ───────────────────────────────────────────────────
 export const AboutContent: React.FC = () => (
@@ -267,7 +298,7 @@ export const EducationContent: React.FC = () => {
 };
 
 // ─── PROJECTS ────────────────────────────────────────────────
-export const ProjectsTriggerContent: React.FC = () => (
+const ProjectsTriggerCard: React.FC = () => (
   <div className="relative h-full flex flex-col justify-end group/projects overflow-hidden p-1">
     <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover/projects:bg-primary/25 transition-colors duration-500" />
     <div className="relative z-10">
@@ -293,8 +324,14 @@ export const ProjectsTriggerContent: React.FC = () => (
   </div>
 );
 
+export const ProjectsTriggerContent = React.memo(function ProjectsTriggerContent() {
+  return <ProjectsTriggerCard />;
+});
+
+
+
 // ─── TESTIMONIALS ────────────────────────────────────────────
-export const TestimonialsContent: React.FC = () => {
+const TestimonialsCard: React.FC = () => {
   const t = testimonials[0];
   return (
     <div className="h-full flex flex-col justify-between relative z-10">
@@ -322,8 +359,12 @@ export const TestimonialsContent: React.FC = () => {
   );
 };
 
+export const TestimonialsContent = React.memo(function TestimonialsContent() {
+  return <TestimonialsCard />;
+});
+
 // ─── BLOG ────────────────────────────────────────────────────
-export const BlogContent: React.FC = () => {
+const BlogCard: React.FC = () => {
   const latest = blogPosts[0];
 
   return (
@@ -379,6 +420,10 @@ export const BlogContent: React.FC = () => {
   );
 };
 
+export const BlogContent = React.memo(function BlogContent() {
+  return <BlogCard />;
+});
+
 // ─── GITHUB ──────────────────────────────────────────────────
 type Level = 0 | 1 | 2 | 3;
 
@@ -406,7 +451,7 @@ const generateFallback = (): Level[][] =>
 
 const fallbackGrid = generateFallback();
 
-export const GitHubContent: React.FC = () => {
+const GithubCard: React.FC = () => {
   const [grid, setGrid] = React.useState<Level[][]>(fallbackGrid);
   const [total, setTotal] = React.useState<number | null>(null);
   const [loading, setLoading] = React.useState(true);
@@ -430,7 +475,8 @@ export const GitHubContent: React.FC = () => {
     ? 'rgba(100,100,100,0.6)'
     : 'rgba(107,105,101,0.5)';
 
-  React.useEffect(() => {
+useEffect(() => {
+  const fetchGitHub = () => {
     fetch('/api/github')
       .then(r => r.json())
       .then(data => {
@@ -440,13 +486,33 @@ export const GitHubContent: React.FC = () => {
             .map((week: { count: number; date: string }[]) =>
               week.map(day => getLevel(day.count))
             );
+
           setGrid(mapped);
           setTotal(data.total ?? null);
         }
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  };
+
+  let idleId: number | null = null;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  if ('requestIdleCallback' in window) {
+    idleId = window.requestIdleCallback(fetchGitHub);
+  } else {
+    timeoutId = setTimeout(fetchGitHub, 2000);
+  }
+
+  return () => {
+    if (idleId !== null && 'cancelIdleCallback' in window) {
+      window.cancelIdleCallback(idleId);
+    }
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+  };
+}, []);
 
   const monthPositions = React.useMemo(() => {
     const now = new Date();
@@ -545,3 +611,8 @@ export const GitHubContent: React.FC = () => {
     </div>
   );
 };
+
+
+export const GitHubContent = React.memo(function GitHubContent() {
+  return <GithubCard />;
+});

@@ -182,6 +182,11 @@ html {
 .animate-marquee         { animation: marquee 25s linear infinite; }
 .animate-marquee-reverse { animation: marquee-reverse 25s linear infinite; }
 
+.animate-marquee,
+.animate-marquee-reverse {
+  will-change: transform;
+  transform: translateZ(0);
+}
 /* ============================
    INITIAL PRE-LOADER
 ============================ */

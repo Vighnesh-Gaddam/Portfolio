@@ -18,6 +18,16 @@ interface BentoCardProps {
   index?: number;
 }
 
+// BentoCard.tsx
+const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
+
+// BentoCard.tsx
+const prefersReducedMotion = typeof window !== 'undefined'
+  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const isMobile = typeof window !== 'undefined'
+  && window.matchMedia('(max-width: 1024px)').matches;
+
 export const BentoCard: React.FC<BentoCardProps> = ({
   children,
   className = "",
@@ -42,7 +52,6 @@ export const BentoCard: React.FC<BentoCardProps> = ({
     <motion.div
       ref={cardRef}
       layoutId={layoutId}
-      layout
       data-bento-id={dataId}
       onClick={onClick}
       className={`${baseClasses} ${className}`}
@@ -52,24 +61,24 @@ export const BentoCard: React.FC<BentoCardProps> = ({
         scale: isInView ? 1 : 0.97,
       }}
       initial={{ opacity: 0, y: 24, scale: 0.97 }}
-      whileHover={
-        onClick
-          ? {
-            y: -6,
-            scale: 1.02,
-            transition: { type: "spring", stiffness: 400, damping: 25 },
-          }
-          : undefined
-      }
+      whileHover={onClick && !isTouchDevice ? {
+        y: -6,
+        scale: 1.02,
+        transition: { type: "spring", stiffness: 400, damping: 25 },
+      } : undefined}
       whileTap={
         onClick
           ? { scale: 0.98, transition: { type: "spring", stiffness: 500, damping: 30 } }
           : undefined
       }
-      transition={{
-        opacity: { duration: 0.45, delay: isInView ? index * 0.05 : 0, ease: "easeOut" },
-        y: { duration: 0.45, delay: isInView ? index * 0.05 : 0, ease: [0.22, 1, 0.36, 1] },
-        scale: { duration: 0.4, delay: isInView ? index * 0.05 : 0, ease: "easeOut" },
+      transition={isMobile ? {
+        opacity: { duration: 0.3, ease: "easeOut" },
+        y: { duration: 0.3, ease: "easeOut" },
+        scale: { duration: 0.25, ease: "easeOut" },
+      } : {
+        opacity: { duration: 0.45, delay: index * 0.05, ease: "easeOut" },
+        y: { duration: 0.45, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] },
+        scale: { duration: 0.4, delay: index * 0.05, ease: "easeOut" },
         layout: { type: "spring", stiffness: 200, damping: 28, mass: 0.8 },
       }}
       style={{ WebkitTapHighlightColor: "transparent" }}
