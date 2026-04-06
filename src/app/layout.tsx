@@ -2,7 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import { PageLoadingProvider } from "@/components/PageLoadingContext";
 
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "I’m Vighnesh Gaddam, a full-stack developer who enjoys building fast, scalable web apps and turning ideas into real, working products. I work mainly with React, Next.js, NestJS, and TypeScript, focusing on clean architecture, performance, and systems that hold up in production.",
+    "I'm Vighnesh Gaddam, a full-stack developer who enjoys building fast, scalable web apps and turning ideas into real, working products. I work mainly with React, Next.js, NestJS, and TypeScript, focusing on clean architecture, performance, and systems that hold up in production.",
 
   keywords: [
     "Vighnesh Gaddam",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vighnesh Gaddam | Full-Stack Developer",
     description:
-      "Here’s a glimpse of what I’ve been working on — building web apps that don’t just run fast, but hold up when things get real.",
+      "Here's a glimpse of what I've been working on — building web apps that don't just run fast, but hold up when things get real.",
     url: "https://whoisvighnesh.in",
     siteName: "Vighnesh Gaddam Portfolio",
     images: [
@@ -66,7 +67,6 @@ export const metadata: Metadata = {
         alt: "Vighnesh Gaddam Portfolio",
       },
     ],
-
     locale: "en_US",
     type: "website",
   },
@@ -75,8 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vighnesh Gaddam | Software Engineer",
     description:
-      "I build web apps using React, Next.js, and TypeScript — the kind that stay fast, scale smoothly, and don’t fall apart once real users show up.",
-
+      "I build web apps using React, Next.js, and TypeScript — the kind that stay fast, scale smoothly, and don't fall apart once real users show up.",
     images: ["https://whoisvighnesh.in/vighnesh1.png"],
   },
 
@@ -115,7 +114,6 @@ export default function RootLayout({
               <span className="loader-name">VIGHNESH GADDAM</span>
               <span className="loader-year">Portfolio 2026</span>
             </div>
-
             <div className="loader-circle-container">
               <svg className="loader-circle-svg" viewBox="0 0 48 48">
                 <circle className="circle-bg" cx="24" cy="24" r="22" />
@@ -136,7 +134,10 @@ export default function RootLayout({
             <ThemeToggle />
           </PageLoadingProvider>
         </ThemeProvider>
-        <Analytics  mode="production" />
+
+        {/* Vercel observability — production only */}
+        <Analytics mode="production" />
+        <SpeedInsights />
       </body>
     </html>
   );
