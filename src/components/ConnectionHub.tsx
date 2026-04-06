@@ -80,7 +80,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
             <a
               href={resume.url}
               target="_blank"
-              className="col-span-3 row-span-2 group relative overflow-hidden rounded-3xl bg-text-main text-page p-6 flex flex-col justify-between transition-all hover:scale-[1.01] active:scale-[0.98]"
+              className="col-span-3 row-span-2 group relative overflow-hidden rounded-3xl bg-text-main text-page p-6 flex flex-col justify-between transition-transform duration-200 [@media(hover:hover)]:hover:scale-[1.01] active:scale-[0.98]"
             >
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 rounded-xl bg-page/20 flex items-center justify-center">
@@ -100,27 +100,27 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
             <a
               href={socials.github}
               target="_blank"
-              className="col-span-1 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-text-main"
+              className="col-span-1 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center transition-colors duration-200 [@media(hover:hover)]:hover:bg-text-main"
             >
-              <Github size={22} className="text-muted group-hover:text-(--text-inverse) transition-colors" />
+              <Github size={22} className="text-muted [@media(hover:hover)]:group-hover:text-(--text-inverse) transition-colors" />
             </a>
 
             {/* LINKEDIN */}
             <a
               href={socials.linkedin}
               target="_blank"
-              className="col-span-1 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center transition-all hover:bg-[#0077b5]"
+              className="col-span-1 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center transition-colors duration-200 [@media(hover:hover)]:hover:bg-[#0077b5]"
             >
-              <Linkedin size={22} className="text-muted group-hover:text-white transition-colors" />
+              <Linkedin size={22} className="text-muted [@media(hover:hover)]:group-hover:text-white transition-colors" />
             </a>
 
             {/* TWITTER */}
             <a
               href={socials.twitter}
               target="_blank"
-              className="col-span-2 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#1DA1F2]/30"
+              className="col-span-2 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center gap-3 transition-colors duration-200 [@media(hover:hover)]:hover:border-[#1DA1F2]/30"
             >
-              <Twitter size={20} className="text-muted group-hover:text-[#1DA1F2] transition-colors" />
+              <Twitter size={20} className="text-muted [@media(hover:hover)]:group-hover:text-[#1DA1F2] transition-colors" />
               <span className="text-[0.65rem] font-black uppercase tracking-widest group-hover:text-[#1DA1F2]">Twitter</span>
             </a>
 
@@ -128,14 +128,14 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
             <a
               href={socials.leetcode}
               target="_blank"
-              className="col-span-2 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center gap-3 transition-all hover:border-[#FFA116]/30"
+              className="col-span-2 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center gap-3 transition-colors duration-200 [@media(hover:hover)]:hover:border-[#FFA116]/30"
             >
-              <Terminal size={20} className="text-muted group-hover:text-[#FFA116] transition-colors" />
+              <Terminal size={20} className="text-muted [@media(hover:hover)]:group-hover:text-[#FFA116] transition-colors" />
               <span className="text-[0.65rem] font-black uppercase tracking-widest group-hover:text-[#FFA116]">LeetCode</span>
             </a>
 
             {/* EMAIL */}
-            <div className="col-span-4 row-span-1 group flex items-center justify-between p-2 pl-6 rounded-3xl bg-card border border-custom hover:border-emerald-500/30 transition-all shadow-sm">
+            <div className="col-span-4 row-span-1 group flex items-center justify-between p-2 pl-6 rounded-3xl bg-card border border-custom [@media(hover:hover)]:hover:border-emerald-500/30 transition-all shadow-sm">
               <a href={`mailto:${person.email}`} className="flex items-center gap-4 flex-1">
                 <Send size={18} className="text-emerald-500" strokeWidth={2} />
                 <div className="flex flex-col">

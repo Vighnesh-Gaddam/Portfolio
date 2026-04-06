@@ -15,6 +15,8 @@
   --text-muted: #666666;
   --text-inverse: #ffffff;
   --overlay: rgba(245, 244, 241, 0.85);
+  
+  --grid-row-height: clamp(150px, 28dvh, 200px);
 }
 
 .dark {
@@ -30,7 +32,6 @@
   --overlay: rgba(8, 8, 8, 0.9);
 
 
-  --grid-row-height: clamp(150px, 28dvh, 200px);
 }
 
 @media (max-width: 640px) {
