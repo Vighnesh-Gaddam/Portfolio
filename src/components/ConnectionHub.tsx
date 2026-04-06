@@ -100,7 +100,7 @@ export const ConnectionHub = ({ onClose, layoutId }: { onClose: () => void; layo
             <a
               href={socials.github}
               target="_blank"
-              className="col-span-1 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center transition-colors duration-200 [@media(hover:hover)]:hover:bg-text-main"
+              className="col-span-1 row-span-1 group rounded-3xl bg-card-hover border border-custom flex items-center justify-center transition-colors duration-200 [@media(hover:hover)]:hover:bg-(--text-main)"
             >
               <Github size={22} className="text-muted [@media(hover:hover)]:group-hover:text-(--text-inverse) transition-colors" />
             </a>

@@ -91,7 +91,7 @@ export const SocialsContent: React.FC<SocialsProps> = ({ onOpenConnect }) => (
       <a href={socials.github}
         target="_blank"
         rel="noreferrer"
-        className="group/github flex-1 flex items-center justify-center rounded-2xl sm:rounded-3xl bg-card-hover border border-custom transition-colors duration-200 [@media(hover:hover)]:hover:bg-text-main"
+        className="group/github flex-1 flex items-center justify-center rounded-2xl sm:rounded-3xl bg-card-hover border border-custom transition-colors duration-200 [@media(hover:hover)]:hover:bg-(--text-main)"
       >
         <Github className="w-6 h-6 sm:w-8 sm:h-8 text-main transition-colors duration-200 [@media(hover:hover)]:group-hover/github:text-(--text-inverse)" />
       </a>
