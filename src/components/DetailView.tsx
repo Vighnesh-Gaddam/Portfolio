@@ -405,7 +405,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                     {testimonials.map((t) => (
                       <div key={t.id} className="p-4 sm:p-5 rounded-2xl sm:rounded-[20px] bg-card-hover border border-custom hover:border-primary/20 transition-all shadow-sm">
                         <Quote size={18} className="text-primary/30 mb-3" strokeWidth={1.5} />
-                        <p className="text-main text-sm leading-relaxed font-medium mb-4">&quot;{t.text}&quot;</p>
+                        <p className="text-main text-sm leading-relaxed font-medium mb-4 italic">&quot;{t.text}&quot;</p>
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs shrink-0">
                             {t.name.charAt(0)}
