@@ -6,17 +6,18 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import { PageLoadingProvider } from "@/components/PageLoadingContext";
+import { seo, person } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://whoisvighnesh.in"),
+  metadataBase: new URL(seo.url),
 
   title: {
-    default: "Vighnesh Gaddam | Software Engineer",
+    default: "Vighnesh Gaddam | Full Stack Developer from Mumbai",
     template: "%s | Vighnesh Gaddam",
   },
 
   verification: {
-    google: "cIA6t7lrm7bP85h9L0MiaI6I5a3yfqBvbs4De7nFfCs",
+    google:  seo.googleVerification,
   },
 
   description:
@@ -35,36 +36,38 @@ export const metadata: Metadata = {
     "Software Engineer Portfolio",
   ],
 
-  authors: [{ name: "Vighnesh Gaddam" }],
-  creator: "Vighnesh Gaddam",
+  authors: [{  name: person.name }],
+  creator: person.name,
 
   alternates: {
-    canonical: "https://whoisvighnesh.in",
+    canonical: seo.url,
   },
 
-  icons: {
+icons: {
     icon: [
-      { url: "/vighnesh1.png", sizes: "any" },
-      { url: "/vighnesh1.png", sizes: "96x96", type: "image/png" },
-      { url: "/vighnesh1.png", sizes: "144x144", type: "image/png" },
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [
-      { url: "/vighnesh1.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
 
   openGraph: {
-    title: "Vighnesh Gaddam | Full-Stack Developer",
+    title: "Vighnesh Gaddam | Full Stack Developer",
     description:
       "Here's a glimpse of what I've been working on — building web apps that don't just run fast, but hold up when things get real.",
-    url: "https://whoisvighnesh.in",
-    siteName: "Vighnesh Gaddam Portfolio",
+    url: seo.url,
+    siteName: seo.siteName,
     images: [
       {
-        url: "https://whoisvighnesh.in/vighnesh1.png",
-        width: 800,
-        height: 800,
-        alt: "Vighnesh Gaddam Portfolio",
+        url: seo.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Vighnesh Gaddam — Full Stack Developer",
       },
     ],
     locale: "en_US",
@@ -73,13 +76,14 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Vighnesh Gaddam | Software Engineer",
+    title: "Vighnesh Gaddam | Full Stack Developer",
     description:
       "I build web apps using React, Next.js, and TypeScript — the kind that stay fast, scale smoothly, and don't fall apart once real users show up.",
-    images: ["https://whoisvighnesh.in/vighnesh1.png"],
+    site: seo.twitterHandle,
+    images: [seo.ogImage],
   },
 
-  applicationName: "Vighnesh Portfolio",
+  applicationName: seo.siteName,
   category: "technology",
 };
 

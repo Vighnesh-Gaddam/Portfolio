@@ -254,7 +254,7 @@ export const blogPosts: BlogPost[] = [
 export const seo = {
   url: "https://whoisvighnesh.in",
   siteName: "Vighnesh Gaddam Portfolio",
-  ogImage: "https://whoisvighnesh.in/vighnesh1.png",
+  ogImage: "https://whoisvighnesh.in/og-image.webp",
   twitterHandle: "@DevVighnesh",
   googleVerification: "cIA6t7lrm7bP85h9L0MiaI6I5a3yfqBvbs4De7nFfCs",
 } as const;

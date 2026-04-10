@@ -33,7 +33,7 @@ interface BentoItem {
 
 const BENTO_ITEMS: BentoItem[] = [
   { id: "intro", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 1 },
-  { id: "photo", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 2, bgImage: "/vighnesh1.webp" },
+  { id: "photo", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 2, bgImage: "/og-image.webp" },
   { id: "socials", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 3 },
   { id: "about", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 4, hasArrow: true, onClickModal: "about" },
   { id: "experience", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 5, hasArrow: true, onClickModal: "experience" },
