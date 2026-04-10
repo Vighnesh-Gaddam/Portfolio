@@ -1,85 +1,42 @@
+# Vighnesh Gaddam — Portfolio
 
-# whoisvighnesh — Developer Portfolio
+Started with "hello world", ended up building full-stack platforms. <br>
+I'm Vighnesh — a developer from Mumbai who takes clean code 
+a little too seriously. Welcome to my portfolio.
 
-> Full-stack developer building fast, scalable web apps that hold up in the real world.
+[![Website](https://img.shields.io/badge/Website-whoisvighnesh.in-blue?style=for-the-badge&logo=google-chrome)](https://whoisvighnesh.in)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vighnesh%20Gaddam-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/vighnesh-gaddam/)
+[![Email](https://img.shields.io/badge/Email-vgnshgdm%40gmail.com-red?style=for-the-badge&logo=gmail)](mailto:vgnshgdm@gmail.com)
 
-[![Live](https://img.shields.io/badge/Live-whoisvighnesh.in-black?style=for-the-badge)](https://whoisvighnesh.in)
-
----
-
-## ✨ Overview
-
-A fast, bento-style developer portfolio built to showcase real work, clean design, and production-ready systems. Focused on performance, smooth interactions, and a solid user experience.
-
----
-
-## ✨ Features
-
-* **Bento Grid Layout** – Clean, modular UI built with Tailwind CSS v4  
-* **Interactive Globe** – Lightweight 3D visualization using `cobe`  
-* **Smooth Animations** – Subtle transitions powered by Framer Motion  
-* **Custom Error States** – Consistent UI for 404 and runtime errors  
-* **SEO-Friendly** – Semantic structure and structured data  
-* **Dark/Light Mode** – Seamless theme switching  
+If you find this useful or just like the design, a ⭐ goes a long way — thank you!
 
 ---
 
-## 🛠️ Tech Stack
-
-* **Framework**: Next.js 16 (App Router)  
-* **Library**: React 19  
-* **Styling**: Tailwind CSS v4  
-* **Animations**: Framer Motion 12  
-* **Visuals**: COBE  
-* **Icons**: Lucide React  
-* **Language**: TypeScript  
+![Portfolio Preview](public/preview.gif)
 
 ---
 
-## 📂 Project Structure
+## What's inside
 
-```text
-├── public/                  # Static assets (images, icons)
-├── src/
-│   ├── app/                 # Next.js App Router
-│   │   ├── error.tsx        # Global error boundary
-│   │   ├── layout.tsx       # Root layout (Metadata & Theme Providers)
-│   │   ├── not-found.tsx    # Custom 404 handler
-│   │   ├── page.tsx         # Home page (Bento Grid)
-│   │   ├── robots.ts        # Search engine instructions
-│   │   ├── sitemap.ts       # Dynamic SEO sitemap
-│   │   └── projects/        # /projects route
-│   │       └── page.tsx     # Project showcase
-│   ├── components/          # Reusable components
-│   │   ├── BentoCard.tsx
-│   │   ├── CardContents.tsx
-│   │   ├── DetailView.tsx
-│   │   ├── ErrorState.tsx
-│   │   ├── Globe.tsx
-│   │   ├── GlobeClient.tsx
-│   │   └── ThemeToggle.tsx
-│   └── types/               # TypeScript types
-└── package.json
-````
+A bento-style portfolio that goes beyond a static page. Every section is interactive, the data is real, and it's built to be fast on any device.
+
+- **Bento grid** — 2-col on mobile, 5-col on desktop, row heights adapt to screen size using `dvh`
+- **Live GitHub graph** — real contribution data fetched from the GitHub GraphQL API, cached hourly
+- **MDX blog** — file-based posts, no CMS, renders with custom styled components
+- **Detail modals** — click any card to expand it into a full view (experience, education, stack, testimonials, blog)
+- **Connection hub** — one modal for resume, email, and every social link
+- **Dark / light mode** — CSS variable theming, instant switch, no flash
+- **Mobile-first** — deferred API fetches, touch-safe hover states, smooth on low-end devices
 
 ---
 
-## 🛣️ Routing
+## Tech
 
-* **Home (`/`)** → Bento-style overview of skills and work
-* **Projects (`/projects`)** → Timeline-based showcase
-* **Error Handling** → Unified design for 404 and runtime states
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · COBE · next-mdx-remote
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-* Node.js 20+
-* npm / pnpm
-
-### Installation
+## Run it locally
 
 ```bash
 git clone https://github.com/Vighnesh-Gaddam/portfolio.git
@@ -88,22 +45,28 @@ npm install
 npm run dev
 ```
 
----
+The site works without any environment variables. The GitHub graph falls back to a static visualization if no token is set.
 
-## 📈 Performance & SEO
+To enable the live graph, create `.env.local`:
 
-* Optimized metadata using Next.js
-* Semantic HTML and accessibility best practices
-* Fast load times with optimized assets and animations
+```env
+GITHUB_TOKEN=your_personal_access_token
+```
 
----
-
-## 📬 Contact
-
-* **Website**: [https://whoisvighnesh.in](https://whoisvighnesh.in)
-* **LinkedIn**: [https://www.linkedin.com/in/vighnesh-gaddam/](https://www.linkedin.com/in/vighnesh-gaddam/)
-* **Email**: [vgnshgdm@gmail.com](mailto:vgnshgdm@gmail.com)
+Get a token at GitHub → Settings → Developer settings → Personal access tokens → Classic → select `read:user` scope only.
 
 ---
-Built with 🤍 by [Vighnesh Gaddam](https://whoisvighnesh.in)
 
+## Want to use this as a template?
+
+Go ahead. The portfolio data lives entirely in one file — `src/data/siteConfig.ts`. Update your name, links, experience, projects, and blog posts there and you're done. No hunting through components.
+
+---
+
+## License
+
+MIT — use it, learn from it, build on it. Credit is appreciated but not required.
+
+---
+
+Built by [Vighnesh Gaddam](https://whoisvighnesh.in) · Open to work
