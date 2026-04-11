@@ -40,6 +40,13 @@
   }
 }
 
+html {
+  font-size: clamp(10px, 1.1vw, 20px);
+  /* Prevents OS text scaling from affecting layout-critical sizes */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 /* ============================
    BASE STYLES
 ============================ */
@@ -47,8 +54,10 @@
   body {
     background-color: var(--bg-page);
     color: var(--text-main);
-    transition: background-color 0.5s ease, color 0.5s ease;
     overscroll-behavior: none;
+  }
+  body.theme-ready {
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 }
 

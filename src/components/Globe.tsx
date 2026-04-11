@@ -22,6 +22,9 @@ interface GlobeProps {
   scale?: number;
 }
 
+// Detect mobile once at module level — avoids repeated checks
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+
 export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,17 +32,7 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
   const sizeRef = useRef(0);
   const themeRef = useRef(theme);
   const globeRef = useRef<{ destroy: () => void } | null>(null);
-  const isVisibleRef = useRef(true);
   const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    const handleVisibility = () => {
-      isVisibleRef.current = !document.hidden;
-    };
-
-    document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
-  }, []);
 
   useEffect(() => {
     themeRef.current = theme;
@@ -54,7 +47,6 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
     if (!canvasRef.current || !containerRef.current) return;
 
     const initGlobe = (size: number) => {
-      // Destroy existing globe before reinitialising
       if (globeRef.current) {
         globeRef.current.destroy();
         globeRef.current = null;
@@ -62,17 +54,19 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
 
       if (!canvasRef.current || size <= 0) return;
 
-      const px = size * (window.devicePixelRatio || 2);
+      const dpr = window.devicePixelRatio || 2;
+      const px = size * dpr;
 
       const globeConfig: COBEOptions = {
-        devicePixelRatio: window.devicePixelRatio || 2,
+        devicePixelRatio: dpr,
         width: px,
         height: px,
         phi: phiRef.current,
         theta: 0.25,
         dark: 1,
         diffuse: 1.2,
-        mapSamples: 16000,
+        // Lower quality on mobile — 4x fewer samples, much faster init
+        mapSamples: isMobile ? 4000 : 16000,
         mapBrightness: 6,
         baseColor: [0.15, 0.15, 0.15],
         markerColor: [1, 1, 1],
@@ -91,69 +85,72 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
 
           const currentSize = sizeRef.current;
           if (currentSize > 0) {
-            const currentPx = currentSize * (window.devicePixelRatio || 2);
+            const currentPx = currentSize * dpr;
             globeState.width = currentPx;
             globeState.height = currentPx;
           }
 
-          if (isVisibleRef.current) {
-            globeState.phi = phiRef.current + 0.003;
-            phiRef.current = globeState.phi;
-          }
+          // Slower rotation on mobile to reduce CPU usage
+          const rotationSpeed = isMobile ? 0.002 : 0.003;
+          globeState.phi = phiRef.current + rotationSpeed;
+          phiRef.current = globeState.phi;
 
-          // Mumbai ripple
-          const cx = 19.0760;
-          const cy = 72.8777;
-          const now = Date.now();
-          const progress = (now % 2000) / 2000;
+          // Mumbai ripple — skip on mobile to save CPU
+          if (!isMobile) {
+            const cx = 19.0760;
+            const cy = 72.8777;
+            const now = Date.now();
+            const progress = (now % 2000) / 2000;
 
-          const lat1Rad = cx * Math.PI / 180;
-          const lon1Rad = cy * Math.PI / 180;
-          const sinLat1 = Math.sin(lat1Rad);
-          const cosLat1 = Math.cos(lat1Rad);
+            const lat1Rad = cx * Math.PI / 180;
+            const lon1Rad = cy * Math.PI / 180;
+            const sinLat1 = Math.sin(lat1Rad);
+            const cosLat1 = Math.cos(lat1Rad);
 
-          const markers: GlobeMarker[] = [{ location: [cx, cy], size: 0.06 }];
-          const rippleConfigs = [{ maxScale: 24 }, { maxScale: 10 }];
+            const markers: GlobeMarker[] = [{ location: [cx, cy], size: 0.06 }];
+            const rippleConfigs = [{ maxScale: 24 }, { maxScale: 10 }];
 
-          rippleConfigs.forEach(config => {
-            const currentRadius = progress * config.maxScale;
-            const opacity = 1 - progress;
-            if (currentRadius > 0.2 && opacity > 0.01) {
-              const dRad = currentRadius * Math.PI / 180;
-              const sinD = Math.sin(dRad);
-              const cosD = Math.cos(dRad);
-              for (let i = 0; i < 40; i++) {
-                const bearing = (i / 40) * 2 * Math.PI;
-                const lat2Rad = Math.asin(
-                  sinLat1 * cosD + cosLat1 * sinD * Math.cos(bearing)
-                );
-                const lon2Rad = lon1Rad + Math.atan2(
-                  Math.sin(bearing) * sinD * cosLat1,
-                  cosD - sinLat1 * Math.sin(lat2Rad)
-                );
-                let lon2 = lon2Rad * 180 / Math.PI;
-                if (lon2 < -180) lon2 += 360;
-                if (lon2 > 180) lon2 -= 360;
-                markers.push({
-                  location: [lat2Rad * 180 / Math.PI, lon2],
-                  size: 0.03 * opacity,
-                });
+            rippleConfigs.forEach(config => {
+              const currentRadius = progress * config.maxScale;
+              const opacity = 1 - progress;
+              if (currentRadius > 0.2 && opacity > 0.01) {
+                const dRad = currentRadius * Math.PI / 180;
+                const sinD = Math.sin(dRad);
+                const cosD = Math.cos(dRad);
+                for (let i = 0; i < 40; i++) {
+                  const bearing = (i / 40) * 2 * Math.PI;
+                  const lat2Rad = Math.asin(
+                    sinLat1 * cosD + cosLat1 * sinD * Math.cos(bearing)
+                  );
+                  const lon2Rad = lon1Rad + Math.atan2(
+                    Math.sin(bearing) * sinD * cosLat1,
+                    cosD - sinLat1 * Math.sin(lat2Rad)
+                  );
+                  let lon2 = lon2Rad * 180 / Math.PI;
+                  if (lon2 < -180) lon2 += 360;
+                  if (lon2 > 180) lon2 -= 360;
+                  markers.push({
+                    location: [lat2Rad * 180 / Math.PI, lon2],
+                    size: 0.03 * opacity,
+                  });
+                }
               }
-            }
-          });
+            });
 
-          globeState.markers = markers;
+            globeState.markers = markers;
+          } else {
+            // Just show the Mumbai dot on mobile — no ripple
+            globeState.markers = [{ location: [19.0760, 72.8777], size: 0.06 }];
+          }
         },
       };
 
       globeRef.current = createGlobe(canvasRef.current, globeConfig);
     };
 
-    // Use ResizeObserver so we catch the real size once the card is painted
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
       if (!entry) return;
-      // Use the smaller of width/height to keep the globe square
       const { width, height } = entry.contentRect;
       const size = Math.min(width, height);
       if (size > 0 && Math.abs(size - sizeRef.current) > 4) {
@@ -164,7 +161,6 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
 
     observer.observe(containerRef.current);
 
-    // Also try immediately in case the element already has a size
     const { offsetWidth, offsetHeight } = containerRef.current;
     const immediateSize = Math.min(offsetWidth, offsetHeight);
     if (immediateSize > 0) {

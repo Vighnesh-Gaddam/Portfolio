@@ -412,30 +412,37 @@ export const GitHubContent = React.memo(function GitHubContent() {
 
   const labelColor = resolvedTheme === 'light' ? 'rgba(100,100,100,0.6)' : 'rgba(107,105,101,0.5)';
 
-  useEffect(() => {
-    const fetchGitHub = () => {
-      fetch('/api/github')
-        .then(r => r.json())
-        .then(data => {
-          if (data.weeks) {
-            setGrid(data.weeks.slice(-DISPLAY_WEEKS).map(
-              (week: { count: number; date: string }[]) => week.map(day => getLevel(day.count))
-            ));
-            setTotal(data.total ?? null);
-          }
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
-    };
+useEffect(() => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
 
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(fetchGitHub);
-      return () => window.cancelIdleCallback(id);
-    } else {
-      const id = setTimeout(fetchGitHub, 2000);
-      return () => clearTimeout(id);
-    }
-  }, []);
+  fetch('https://github-contributions-api.jogruber.de/v4/Vighnesh-Gaddam?y=last', {
+    signal: controller.signal,
+  })
+    .then(r => r.json())
+    .then(data => {
+      clearTimeout(timeout);
+      if (data.contributions) {
+        const flat: { date: string; count: number }[] = data.contributions;
+        const weeks: Level[][] = [];
+        for (let i = 0; i < flat.length; i += 7) {
+          weeks.push(flat.slice(i, i + 7).map(d => getLevel(d.count)));
+        }
+        setGrid(weeks.slice(-DISPLAY_WEEKS));
+        setTotal(flat.reduce((sum, d) => sum + d.count, 0));
+      }
+      setLoading(false);
+    })
+    .catch(() => {
+      clearTimeout(timeout);
+      setLoading(false);
+    });
+
+  return () => {
+    clearTimeout(timeout);
+    controller.abort();
+  };
+}, []);
 
   const monthPositions = React.useMemo(() => {
     const now = new Date();
@@ -481,12 +488,36 @@ export const GitHubContent = React.memo(function GitHubContent() {
             </text>
           ))}
           {loading
-            ? Array.from({ length: DISPLAY_WEEKS }, (_, w) =>
-              Array.from({ length: 7 }, (_, d) => (
-                <rect key={`sk-${w}-${d}`} x={w * STEP} y={TOP_OFFSET + d * STEP}
-                  width={CELL} height={CELL} rx="2" fill="rgba(255,255,255,0.04)" />
-              ))
-            )
+            ? (() => {
+              const totalCells = DISPLAY_WEEKS * 7;
+              return Array.from({ length: DISPLAY_WEEKS }, (_, w) =>
+                Array.from({ length: 7 }, (_, d) => {
+                  const delay = ((w * 7 + d) / totalCells) * 1.5;
+                  return (
+                    <rect
+                      key={`sk-${w}-${d}`}
+                      x={w * STEP} y={TOP_OFFSET + d * STEP}
+                      width={CELL} height={CELL} rx="2"
+                      fill={resolvedTheme === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'}
+                    >
+                      <animate
+                        attributeName="fill"
+                        values={
+                          resolvedTheme === 'light'
+                            ? 'rgba(0,0,0,0.06);rgba(16,185,129,0.25);rgba(0,0,0,0.06)'
+                            : 'rgba(255,255,255,0.04);rgba(16,185,129,0.3);rgba(255,255,255,0.04)'
+                        }
+                        dur="1.8s"
+                        begin={`${delay}s`}
+                        repeatCount="indefinite"
+                        calcMode="spline"
+                        keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                      />
+                    </rect>
+                  );
+                })
+              );
+            })()
             : grid.map((week, w) =>
               week.map((level, d) => (
                 <rect key={`${w}-${d}`} x={w * STEP} y={TOP_OFFSET + d * STEP}

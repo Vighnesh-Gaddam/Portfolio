@@ -32,30 +32,30 @@ interface BentoItem {
 }
 
 const BENTO_ITEMS: BentoItem[] = [
-  { id: "intro", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 1 },
-  { id: "photo", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 2, bgImage: "/og-image.webp" },
-  { id: "socials", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 3 },
-  { id: "about", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 4, hasArrow: true, onClickModal: "about" },
-  { id: "experience", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 5, hasArrow: true, onClickModal: "experience" },
-  { id: "education", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 7, hasArrow: true, onClickModal: "education" },
-  { id: "featured projects", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 8, hasArrow: true },
-  { id: "stack", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 6, hasArrow: true, onClickModal: "stack" },
-  { id: "blog", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 9, hasArrow: true, onClickModal: "blog" },
-  { id: "testimonials", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 10, hasArrow: true, onClickModal: "testimonials" },
-  { id: "github", colSpan: "col-span-2 lg:col-span-2", mobileOrder: 11 },
-  { id: "map", colSpan: "col-span-2 lg:col-span-1", mobileOrder: 12, noPadding: true },
+  { id: "intro",             colSpan: "col-span-2 lg:col-span-2", mobileOrder: 1 },
+  { id: "photo",             colSpan: "col-span-1 lg:col-span-1", mobileOrder: 2, bgImage: "/og-image.webp" },
+  { id: "socials",           colSpan: "col-span-1 lg:col-span-1", mobileOrder: 3 },
+  { id: "about",             colSpan: "col-span-1 lg:col-span-1", mobileOrder: 4,  hasArrow: true, onClickModal: "about" },
+  { id: "experience",        colSpan: "col-span-1 lg:col-span-1", mobileOrder: 5,  hasArrow: true, onClickModal: "experience" },
+  { id: "education",         colSpan: "col-span-1 lg:col-span-1", mobileOrder: 7,  hasArrow: true, onClickModal: "education" },
+  { id: "featured projects", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 8,  hasArrow: true },
+  { id: "stack",             colSpan: "col-span-2 lg:col-span-2", mobileOrder: 6,  hasArrow: true, onClickModal: "stack" },
+  { id: "blog",              colSpan: "col-span-1 lg:col-span-1", mobileOrder: 9,  hasArrow: true, onClickModal: "blog" },
+  { id: "testimonials",      colSpan: "col-span-1 lg:col-span-1", mobileOrder: 10, hasArrow: true, onClickModal: "testimonials" },
+  { id: "github",            colSpan: "col-span-2 lg:col-span-2", mobileOrder: 11 },
+  { id: "map",               colSpan: "col-span-2 lg:col-span-1", mobileOrder: 12, noPadding: true },
 ];
 
 const NO_TITLE_CARDS = new Set(["intro", "socials", "photo", "map", "github", "testimonials"]);
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.05 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.03, delayChildren: 0 } },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 12, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 10, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export default function HomePage() {
@@ -65,10 +65,11 @@ export default function HomePage() {
   const router = useRouter();
   const { start } = usePageLoading();
 
-  // useEffect(() => {
-  //   const loader = document.getElementById("initial-loader");
-  //   if (loader) loader.classList.add("loaded");
-  // }, []);
+  // CRITICAL — hide initial loader as soon as React mounts
+  useEffect(() => {
+    const loader = document.getElementById("initial-loader");
+    if (loader) loader.classList.add("loaded");
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = activeModal || isConnectOpen ? "hidden" : "unset";
@@ -83,18 +84,18 @@ export default function HomePage() {
 
   const renderCardContent = useCallback((id: string) => {
     switch (id) {
-      case "intro": return <IntroContent />;
-      case "socials": return <SocialsContent onOpenConnect={() => setIsConnectOpen(true)} />;
-      case "stack": return <TechStackContent />;
-      case "about": return <AboutContent />;
-      case "experience": return <ExperienceContent />;
-      case "education": return <EducationContent />;
+      case "intro":             return <IntroContent />;
+      case "socials":           return <SocialsContent onOpenConnect={() => setIsConnectOpen(true)} />;
+      case "stack":             return <TechStackContent />;
+      case "about":             return <AboutContent />;
+      case "experience":        return <ExperienceContent />;
+      case "education":         return <EducationContent />;
       case "featured projects": return <ProjectsTriggerContent />;
-      case "testimonials": return <TestimonialsContent />;
-      case "blog": return <BlogContent />;
-      case "github": return <GitHubContent />;
-      case "map": return <MapContent theme={resolvedTheme} />;
-      default: return null;
+      case "testimonials":      return <TestimonialsContent />;
+      case "blog":              return <BlogContent />;
+      case "github":            return <GitHubContent />;
+      case "map":               return <MapContent theme={resolvedTheme} />;
+      default:                  return null;
     }
   }, [resolvedTheme]);
 
@@ -112,18 +113,14 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
-          {/* <div className="w-full max-w-7xl mx-auto"> */}
-          <div className="w-full max-w-350 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-350 mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             className="grid grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4"
-            style={{
-              gridAutoRows: 'var(--grid-row-height)',
-            }}
+            style={{ gridAutoRows: 'var(--grid-row-height)' }}
           >
-            {/* className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4auto-rows-[152px] sm:auto-rows-[175px] md:auto-rows-[200px] lg:auto-rows-[195px]" >  */}
             {BENTO_ITEMS.map((item) => (
               <motion.div
                 key={item.id}
@@ -158,6 +155,6 @@ export default function HomePage() {
           </footer>
         </div>
       </div>
-    </main >
+    </main>
   );
 }
