@@ -36,12 +36,12 @@
 
 @media (max-width: 640px) {
   :root {
-    --grid-row-height: clamp(120px, 20dvh, 165px);
+    --grid-row-height: clamp(120px, 21dvh, 165px);
   }
 }
 
 html {
-  font-size: clamp(10px, 1.1vw, 20px);
+  /* font-size: clamp(16px, 1.1vw, 20px); */
   /* Prevents OS text scaling from affecting layout-critical sizes */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;

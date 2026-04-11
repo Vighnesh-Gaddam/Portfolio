@@ -412,39 +412,42 @@ export const GitHubContent = React.memo(function GitHubContent() {
 
   const labelColor = resolvedTheme === 'light' ? 'rgba(100,100,100,0.6)' : 'rgba(107,105,101,0.5)';
 
-useEffect(() => {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000);
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
 
-  fetch('https://github-contributions-api.jogruber.de/v4/Vighnesh-Gaddam?y=last', {
-    signal: controller.signal,
-  })
-    .then(r => r.json())
-    .then(data => {
-      clearTimeout(timeout);
-      if (data.contributions) {
-        const flat: { date: string; count: number }[] = data.contributions;
-        const weeks: Level[][] = [];
-        for (let i = 0; i < flat.length; i += 7) {
-          weeks.push(flat.slice(i, i + 7).map(d => getLevel(d.count)));
-        }
-        setGrid(weeks.slice(-DISPLAY_WEEKS));
-        setTotal(flat.reduce((sum, d) => sum + d.count, 0));
-      }
-      setLoading(false);
+    fetch('https://github-contributions-api.jogruber.de/v4/Vighnesh-Gaddam?y=last', {
+      signal: controller.signal,
     })
-    .catch(() => {
+      .then(r => r.json())
+      .then(data => {
+        clearTimeout(timeout);
+        if (data.contributions) {
+          const flat: { date: string; count: number }[] = data.contributions;
+          const weeks: Level[][] = [];
+          for (let i = 0; i < flat.length; i += 7) {
+            weeks.push(flat.slice(i, i + 7).map(d => getLevel(d.count)));
+          }
+          setGrid(weeks.slice(-DISPLAY_WEEKS));
+          setTotal(flat.reduce((sum, d) => sum + d.count, 0));
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        clearTimeout(timeout);
+        setLoading(false);
+      });
+
+    return () => {
       clearTimeout(timeout);
-      setLoading(false);
-    });
+      controller.abort();
+    };
+  }, []);
 
-  return () => {
-    clearTimeout(timeout);
-    controller.abort();
-  };
-}, []);
+  // Change useMemo to only run client-side
+  const [monthPositions, setMonthPositions] = React.useState<{ weekIdx: number; name: string }[]>([]);
 
-  const monthPositions = React.useMemo(() => {
+  useEffect(() => {
     const now = new Date();
     const result: { weekIdx: number; name: string }[] = [];
     let lastMonth = -1;
@@ -459,7 +462,9 @@ useEffect(() => {
         lastWeekIdx = w;
       }
     }
-    return result;
+    queueMicrotask(() => {
+      setMonthPositions(result);
+    });
   }, []);
 
   const svgW = DISPLAY_WEEKS * STEP - GAP;

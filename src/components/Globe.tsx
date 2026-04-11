@@ -32,6 +32,7 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
   const sizeRef = useRef(0);
   const themeRef = useRef(theme);
   const globeRef = useRef<{ destroy: () => void } | null>(null);
+  const lastFrameTimeRef = useRef(0); // ← FPS limiter
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
 
       if (!canvasRef.current || size <= 0) return;
 
-      const dpr = window.devicePixelRatio || 2;
+      const dpr = isMobile? window.devicePixelRatio : 2;
       const px = size * dpr;
 
       const globeConfig: COBEOptions = {
@@ -65,15 +66,20 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
         theta: 0.25,
         dark: 1,
         diffuse: 1.2,
-        // Lower quality on mobile — 4x fewer samples, much faster init
         mapSamples: isMobile ? 4000 : 16000,
-        mapBrightness: 6,
+        mapBrightness: isMobile ? 6 : 4,
         baseColor: [0.15, 0.15, 0.15],
         markerColor: [1, 1, 1],
         glowColor: [0.15, 0.15, 0.15],
         opacity: 1,
         markers: [],
         onRender: (state) => {
+          if (isMobile) {
+            const now = performance.now();
+            if (now - lastFrameTimeRef.current < 1000 / 25) return;
+            lastFrameTimeRef.current = now;
+          }
+
           const globeState = state as GlobeRenderState;
 
           const isDark = themeRef.current !== 'light';
@@ -90,12 +96,10 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
             globeState.height = currentPx;
           }
 
-          // Slower rotation on mobile to reduce CPU usage
-          const rotationSpeed = isMobile ? 0.002 : 0.003;
+          const rotationSpeed = isMobile ? 0.005 : 0.003;
           globeState.phi = phiRef.current + rotationSpeed;
           phiRef.current = globeState.phi;
 
-          // Mumbai ripple — skip on mobile to save CPU
           if (!isMobile) {
             const cx = 19.0760;
             const cy = 72.8777;
@@ -139,7 +143,6 @@ export const Globe: React.FC<GlobeProps> = ({ theme, scale = 1.2 }) => {
 
             globeState.markers = markers;
           } else {
-            // Just show the Mumbai dot on mobile — no ripple
             globeState.markers = [{ location: [19.0760, 72.8777], size: 0.06 }];
           }
         },
