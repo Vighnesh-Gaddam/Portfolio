@@ -40,7 +40,7 @@ const BENTO_ITEMS: BentoItem[] = [
   { id: "education",         colSpan: "col-span-1 lg:col-span-1", mobileOrder: 7,  hasArrow: true, onClickModal: "education" },
   { id: "featured projects", colSpan: "col-span-1 lg:col-span-1", mobileOrder: 8,  hasArrow: true },
   { id: "stack",             colSpan: "col-span-2 lg:col-span-2", mobileOrder: 6,  hasArrow: true, onClickModal: "stack" },
-  { id: "blog",              colSpan: "col-span-1 lg:col-span-1", mobileOrder: 9,  hasArrow: true, onClickModal: "blog" },
+  { id: "blog",              colSpan: "col-span-1 lg:col-span-1", mobileOrder: 9,  hasArrow: true},
   { id: "testimonials",      colSpan: "col-span-1 lg:col-span-1", mobileOrder: 10, hasArrow: true, onClickModal: "testimonials" },
   { id: "github",            colSpan: "col-span-2 lg:col-span-2", mobileOrder: 11 },
   { id: "map",               colSpan: "col-span-2 lg:col-span-1", mobileOrder: 12, noPadding: true },
@@ -79,6 +79,7 @@ export default function HomePage() {
   const handleCardClick = useCallback((item: BentoItem) => {
     if (item.onClickModal) return () => setActiveModal(item.onClickModal!);
     if (item.id === "featured projects") return () => { start(); router.push("/projects"); };
+    if (item.id === "blog") return () => { start(); router.push("/blog"); };
     return undefined;
   }, [router, start]);
 

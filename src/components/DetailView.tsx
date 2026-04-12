@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { X, Building2, GraduationCap, Award, BookOpen, Database, ShieldCheck, BookMarked, Quote, Clock, Calendar, ArrowUpRight } from 'lucide-react';
+import { X, Building2, GraduationCap, Award, BookOpen, Database, ShieldCheck, BookMarked, Quote } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { testimonials, experiences, education, techStack, blogPosts } from '@/data/siteConfig';
+import { testimonials, experiences, education, techStack } from '@/data/siteConfig';
 import { useRouter } from 'next/navigation';
 import { usePageLoading } from '@/components/PageLoadingContext';
 
 
-export type DetailType = 'about' | 'experience' | 'education' | 'stack' | 'testimonials' | 'blog';
+export type DetailType = 'about' | 'experience' | 'education' | 'stack' | 'testimonials';
 
 interface DetailViewProps {
   onClose: () => void;
@@ -416,81 +416,6 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {type === 'blog' && (
-              <div className="p-5 sm:p-7 md:p-10 pb-7 bg-card min-h-full">
-                <div className="max-w-3xl mx-auto">
-                  <div className="mb-5 sm:mb-7 mt-5 sm:mt-0">
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-main mb-1.5 tracking-tight">
-                      Writing
-                    </h2>
-                    <p className="text-muted text-xs sm:text-sm">
-                      Thoughts on engineering, architecture, and building things that last.
-                    </p>
-                  </div>
-
-                  <div className="grid gap-3 pb-4">
-                    {blogPosts.map((post, i) => (
-                      <button
-                        key={post.slug}
-                        onClick={() => {
-                          start();
-                          router.push(`/blog/${post.slug}`);
-                        }}
-                        className="group w-full text-left p-4 sm:p-5 rounded-2xl sm:rounded-[20px] bg-card-hover border border-custom hover:border-primary/20 transition-all shadow-sm"
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 min-w-0">
-                            {/* Number + tags row */}
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="text-[0.55rem] font-mono text-muted/50">
-                                {String(i + 1).padStart(2, '0')}
-                              </span>
-                              <div className="flex gap-1">
-                                {post.tags.slice(0, 2).map(tag => (
-                                  <span key={tag} className="text-[0.55rem] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-card border border-custom text-muted">
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Title */}
-                            <h3 className="text-sm font-bold text-main leading-tight mb-1.5 group-hover:text-primary transition-colors">
-                              {post.title}
-                            </h3>
-
-                            {/* Description */}
-                            <p className="text-muted text-[0.7rem] leading-relaxed line-clamp-2">
-                              {post.description}
-                            </p>
-
-                            {/* Meta */}
-                            <div className="flex items-center gap-3 mt-2.5">
-                              <span className="flex items-center gap-1 text-[0.55rem] text-muted font-medium">
-                                <Calendar size={9} />
-                                {new Date(post.date).toLocaleDateString('en-IN', {
-                                  year: 'numeric', month: 'short', day: 'numeric'
-                                })}
-                              </span>
-                              <span className="flex items-center gap-1 text-[0.55rem] text-muted font-medium">
-                                <Clock size={9} />
-                                {post.readTime} read
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Arrow */}
-                          <div className="w-7 h-7 rounded-full bg-card border border-custom flex items-center justify-center text-muted group-hover:border-primary/20 group-hover:text-primary transition-all shrink-0 group-hover:rotate-45 duration-300">
-                            <ArrowUpRight size={13} />
-                          </div>
-                        </div>
-                      </button>
                     ))}
                   </div>
                 </div>
