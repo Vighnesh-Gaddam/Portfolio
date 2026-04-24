@@ -210,7 +210,6 @@ export const AboutContent: React.FC = () => (
 );
 
 // ─── EXPERIENCE ──────────────────────────────────────────────
-
 export const ExperienceContent: React.FC = () => {
   const previous = experiences.find(e => !e.current);
 
@@ -257,7 +256,7 @@ export const ExperienceContent: React.FC = () => {
 export const EducationContent: React.FC = () => {
   const current = education[0];
   return (
-    <div className="h-full flex flex-col justify-end pt-4 relative">
+    <div className="h-full flex flex-col justify-end pb-1 sm:pb-0 pt-4 relative">
       <div className="absolute top-0 right-0 p-24 bg-linear-to-br from-primary/5 to-purple-500/5 blur-[60px] rounded-full pointer-events-none z-0" />
       <div className="mt-auto space-y-2 sm:space-y-3 relative z-10">
         <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-card border border-custom flex items-center justify-center text-main shadow-sm">
