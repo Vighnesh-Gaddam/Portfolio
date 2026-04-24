@@ -165,7 +165,7 @@ const techRow2 = [
 
 export const TechStackContent = React.memo(function TechStackContent() {
   return (
-    <div className="flex flex-col flex-1 justify-center items-center h-full w-full relative overflow-hidden py-4">
+    <div className="flex flex-col flex-1 justify-center items-center h-full w-full relative py-4">
       <div className="flex gap-3 overflow-x-hidden w-full mb-3 py-1">
         <div className="flex shrink-0 animate-marquee items-center gap-3">
           {techRow1.map((item, i) => <TechIcon key={`r1-${i}`} {...item} />)}
