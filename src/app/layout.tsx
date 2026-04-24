@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import { PageLoadingProvider } from "@/components/PageLoadingContext";
 import { seo, person } from "@/data/siteConfig";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   metadataBase: new URL(seo.url),
@@ -142,6 +143,7 @@ export default function RootLayout({
         {/* Vercel observability — production only */}
         <Analytics mode="production" />
         <SpeedInsights />
+        <GoogleAnalytics gaId="G-42FRP71HTB" />
       </body>
     </html>
   );
