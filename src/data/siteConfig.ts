@@ -237,6 +237,7 @@ export interface BlogPost {
   date: string;
   readTime: string;
   tags: string[];
+  category: string;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -247,7 +248,24 @@ export const blogPosts: BlogPost[] = [
     date: "2026-04-04",
     readTime: "6 min",
     tags: ["Next.js", "Prisma", "TypeScript", "Full Stack", "Backend"],
-  }
+    category: "fullstack",
+  },
+];
+
+export interface BlogCategory {
+  id: string;
+  label: string;
+}
+
+export const blogCategories: BlogCategory[] = [
+  { id: "frontend", label: "Frontend" },
+  { id: "backend", label: "Backend" },
+  { id: "fullstack", label: "Full Stack" },
+  { id: "devops", label: "DevOps" },
+  { id: "dsa", label: "DSA" },
+  // { id: "system-design", label: "System Design" },
+  // { id: "career", label: "Career" },
+  // { id: "tools", label: "Tools" },
 ];
 
 // ─── SEO / METADATA ──────────────────────────────────────────
